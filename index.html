@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>SENTINEL | Global Legacy Protocol</title>
+    <title>SENTINEL | Ultimate Legacy Protocol</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/5.7.2/ethers.umd.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
@@ -11,42 +11,44 @@
         * { box-sizing: border-box; transition: 0.3s; font-family: 'Inter', sans-serif; }
         body { 
             margin: 0; background: var(--bg); color: white; display: flex; min-height: 100vh; overflow-x: hidden;
-            background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.9)), url('https://images.unsplash.com/photo-1639762681485-074b7f938ba0?q=80&w=2000&auto=format&fit=crop') no-repeat center center fixed;
+            background: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.95)), url('https://images.unsplash.com/photo-1639762681485-074b7f938ba0?q=80&w=2000&auto=format&fit=crop') no-repeat center center fixed;
             background-size: cover;
         }
 
-        /* SIDEBAR (RIGHT) */
+        /* SIDEBAR (SAĞ) */
         .sidebar { width: 280px; height: 100vh; background: #000; border-left: 1px solid var(--border); position: fixed; right: -280px; z-index: 9999; display: flex; flex-direction: column; }
         .sidebar.active { right: 0; }
         .sidebar-header { padding: 30px; text-align: center; border-bottom: 1px solid var(--border); }
         .lang-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; padding: 10px; }
         .lang-btn { background: rgba(255,255,255,0.05); border: 1px solid var(--border); color: white; padding: 5px; border-radius: 5px; cursor: pointer; font-size: 0.6rem; text-align: center; }
         .lang-btn.active { background: var(--neon); color: black; font-weight: bold; }
-
         .menu-item { padding: 18px 25px; color: #777; text-decoration: none; display: flex; align-items: center; gap: 15px; border-radius: 12px; margin: 5px 15px; cursor: pointer; }
         .menu-item:hover, .menu-item.active { background: rgba(0, 242, 255, 0.1); color: var(--neon); }
 
-        /* MAIN CONTENT */
+        /* ANA İÇERİK */
         .main-content { flex-grow: 1; width: 100%; padding: 20px; transition: 0.5s; }
         header { display: flex; justify-content: space-between; align-items: center; padding: 15px 25px; background: var(--glass); border: 1px solid var(--border); border-radius: 20px; margin-bottom: 25px; backdrop-filter: blur(15px); }
         .hamburger { font-size: 1.6rem; color: var(--neon); cursor: pointer; order: 2; }
 
-        /* CARDS */
-        .glass-card { background: var(--glass); border: 1px solid var(--border); border-radius: 28px; padding: 30px; margin-bottom: 25px; backdrop-filter: blur(20px); text-align: center; box-shadow: 0 0 30px rgba(0,242,255,0.05); }
-        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 15px; margin-top: 20px; }
+        /* KARTLAR */
+        .glass-card { background: var(--glass); border: 1px solid var(--border); border-radius: 28px; padding: 30px; margin-bottom: 25px; backdrop-filter: blur(20px); text-align: center; }
+        
+        /* DASHBOARD DOLULUĞU İÇİN YENİ BÖLÜMLER */
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 15px; margin-bottom: 25px; }
         .stat-card { background: rgba(255,255,255,0.02); padding: 15px; border-radius: 18px; border: 1px solid rgba(255,255,255,0.05); }
+        .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; text-align: left; margin-top: 20px; }
+        .feature-item i { color: var(--neon); font-size: 1.5rem; margin-bottom: 10px; display: block; }
+        .feature-item h4 { margin: 5px 0; font-size: 1rem; }
+        .feature-item p { color: #666; font-size: 0.8rem; }
 
-        /* BUY SECTION */
+        /* SATIN ALMA ALANI */
         .coin-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(80px, 1fr)); gap: 10px; margin: 20px 0; }
         .coin-item { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); padding: 12px; border-radius: 16px; cursor: pointer; font-size: 0.8rem; }
         .coin-item.active { border-color: var(--neon); background: rgba(0,242,255,0.1); box-shadow: 0 0 10px var(--neon); }
         .coin-item img { width: 22px; display: block; margin: 0 auto 5px; }
 
-        .balance-trigger { font-size: 0.75rem; color: #888; margin-top: 10px; cursor: pointer; display: inline-block; padding: 5px 10px; border-radius: 20px; border: 1px solid transparent; }
-        .balance-trigger:hover { color: var(--neon); border-color: var(--border); }
-
         input { width: 100%; padding: 16px; background: rgba(0,0,0,0.6); border: 1px solid rgba(255,255,255,0.1); border-radius: 15px; color: white; outline: none; margin-top: 10px; text-align: center; font-size: 1.2rem; font-weight: bold; }
-        .btn-neon { width: 100%; padding: 18px; background: var(--neon); color: black; border: none; border-radius: 15px; font-weight: 900; cursor: pointer; margin-top: 15px; text-transform: uppercase; }
+        .btn-neon { width: 100%; padding: 18px; background: var(--neon); color: black; border: none; border-radius: 15px; font-weight: 900; cursor: pointer; margin-top: 15px; text-transform: uppercase; box-shadow: 0 5px 20px rgba(0,242,255,0.2); }
 
         .tab-content { display: none; }
         .tab-content.active { display: block; animation: slideUp 0.5s ease; }
@@ -80,33 +82,54 @@
     <main class="main-content">
         <header>
             <div class="hamburger" onclick="toggleSidebar()"><i class="fa fa-bars"></i></div>
-            <div id="user-id" style="font-size: 0.7rem; color: var(--neon); font-weight: bold; letter-spacing: 1px;">ID: DISCONNECTED</div>
+            <div id="user-id" style="font-size: 0.7rem; color: var(--neon); font-weight: bold;">ID: DISCONNECTED</div>
             <button class="btn-neon" id="connectBtn" onclick="connectWallet()" style="width:auto; margin:0; padding:10px 20px; font-size: 0.7rem;">CONNECT WALLET</button>
         </header>
 
         <section id="home" class="tab-content active">
             <div class="glass-card">
-                <h1 id="h-title" style="letter-spacing: -1px; font-size: 2.2rem;">SENTINEL <span style="color:var(--neon)">PROTOCOL</span></h1>
-                <p id="h-desc" style="color:#666; font-size: 0.9rem;">Military-Grade Decentralized Asset Inheritance</p>
+                <h1 style="letter-spacing: -1px; font-size: 2.2rem;">SENTINEL <span style="color:var(--neon)">PROTOCOL</span></h1>
+                <p id="h-desc" style="color:#666; font-size: 0.9rem;">Multichain Digital Asset Vault & Inheritance Gateway</p>
+                
                 <div class="stats-grid">
-                    <div class="stat-card"><span class="stat-val" style="color:var(--neon)">500,000,000</span><br><small data-key="s1">Total Supply</small></div>
-                    <div class="stat-card"><span class="stat-val" id="eth-display" style="color:var(--neon)">0.00</span><br><small data-key="s2">Your Balance</small></div>
+                    <div class="stat-card"><span style="color:var(--neon); font-weight:800;">500,000,000</span><br><small data-key="s1">Total Supply</small></div>
+                    <div class="stat-card"><span id="eth-display" style="color:var(--neon); font-weight:800;">0.00</span><br><small data-key="s2">Your Balance</small></div>
+                    <div class="stat-card"><span style="color:var(--neon); font-weight:800;">$0.01</span><br><small>Listing Price</small></div>
                 </div>
-                <div style="margin-top:25px; background:rgba(0,242,255,0.03); padding:20px; border-radius:20px; border:1px solid var(--border);">
-                    <div style="display:flex; justify-content:space-between; font-size:0.7rem; margin-bottom:10px;">
-                        <span data-key="p-status">NETWORK STATUS: SECURE</span>
-                        <span id="target-txt">$0 / $5,000,000</span>
+
+                <div class="feature-grid">
+                    <div class="feature-item">
+                        <i class="fa fa-user-shield"></i>
+                        <h4 data-key="f1-t">Inheritance Protocol</h4>
+                        <p data-key="f1-d">Securely transfer your NFTs and tokens to heirs automatically.</p>
                     </div>
-                    <div style="width:100%; height:8px; background:rgba(255,255,255,0.05); border-radius:10px; overflow:hidden;">
-                        <div style="width:1%; height:100%; background:var(--neon); box-shadow: 0 0 15px var(--neon);"></div>
+                    <div class="feature-item">
+                        <i class="fa fa-microchip"></i>
+                        <h4 data-key="f2-t">AES-256 Sharding</h4>
+                        <p data-key="f2-d">Your data is fragmented across decentralized nodes.</p>
                     </div>
+                    <div class="feature-item">
+                        <i class="fa fa-network-wired"></i>
+                        <h4 data-key="f3-t">Multi-Chain Support</h4>
+                        <p data-key="f3-d">Compatible with Ethereum, BSC, and Polygon networks.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass-card" style="padding: 20px;">
+                <div style="display:flex; justify-content:space-between; font-size:0.7rem; margin-bottom:10px;">
+                    <span data-key="p-status">PROTOCOL STATUS: ONLINE</span>
+                    <span>RAISED: $0 / $5,000,000</span>
+                </div>
+                <div style="width:100%; height:12px; background:rgba(255,255,255,0.05); border-radius:10px; overflow:hidden; border: 1px solid var(--border);">
+                    <div style="width:1%; height:100%; background:linear-gradient(90deg, #00f2ff, #0072ff); box-shadow: 0 0 15px var(--neon);"></div>
                 </div>
             </div>
         </section>
 
         <section id="buy" class="tab-content">
             <div class="glass-card">
-                <h2 data-key="b-title">ACQUIRE $SNTL</h2>
+                <h2 data-key="b-title">TOKEN SALE</h2>
                 <div class="coin-grid">
                     <div class="coin-item active" onclick="setCoin('ETH', 2600, this)"><img src="https://cryptologos.cc/logos/ethereum-eth-logo.png">ETH</div>
                     <div class="coin-item" onclick="setCoin('BTC', 48000, this)"><img src="https://cryptologos.cc/logos/bitcoin-btc-logo.png">BTC</div>
@@ -114,37 +137,29 @@
                     <div class="coin-item" onclick="setCoin('USDT', 1, this)"><img src="https://cryptologos.cc/logos/tether-usdt-logo.png">USDT</div>
                 </div>
                 
-                <div class="balance-trigger" onclick="setMax()" data-key="b-bal">Wallet Balance: <span id="wallet-bal">0.00</span> (Click to Max)</div>
+                <div style="font-size: 0.75rem; color: #888; margin-bottom: 5px; cursor: pointer;" onclick="setMax()">WALLET: <span id="wallet-bal">0.00</span> (MAX)</div>
                 <input type="number" id="payAmt" placeholder="0.00" oninput="calculate()">
                 
                 <div style="margin-top:20px; padding:25px; background:rgba(0,242,255,0.05); border-radius:20px; border:1px solid var(--border);">
-                    <small data-key="b-get" style="color:#888;">ESTIMATED RECEIVE</small><br>
-                    <span style="font-size:2rem; font-weight:900; color:var(--neon);" id="outAmt">0</span> $SNTL
+                    <small data-key="b-get">ESTIMATED $SNTL</small><br>
+                    <span style="font-size:2rem; font-weight:900; color:var(--neon);" id="outAmt">0</span>
                 </div>
-                <button class="btn-neon" onclick="executeSwap()" data-key="b-btn">AUTHORIZE SWAP</button>
+                <button class="btn-neon" onclick="executeSwap()" data-key="b-btn">PAY & CLAIM TOKENS</button>
             </div>
         </section>
 
-        <section id="wp" class="tab-content">
-            <div class="glass-card">
-                <h2 data-key="m5">Whitepaper</h2>
-                <div style="text-align:left; font-size:0.85rem; color:#888; max-height:400px; overflow-y:auto; padding-right:10px;">
-                    <h3 style="color:white;">Technical Overview</h3>
-                    <p>Sentinel utilizes AES-256 encryption sharded across decentralized IPFS nodes. The "Dead Man's Switch" algorithm monitors real-time wallet activity via RPC endpoints.</p>
-                    <h3 style="color:white;">Token Utility</h3>
-                    <p>$SNTL serves as the governance and fuel token for vault sharding. 500M fixed supply ensures scarcity and long-term protocol stability.</p>
-                </div>
-            </div>
+        <section id="vault" class="tab-content">
+            <div class="glass-card"><h2>SECURE VAULT</h2><p>Connect wallet to view your encrypted assets.</p></div>
         </section>
     </main>
 
     <script>
+        // --- BURASI ÖNEMLİ: Gelen paranın gideceği adres ---
+        const TREASURY_WALLET = "0xYOUR_WALLET_ADDRESS_HERE"; // Kendi adresini buraya yapıştır!
+
         const texts = {
-            en: { m1: "Dashboard", m2: "Vault", m3: "Buy SNTL", m4: "Legacy", m5: "Whitepaper", s1: "Total Supply", s2: "Your Balance", "b-title": "ACQUIRE $SNTL", "b-bal": "Wallet Balance: ", "b-get": "ESTIMATED RECEIVE", "b-btn": "AUTHORIZE SWAP", "p-status": "NETWORK: SECURE" },
-            tr: { m1: "Panel", m2: "Kasa", m3: "SNTL Al", m4: "Miras", m5: "Teknik Belge", s1: "Toplam Arz", s2: "Bakiyeniz", "b-title": "$SNTL EDİNİN", "b-bal": "Cüzdan Bakiyesi: ", "b-get": "TAHMİNİ ALINAN", "b-btn": "TAKASI ONAYLA", "p-status": "AĞ DURUMU: GÜVENLİ" },
-            zh: { m1: "仪表板", m2: "保险库", m3: "购买 SNTL", m4: "遗产", m5: "白皮书", s1: "总供应量", s2: "您的余额", "b-title": "获取 $SNTL", "b-bal": "钱包余额: ", "b-get": "预计收到", "b-btn": "授权兑换", "p-status": "网络状态: 安全" },
-            ru: { m1: "Панель", m2: "Сейф", m3: "Купить SNTL", m4: "Наследие", m5: "Документация", s1: "Всего предл.", s2: "Ваш баланс", "b-title": "КУПИТЬ $SNTL", "b-bal": "Баланс: ", "b-get": "ВЫ ПОЛУЧИТЕ", "b-btn": "ПОДТВЕРДИТЬ", "p-status": "СЕТЬ: ЗАЩИЩЕНО" },
-            ar: { m1: "لوحة القيادة", m2: "الخزنة", m3: "شراء SNTL", m4: "الميراث", m5: "ورقة عمل", s1: "إجمالي العرض", s2: "رصيدك", "b-title": "اقتناء $SNTL", "b-bal": "رصيد المحفظة: ", "b-get": "الاستلام المتوقع", "b-btn": "تخويل التبادل", "p-status": "حالة الشبكة: آمنة" }
+            en: { m1: "Dashboard", m2: "Vault", m3: "Buy", m4: "Legacy", m5: "Whitepaper", s1: "Supply", s2: "Balance", "b-title": "TOKEN SALE", "b-get": "ESTIMATED $SNTL", "b-btn": "PAY & CLAIM", "p-status": "STATUS: ONLINE", "f1-t": "Inheritance", "f1-d": "Securely transfer tokens to heirs.", "f2-t": "Sharding", "f2-d": "Data fragmented across nodes.", "f3-t": "Multi-Chain", "f3-d": "ETH, BSC, Polygon support." },
+            tr: { m1: "Panel", m2: "Kasa", m3: "Satın Al", m4: "Miras", m5: "WP", s1: "Arz", s2: "Bakiye", "b-title": "TOKEN SATIŞI", "b-get": "TAHMİNİ $SNTL", "b-btn": "ÖDE VE AL", "p-status": "DURUM: ÇEVRİMİÇİ", "f1-t": "Miras", "f1-d": "Varlıklarınızı mirasçılara aktarın.", "f2-t": "Parçalama", "f2-d": "Verileriniz düğümlere dağıtılır.", "f3-t": "Çoklu Ağ", "f3-d": "ETH, BSC, Polygon desteği." }
         };
 
         let currentRate = 2600;
@@ -155,7 +170,7 @@
             event.target.classList.add('active');
             document.querySelectorAll('[data-key]').forEach(el => {
                 const key = el.getAttribute('data-key');
-                if(texts[l][key]) el.innerText = texts[l][key];
+                if(texts[l] && texts[l][key]) el.innerText = texts[l][key];
             });
         }
 
@@ -194,7 +209,23 @@
         }
 
         function setMax() { document.getElementById('payAmt').value = userEth; calculate(); }
-        function executeSwap() { alert("Confirming on network... Please check your wallet."); }
+
+        async function executeSwap() {
+            const amount = document.getElementById('payAmt').value;
+            if(!amount || amount <= 0) { alert("Please enter amount"); return; }
+            
+            try {
+                const provider = new ethers.providers.Web3Provider(window.ethereum);
+                const signer = provider.getSigner();
+                const tx = await signer.sendTransaction({
+                    to: TREASURY_WALLET,
+                    value: ethers.utils.parseEther(amount.toString())
+                });
+                alert("Transaction Sent! TX: " + tx.hash);
+            } catch (err) {
+                alert("Error: " + err.message);
+            }
+        }
     </script>
 </body>
 </html>
