@@ -3,104 +3,128 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SENTINEL | Decentralized Vault System</title>
+    <title>SENTINEL | Professional Legacy System</title>
     <style>
-        :root { --neon: #00f2ff; --glass: rgba(255, 255, 255, 0.05); }
-        * { box-sizing: border-box; transition: 0.3s; }
-        body, html { margin: 0; padding: 0; background: #000; font-family: 'Inter', sans-serif; color: white; overflow-x: hidden; }
+        :root { --neon: #00f2ff; --glass-dark: rgba(0, 0, 0, 0.85); --glass-light: rgba(255, 255, 255, 0.05); }
+        * { box-sizing: border-box; transition: 0.3s; font-family: 'Inter', sans-serif; }
+        body, html { margin: 0; padding: 0; height: 100%; width: 100%; background: #000; color: white; overflow-x: hidden; }
 
-        /* Arka Plan */
-        .main-container {
-            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.6)), url('vault.jpg') no-repeat center center fixed;
-            background-size: cover; min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 20px;
+        .main-bg {
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.6)), url('vault.jpg') no-repeat center center fixed;
+            background-size: cover; min-height: 100vh; display: flex; flex-direction: column; align-items: center;
         }
 
-        /* Navbar */
-        nav { width: 100%; max-width: 1200px; display: flex; justify-content: space-between; align-items: center; padding: 20px 0; }
-        .logo { width: 50px; filter: drop-shadow(0 0 10px var(--neon)); }
-        .nav-links a { color: white; text-decoration: none; margin-left: 20px; font-size: 0.8rem; letter-spacing: 1px; }
+        /* Navigasyon */
+        nav { width: 100%; max-width: 1200px; display: flex; justify-content: space-between; align-items: center; padding: 25px; }
+        .logo { width: 45px; filter: drop-shadow(0 0 10px var(--neon)); cursor: pointer; }
+        .nav-links a { color: white; text-decoration: none; margin-left: 20px; font-size: 0.8rem; letter-spacing: 1px; font-weight: 600; }
 
-        /* Ana İçerik */
-        .hero { display: flex; flex-direction: column; align-items: center; text-align: center; margin-top: 80px; max-width: 800px; }
-        h1 { font-size: 4rem; letter-spacing: -2px; margin: 0; font-weight: 900; }
-        .sub-text { color: var(--neon); letter-spacing: 4px; font-size: 0.9rem; margin-top: 10px; }
+        /* Ana Hero */
+        .hero { text-align: center; margin-top: 100px; padding: 20px; max-width: 900px; }
+        h1 { font-size: 4.5rem; letter-spacing: -2px; margin: 0; font-weight: 900; line-height: 1; }
+        .sub { color: var(--neon); letter-spacing: 5px; font-size: 0.9rem; margin-top: 15px; text-transform: uppercase; }
 
-        /* İşlem Butonları */
-        .action-group { display: flex; gap: 20px; margin-top: 50px; flex-wrap: wrap; justify-content: center; }
-        .btn-main { padding: 20px 40px; background: var(--neon); color: black; border-radius: 12px; font-weight: 800; text-decoration: none; cursor: pointer; }
-        .btn-outline { padding: 20px 40px; border: 1px solid var(--neon); color: var(--neon); border-radius: 12px; text-decoration: none; cursor: pointer; background: transparent; }
-        .btn-main:hover { box-shadow: 0 0 30px var(--neon); transform: translateY(-5px); }
+        /* Butonlar */
+        .btn-group { display: flex; gap: 15px; margin-top: 40px; justify-content: center; }
+        .btn { padding: 18px 35px; border-radius: 12px; font-weight: 800; cursor: pointer; border: none; font-size: 0.85rem; text-decoration: none; }
+        .btn-primary { background: var(--neon); color: black; box-shadow: 0 0 20px rgba(0, 242, 255, 0.3); }
+        .btn-secondary { background: var(--glass-light); color: white; border: 1px solid rgba(255,255,255,0.1); }
+        .btn:hover { transform: translateY(-3px); filter: brightness(1.2); }
 
-        /* MODAL (Giriş & Üyelik Paneli) */
-        .modal-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9);
-            display: none; justify-content: center; align-items: center; z-index: 1000; backdrop-filter: blur(10px);
+        /* MODAL & PANEL YAPISI (Şık Tasarım) */
+        .modal {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95);
+            display: none; justify-content: center; align-items: center; z-index: 2000; backdrop-filter: blur(15px);
         }
-        .auth-card {
-            background: rgba(15, 15, 20, 0.8); border: 1px solid var(--neon); padding: 40px;
-            border-radius: 30px; width: 90%; max-width: 400px; text-align: center;
+        .panel-card {
+            background: var(--glass-dark); border: 1px solid var(--neon); border-radius: 30px;
+            width: 90%; max-width: 600px; max-height: 85vh; padding: 40px; overflow-y: auto; position: relative;
         }
-        input {
-            width: 100%; padding: 15px; margin: 10px 0; background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; color: white; outline: none;
-        }
-        input:focus { border-color: var(--neon); }
-        .close-btn { position: absolute; top: 20px; right: 20px; font-size: 2rem; cursor: pointer; }
+        .close { position: absolute; top: 20px; right: 25px; font-size: 2rem; cursor: pointer; color: #555; }
+        .close:hover { color: var(--neon); }
 
-        @media (max-width: 600px) { h1 { font-size: 2.5rem; } }
+        /* Dashboard İçeriği */
+        .db-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 25px; }
+        .db-item { background: rgba(255,255,255,0.03); padding: 20px; border-radius: 15px; border: 1px solid rgba(255,255,255,0.05); }
+        .db-val { font-size: 1.2rem; font-weight: bold; color: var(--neon); display: block; }
+        .db-lab { font-size: 0.65rem; color: #888; text-transform: uppercase; }
+
+        input { width: 100%; padding: 15px; margin: 10px 0; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; color: white; }
     </style>
 </head>
 <body>
 
-    <div class="main-container">
-        <nav>
-            <img src="logo.png" alt="SNTL" class="logo">
-            <div class="nav-links">
-                <a href="whitepaper.md">DOCS</a>
-                <a href="#" onclick="openModal()">VAULT ACCESS</a>
-            </div>
-        </nav>
+<div class="main-bg">
+    <nav>
+        <img src="logo.png" alt="SNTL" class="logo" onclick="location.reload()">
+        <div class="nav-links">
+            <a href="#" onclick="openPanel('wp')">WHITEPAPER</a>
+            <a href="#" onclick="openPanel('auth')">VAULT LOGIN</a>
+        </div>
+    </nav>
 
-        <div class="hero">
-            <h1>SENTINEL</h1>
-            <div class="sub-text">DECENTRALIZED VAULT & PRIVACY PROTOCOL</div>
-            <p style="color: #888; margin-top: 30px; line-height: 1.6;">Secure your digital legacy with 500M $SNTL tokens. High-encryption sharding for the modern age.</p>
-            
-            <div class="action-group">
-                <button class="btn-main" onclick="openModal()">INITIALIZE VAULT</button>
-                <a href="whitepaper.md" class="btn-outline">TECHNICAL SPECS</a>
-            </div>
+    <div class="hero">
+        <h1>SENTINEL</h1>
+        <div class="sub">Decentralized Vault & Privacy Protocol</div>
+        <div class="btn-group">
+            <button class="btn btn-primary" onclick="openPanel('auth')">INITIALIZE VAULT</button>
+            <button class="btn btn-secondary" onclick="openPanel('wp')">VIEW DOCUMENTS</button>
         </div>
     </div>
+</div>
 
-    <div class="modal-overlay" id="authModal">
-        <span class="close-btn" onclick="closeModal()">&times;</span>
-        <div class="auth-card">
-            <h2 id="modalTitle">VAULT ACCESS</h2>
-            <p id="modalSub" style="font-size: 0.8rem; color: #888; margin-bottom: 20px;">Identity verification required</p>
-            
-            <input type="text" placeholder="Username / Wallet Address">
-            <input type="password" placeholder="Access Key">
-            
-            <button class="btn-main" style="width: 100%; margin-top: 20px;">UNLOCK VAULT</button>
-            
-            <p style="margin-top: 20px; font-size: 0.8rem;">
-                <a href="#" onclick="toggleAuth()" id="toggleLink" style="color: var(--neon); text-decoration: none;">New user? Create Vault</a>
-            </p>
+<div class="modal" id="authPanel">
+    <div class="panel-card">
+        <span class="close" onclick="closeAll()">&times;</span>
+        <h2 style="letter-spacing: 2px;">SECURE ACCESS</h2>
+        <p style="color: #666; font-size: 0.8rem;">Enter your credentials to decrypt your vault.</p>
+        <input type="text" placeholder="Wallet Address / Username">
+        <input type="password" placeholder="Access Key">
+        <button class="btn btn-primary" style="width: 100%; margin-top: 10px;" onclick="openPanel('dash')">UNLOCK VAULT</button>
+    </div>
+</div>
+
+<div class="modal" id="dashPanel">
+    <div class="panel-card">
+        <span class="close" onclick="closeAll()">&times;</span>
+        <h2 style="color: var(--neon);">VAULT_ACTIVE</h2>
+        <div class="db-grid">
+            <div class="db-item"><span class="db-lab">Balance</span><span class="db-val">0.00 $SNTL</span></div>
+            <div class="db-item"><span class="db-lab">Encryption</span><span class="db-val">AES-256</span></div>
+            <div class="db-item"><span class="db-lab">Files Stored</span><span class="db-val">0 Items</span></div>
+            <div class="db-item"><span class="db-lab">Heir Status</span><span class="db-val">Inactive</span></div>
+        </div>
+        <button class="btn btn-secondary" style="width: 100%; margin-top: 20px;">UPLOAD SECURE DATA</button>
+    </div>
+</div>
+
+<div class="modal" id="wpPanel">
+    <div class="panel-card" style="max-width: 800px; text-align: left;">
+        <span class="close" onclick="closeAll()">&times;</span>
+        <h1 style="font-size: 2rem; color: var(--neon);">WHITEPAPER</h1>
+        <hr style="border: 0; border-top: 1px solid #333; margin: 20px 0;">
+        <div style="font-size: 0.9rem; line-height: 1.8; color: #ccc;">
+            <h3 style="color: white;">1. THE VISION</h3>
+            Sentinel Protocol provides a decentralized haven for digital assets. Using 500,000,000 $SNTL tokens, we power a global network of encrypted sharding.
+            <h3 style="color: white;">2. SECURITY</h3>
+            Every file is split into pieces and scattered across the blockchain. No single entity holds your data.
+            <h3 style="color: white;">3. INHERITANCE</h3>
+            Our smart-trigger system ensures your assets are transferred to your heirs if you are no longer active.
         </div>
     </div>
+</div>
 
-    <script>
-        function openModal() { document.getElementById('authModal').style.display = 'flex'; }
-        function closeModal() { document.getElementById('authModal').style.display = 'none'; }
-        
-        let isLogin = true;
-        function toggleAuth() {
-            isLogin = !isLogin;
-            document.getElementById('modalTitle').innerText = isLogin ? 'VAULT ACCESS' : 'CREATE VAULT';
-            document.getElementById('modalSub').innerText = isLogin ? 'Identity verification required' : 'Initialize your private encryption key';
-            document.getElementById('toggleLink').innerText = isLogin ? 'New user? Create Vault' : 'Already have a vault? Login';
-        }
-    </script>
+<script>
+    function openPanel(id) {
+        closeAll();
+        if(id === 'auth') document.getElementById('authPanel').style.display = 'flex';
+        if(id === 'dash') document.getElementById('dashPanel').style.display = 'flex';
+        if(id === 'wp') document.getElementById('wpPanel').style.display = 'flex';
+    }
+    function closeAll() {
+        document.querySelectorAll('.modal').forEach(m => m.style.display = 'none');
+    }
+</script>
+
 </body>
 </html>
