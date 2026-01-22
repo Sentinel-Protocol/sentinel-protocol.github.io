@@ -47,19 +47,16 @@
             box-shadow: 0 0 15px var(--neon-dim); font-size: 0.85rem;
         }
 
-        /* ADMIN PANEL STYLES (Gizli) */
+        /* ADMIN PANEL STYLES */
         #adminPanel {
-            display: none; 
-            position: fixed; bottom: 0; left: 0; width: 100%;
+            display: none; position: fixed; bottom: 0; left: 0; width: 100%;
             background: #1a0505; border-top: 2px solid #ff4444;
-            padding: 20px; z-index: 9999; box-shadow: 0 -10px 30px rgba(255,0,0,0.2);
-            max-height: 300px; overflow-y: auto;
+            padding: 20px; z-index: 9999; box-shadow: 0 -10px 30px rgba(255,0,0,0.2); max-height: 300px; overflow-y: auto;
         }
         .admin-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; max-width: 1200px; margin: 0 auto; }
         .admin-item label { display: block; color: #ff8888; font-size: 0.65rem; margin-bottom: 3px; font-weight: bold; }
         .admin-item input { width: 100%; background: #330a0a; border: 1px solid #551111; color: white; padding: 8px; border-radius: 5px; font-size: 0.8rem; }
         .btn-admin { background: #ff4444; color: white; border: none; padding: 10px; border-radius: 5px; cursor: pointer; font-weight: bold; width: 100%; font-size: 0.8rem; }
-        .btn-admin:hover { background: #ff2222; }
 
         /* SIDEBAR */
         .hamburger { font-size: 1.5rem; color: var(--neon); cursor: pointer; }
@@ -101,10 +98,15 @@
         .time-box { background: #1a2230; padding: 8px 12px; border-radius: 8px; font-family: 'Orbitron'; min-width: 50px; border: 1px solid #333; text-align: center; }
         .time-label { font-size: 0.6rem; color: #888; display: block; margin-top: 3px; }
         
-        .pay-tabs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; margin-bottom: 15px; }
-        .pay-tab { background: #151b26; border: 1px solid #333; padding: 10px 5px; font-size: 0.75rem; cursor: pointer; text-align: center; border-radius: 8px; display: flex; flex-direction: column; align-items: center; gap: 3px; }
-        .pay-tab img { width: 18px; }
+        /* 5 TAB YAPISI (TEST ETH EKLENDİ) */
+        .pay-tabs { display: grid; grid-template-columns: repeat(5, 1fr); gap: 5px; margin-bottom: 15px; }
+        .pay-tab { background: #151b26; border: 1px solid #333; padding: 8px 2px; font-size: 0.65rem; cursor: pointer; text-align: center; border-radius: 8px; display: flex; flex-direction: column; align-items: center; gap: 3px; }
+        .pay-tab img { width: 16px; }
         .pay-tab.active { background: var(--neon-dim); border-color: var(--neon); color: var(--neon); font-weight: bold; }
+        
+        /* Test Tabı İçin Özel Stil */
+        .pay-tab.test-tab { border-color: #ff9900; color: #ff9900; }
+        .pay-tab.test-tab.active { background: rgba(255, 153, 0, 0.2); }
 
         .input-group { position: relative; margin-bottom: 15px; }
         .input-group label { display: block; font-size: 0.75rem; color: #888; margin-bottom: 5px; }
@@ -127,27 +129,27 @@
         <div style="text-align:center; color:#ff4444; font-weight:bold; margin-bottom:10px; font-family:'Orbitron'">COMMAND CENTER</div>
         <div class="admin-grid">
             <div class="admin-item">
-                <label>Raised Amount ($)</label>
+                <label>Raised ($)</label>
                 <input type="number" id="admRaised" value="250000">
             </div>
             <div class="admin-item">
-                <label>Token Price ($)</label>
+                <label>Price ($)</label>
                 <input type="number" id="admPrice" value="0.03">
             </div>
             <div class="admin-item">
-                <label>Progress Bar (%)</label>
+                <label>Progress (%)</label>
                 <input type="number" id="admProg" value="5">
             </div>
             <div class="admin-item">
-                <label>Days Left</label>
+                <label>Days</label>
                 <input type="number" id="admDays" value="4">
             </div>
             <div class="admin-item">
-                <label>Hours Left</label>
+                <label>Hours</label>
                 <input type="number" id="admHours" value="12">
             </div>
              <div class="admin-item" style="display:flex; align-items:flex-end;">
-                <button class="btn-admin" onclick="updateSite()">UPDATE ALL</button>
+                <button class="btn-admin" onclick="updateSite()">UPDATE</button>
             </div>
         </div>
     </div>
@@ -165,7 +167,7 @@
             </div>
              <div class="wallet-item" onclick="connectManager('other')">
                 <i class="fa fa-wallet" style="font-size:1.5rem; color:#888; margin-left:5px; margin-right:5px;"></i>
-                <div style="text-align:left; color:white;">WalletConnect<br><small style="color:#666;">Other Wallets</small></div>
+                <div style="text-align:left; color:white;">WalletConnect<br><small style="color:#666;">Other</small></div>
             </div>
             <button onclick="closeModal()" style="margin-top:20px; background:none; border:none; color:#555; cursor:pointer;">Cancel</button>
         </div>
@@ -248,6 +250,7 @@
                 <div class="pay-tab" onclick="setTab('bnb', this)"><img src="https://cryptologos.cc/logos/bnb-bnb-logo.png"> BNB</div>
                 <div class="pay-tab" onclick="setTab('usdc', this)"><img src="https://cryptologos.cc/logos/usd-coin-usdc-logo.png"> USDC</div>
                 <div class="pay-tab" onclick="setTab('btc', this)"><img src="https://cryptologos.cc/logos/bitcoin-btc-logo.png"> BTC</div>
+                <div class="pay-tab test-tab" onclick="setTab('sepolia', this)"><i class="fa fa-vial"></i> TEST</div>
             </div>
 
             <div class="input-group">
@@ -269,13 +272,14 @@
         // ADRESİN
         const OWNER_ADDRESS = "0xd81f6b82683b4b8a2a08998dBcf33ebC5498715D"; 
         
-        let rates = { eth: 2650, bnb: 600, usdc: 1, btc: 48000 };
+        // Sepolia Test ETH'i de normal ETH fiyatı gibi işlem görsün
+        let rates = { eth: 2650, bnb: 600, usdc: 1, btc: 48000, sepolia: 2650 };
         let currentCurr = 'eth';
         let isConnected = false;
         let sntlPrice = 0.03;
         
-        // TIMER MANTIĞI
-        let totalSeconds = (4 * 24 * 3600) + (12 * 3600) + (45 * 60); // Varsayılan süre
+        // TIMER
+        let totalSeconds = (4 * 24 * 3600) + (12 * 3600);
         let timerInterval;
 
         function startTimer() {
@@ -293,17 +297,15 @@
             const h = Math.floor((totalSeconds % (3600 * 24)) / 3600);
             const m = Math.floor((totalSeconds % 3600) / 60);
             const s = Math.floor(totalSeconds % 60);
-            
             document.getElementById('cdDay').innerText = d < 10 ? "0"+d : d;
             document.getElementById('cdHour').innerText = h < 10 ? "0"+h : h;
             document.getElementById('cdMin').innerText = m < 10 ? "0"+m : m;
             document.getElementById('cdSec').innerText = s < 10 ? "0"+s : s;
         }
 
-        // Sayfa Yüklendiğinde
         window.onload = function() {
             startTimer();
-            setLang('en', document.querySelectorAll('.lang-btn')[1]); // İngilizce Başlat
+            setLang('en', document.querySelectorAll('.lang-btn')[1]); 
         };
 
         function openModal() { document.getElementById('walletModal').style.display = 'flex'; }
@@ -318,7 +320,7 @@
                 onConnect(addr);
             } else {
                  if(type === 'metamask') window.location.href = "https://metamask.app.link/dapp/" + window.location.host;
-                 else alert("Please open inside Wallet App");
+                 else alert("App not found");
             }
         }
 
@@ -329,47 +331,38 @@
             document.getElementById('mintBar').style.width = "45%";
             document.getElementById('statusTxt').innerText = "ONLINE";
             document.getElementById('statusTxt').style.color = "#0f0";
-            
-            if(addr.toLowerCase() === OWNER_ADDRESS.toLowerCase()) {
-                document.getElementById('adminPanel').style.display = 'block';
-            }
+            if(addr.toLowerCase() === OWNER_ADDRESS.toLowerCase()) document.getElementById('adminPanel').style.display = 'block';
             isConnected = true;
             closeModal();
         }
 
-        function disconnect() {
-            if(confirm("Disconnect Wallet?")) {
-                location.reload();
-            }
-        }
+        function disconnect() { if(confirm("Disconnect?")) location.reload(); }
 
-        // ADMIN UPDATE
         function updateSite() {
-            // Değerleri Al
             let raised = document.getElementById('admRaised').value;
             let price = document.getElementById('admPrice').value;
             let prog = document.getElementById('admProg').value;
             let days = document.getElementById('admDays').value;
             let hours = document.getElementById('admHours').value;
 
-            // Siteye Uygula
             document.getElementById('dispRaised').innerText = "Raised: $" + Number(raised).toLocaleString();
             document.getElementById('dispPrice').innerText = "$" + price;
             document.getElementById('saleProgress').style.width = prog + "%";
             sntlPrice = price;
-
-            // Süreyi Güncelle
             totalSeconds = (days * 24 * 3600) + (hours * 3600);
-            startTimer(); // Sayacı yeniden başlat
-
-            alert("Site & Timer Updated!");
+            startTimer();
+            alert("Updated!");
         }
 
         function setTab(c, el) {
             currentCurr = c;
             document.querySelectorAll('.pay-tab').forEach(t => t.classList.remove('active'));
             el.classList.add('active');
-            document.getElementById('currLabel').innerText = c.toUpperCase();
+            
+            // Eğer TEST butonu seçildiyse etiketi ona göre yap
+            if(c === 'sepolia') document.getElementById('currLabel').innerText = "TEST ETH";
+            else document.getElementById('currLabel').innerText = c.toUpperCase();
+            
             calc();
         }
 
@@ -382,25 +375,38 @@
             }
         }
 
+        // SEPOLIA AĞINA GEÇİŞ VE SATIN ALMA
         async function checkBuy() {
             if(!isConnected) { openModal(); return; }
-            if(currentCurr === 'btc') { alert("Manual BTC Transfer Required."); return; }
+            if(currentCurr === 'btc') { alert("Manual BTC Transfer Required"); return; }
 
             try {
+                // Eğer TEST seçildiyse Sepolia ağına geçmeye zorla
+                if(currentCurr === 'sepolia') {
+                    try {
+                        await window.ethereum.request({
+                            method: 'wallet_switchEthereumChain',
+                            params: [{ chainId: '0xaa36a7' }], // Sepolia Chain ID
+                        });
+                    } catch (switchError) {
+                        alert("Please switch to Sepolia Network in MetaMask manually.");
+                        return;
+                    }
+                }
+
                 const provider = new ethers.providers.Web3Provider(window.ethereum);
                 const signer = provider.getSigner();
-                // Sepolia veya Mainnet fark etmez, cüzdan neredeyse oradan gönderir
                 const tx = await signer.sendTransaction({
                     to: OWNER_ADDRESS,
                     value: ethers.utils.parseEther(document.getElementById('amtIn').value)
                 });
-                alert("TX Sent! Hash: " + tx.hash);
+                alert("TEST TX SUCCESS! Hash: " + tx.hash);
             } catch(e) {
-                alert("Transaction Cancelled");
+                alert("Transaction Failed: " + e.message);
             }
         }
         
-        // DİL YÖNETİMİ
+        // LANG
         const txt = {
             tr: { connect: "CÜZDANI BAĞLA", title: "Geleceğin<br><span>Dijital Kasası</span>", desc: "Varlıklarınızı koruyun. Dijital mirasınızı güvenceye alın.", presale_end: "ÖN SATIŞ BİTİŞİ", you_pay: "Ödeyeceğiniz Miktar", you_get: "Alacağınız SNTL", buy_btn: "ŞİMDİ SATIN AL", home: "Ana Sayfa", vault: "Kasa", wp: "Whitepaper", f1:"Güvenli", f2:"Hızlı", f3:"Çoklu Ağ", select_wallet: "CÜZDAN SEÇİN", d:"G", h:"S", m:"D", s:"Sn" },
             en: { connect: "CONNECT WALLET", title: "Future of<br><span>Digital Vault</span>", desc: "Protect your assets. Secure your digital legacy.", presale_end: "PRESALE ENDS IN", you_pay: "You Pay", you_get: "You Receive", buy_btn: "BUY TOKENS NOW", home: "Home", vault: "Vault", wp: "Whitepaper", f1:"Secure", f2:"Fast", f3:"Multi-Chain", select_wallet: "SELECT WALLET", d:"D", h:"H", m:"M", s:"S" },
@@ -412,7 +418,6 @@
         function setLang(l, el) {
             document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
             el.classList.add('active');
-            
             document.querySelectorAll('[data-lang]').forEach(elem => {
                 const key = elem.getAttribute('data-lang');
                 if(txt[l][key]) {
