@@ -1,38 +1,73 @@
-   <div class="glass-card" style="text-align: left; position: relative; overflow: hidden;">
-    <div style="display: flex; justify-content: space-between; align-items: flex-end;">
-        <div>
-            <h2 style="margin: 0; color: var(--neon);">PRESALE STAGE 1</h2>
-            <p style="font-size: 0.8rem; color: #888;">Initial Protocol Offering (IPO)</p>
-        </div>
-        <div style="text-align: right;">
-            <span style="font-size: 1.2rem; font-weight: bold;">$0</span> 
-            <span style="font-size: 0.7rem; color: #555;">/ $5,000,000</span>
-        </div>
-    </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SENTINEL | Universal Legacy Protocol</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/5.7.2/ethers.umd.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root { --neon: #00f2ff; --glass: rgba(15, 15, 20, 0.95); --border: rgba(0, 242, 255, 0.2); }
+        * { box-sizing: border-box; transition: 0.3s; font-family: 'Inter', sans-serif; }
+        body { margin: 0; background: #000; color: white; display: flex; overflow-x: hidden; min-height: 100vh; }
 
-    <div style="width: 100%; height: 12px; background: rgba(255,255,255,0.05); border-radius: 20px; margin: 20px 0; border: 1px solid rgba(0,242,255,0.1);">
-        <div id="progress-fill" style="width: 0%; height: 100%; background: linear-gradient(90deg, #00f2ff, #0072ff); border-radius: 20px; box-shadow: 0 0 15px rgba(0,242,255,0.4);"></div>
-    </div>
+        /* YAN MENÜ (SIDEBAR) */
+        .sidebar {
+            width: 280px; height: 100vh; background: rgba(5, 5, 5, 1);
+            border-right: 1px solid var(--border); display: flex; flex-direction: column;
+            position: fixed; left: 0; z-index: 2000; transition: 0.5s;
+        }
+        
+        .sidebar-header { padding: 30px; text-align: center; border-bottom: 1px solid var(--border); }
+        .sidebar-menu { padding: 20px; flex-grow: 1; }
+        .menu-item {
+            padding: 15px; color: #888; text-decoration: none; display: flex; align-items: center;
+            gap: 15px; border-radius: 12px; margin-bottom: 5px; cursor: pointer; font-size: 0.9rem;
+        }
+        .menu-item:hover, .menu-item.active { background: rgba(0, 242, 255, 0.1); color: var(--neon); }
 
-    <div style="display: flex; justify-content: space-between; font-size: 0.7rem; letter-spacing: 1px;">
-        <span>PARTICIPANTS: 0</span>
-        <span style="color: var(--neon);">STATUS: STANDBY</span>
-    </div>
-</div>
+        /* ANA İÇERİK */
+        .main-content {
+            flex-grow: 1; margin-left: 280px; width: calc(100% - 280px);
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.8)), url('vault.jpg') no-repeat center center fixed;
+            background-size: cover; min-height: 100vh; padding: 30px;
+        }
 
-<div class="glass-card">
-    <table style="width: 100%; font-size: 0.8rem; border-collapse: collapse;">
-        <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
-            <td style="padding: 10px 0; color: #888;">Token Name:</td>
-            <td style="padding: 10px 0; text-align: right; font-weight: bold;">Sentinel Protocol</td>
-        </tr>
-        <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
-            <td style="padding: 10px 0; color: #888;">Ticker:</td>
-            <td style="padding: 10px 0; text-align: right; font-weight: bold; color: var(--neon);">$SNTL</td>
-        </tr>
-        <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
-            <td style="padding: 10px 0; color: #888;">Price:</td>
-            <td style="padding: 10px 0; text-align: right; font-weight: bold;">1 SNTL = $0.01</td>
-        </tr>
-    </table>
-</div>
+        header {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 20px; background: rgba(255,255,255,0.03); backdrop-filter: blur(10px);
+            border-radius: 20px; border: 1px solid var(--border); margin-bottom: 30px;
+        }
+
+        /* SEKMELER */
+        .tab-content { display: none; animation: fadeIn 0.4s; }
+        .tab-content.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* KARTLAR */
+        .glass-card {
+            background: var(--glass); border: 1px solid var(--border);
+            border-radius: 25px; padding: 30px; margin-bottom: 25px; backdrop-filter: blur(20px);
+        }
+
+        /* PROGRESS BAR */
+        .progress-container { width: 100%; height: 12px; background: rgba(255,255,255,0.05); border-radius: 20px; margin: 20px 0; border: 1px solid var(--border); overflow: hidden; }
+        .progress-fill { width: 0%; height: 100%; background: var(--neon); box-shadow: 0 0 15px var(--neon); }
+
+        /* INPUTLAR */
+        input, select {
+            width: 100%; padding: 15px; background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; color: white; margin-top: 10px; outline: none;
+        }
+        input:focus { border-color: var(--neon); }
+
+        .btn-action {
+            width: 100%; padding: 18px; background: var(--neon); color: black;
+            border: none; border-radius: 12px; font-weight: 900; cursor: pointer; margin-top: 15px;
+        }
+
+        /* COIN SECIMI */
+        .coin-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 10px; margin-top: 20px; }
+        .coin-btn { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); padding: 15px; border-radius: 12px; text-align: center; cursor: pointer; }
+        .coin-btn:hover { border-color: var(--neon); }
+        .coin-btn img { width: 24px; display:
