@@ -32,4 +32,191 @@
         .lang-btn.active { color: var(--neon); border-color: var(--neon); background: rgba(0, 242, 255, 0.05); }
 
         /* MAIN CONTENT & 500M PANEL (Görseldeki Tam Tasarım) */
-        .container {
+        .container { padding: 20px; max-width: 1200px; margin: 0 auto; }
+        .vault-card { background: var(--glass); border: 1px solid var(--border); border-radius: 30px; padding: 40px 30px; margin-bottom: 25px; text-align: center; box-shadow: 0 15px 35px rgba(0,0,0,0.4); }
+        .stat-grid { display: flex; justify-content: space-around; margin: 30px 0; }
+        .stat-item small { color: #888; font-size: 0.7rem; letter-spacing: 1px; }
+        .stat-item b { display: block; font-size: 1.4rem; margin-top: 5px; }
+
+        .progress-container { margin-top: 30px; text-align: left; }
+        .progress-info { display: flex; justify-content: space-between; font-size: 0.75rem; color: #aaa; margin-bottom: 10px; font-weight: bold; }
+        .progress-bar { width: 100%; height: 10px; background: rgba(255,255,255,0.05); border-radius: 20px; border: 1px solid rgba(0,242,255,0.1); overflow: hidden; }
+        .progress-fill { width: 0%; height: 100%; background: var(--neon); box-shadow: 0 0 15px var(--neon); transition: 1.5s cubic-bezier(0.4, 0, 0.2, 1); }
+
+        /* BUY PANEL */
+        .buy-card { background: rgba(10, 15, 25, 0.7); border: 1px solid var(--border); border-radius: 25px; padding: 25px; margin-top: 20px; }
+        .coin-list { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin: 20px 0; }
+        .coin-btn { background: rgba(255,255,255,0.03); border: 1px solid var(--border); padding: 10px 5px; border-radius: 12px; cursor: pointer; font-size: 0.6rem; text-align: center; color: #888; }
+        .coin-btn.active { background: var(--neon); color: black; font-weight: bold; border-color: var(--neon); }
+        input { width: 100%; padding: 18px; background: #000; border: 1px solid var(--border); border-radius: 15px; color: white; text-align: center; font-size: 1.4rem; outline: none; }
+
+        .btn-main { background: var(--neon); color: black; padding: 18px; border-radius: 15px; border: none; font-weight: 900; width: 100%; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; margin-top: 20px; }
+        
+        #overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 9998; display: none; }
+        .tab-content { display: none; animation: fadeIn 0.5s; }
+        .tab-content.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    </style>
+</head>
+<body>
+
+    <div class="modal" id="walletModal">
+        <div class="modal-content">
+            <h3 style="margin-bottom:20px; font-size: 1.1rem;">CONNECT GATEWAY</h3>
+            <div class="wallet-option" onclick="connect('chrome')">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Google_Chrome_icon_%28September_2014_-_January_2022%29.svg">
+                <div>Chrome / Browser<br><small style="color:#666; font-weight:normal">Extension Connection</small></div>
+            </div>
+            <div class="wallet-option" onclick="connect('mobile')">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/3/36/MetaMask_Mirror.svg">
+                <div>MetaMask Mobile<br><small style="color:#666; font-weight:normal">Direct App Sync</small></div>
+            </div>
+            <p onclick="closeModal()" style="color:#555; margin-top:15px; cursor:pointer; font-size:0.8rem;">Cancel Connection</p>
+        </div>
+    </div>
+
+    <div id="overlay" onclick="toggleSidebar()"></div>
+
+    <nav class="sidebar" id="sidebar">
+        <div class="lang-panel">
+            <div class="lang-btn active" onclick="setLang('en', this)">EN</div>
+            <div class="lang-btn" onclick="setLang('tr', this)">TR</div>
+            <div class="lang-btn" onclick="setLang('zh', this)">ZH</div>
+            <div class="lang-btn" onclick="setLang('ru', this)">RU</div>
+            <div class="lang-btn" onclick="setLang('ar', this)">AR</div>
+        </div>
+        <div style="padding: 20px;">
+            <div style="padding:15px; border-bottom:1px solid #111; cursor:pointer;" onclick="showTab('home')"><i class="fa fa-th-large"></i> Dashboard</div>
+            <div style="padding:15px; border-bottom:1px solid #111; cursor:pointer;" onclick="showTab('wp')"><i class="fa fa-file-alt"></i> Whitepaper</div>
+            <div style="padding:15px; border-bottom:1px solid #111; cursor:pointer;" onclick="showTab('buy')"><i class="fa fa-shopping-cart"></i> Buy $SNTL</div>
+        </div>
+    </nav>
+
+    <header>
+        <h2 style="color:var(--neon); letter-spacing: 2px; font-size: 1.2rem;">SENTINEL</h2>
+        <div style="display:flex; align-items:center; gap:12px;">
+            <button id="connectBtn" class="btn-main" onclick="openModal()" style="margin:0; padding:10px 20px; width:auto; font-size:0.75rem;">CONNECT</button>
+            <div id="addrBtn" class="addr-btn" onclick="toggleDC()">
+                <span id="addrTxt">0x...</span>
+                <div class="dc-dropdown" id="dcMenu"><button onclick="disconnect()">DISCONNECT</button></div>
+            </div>
+            <i class="fa fa-bars" onclick="toggleSidebar()" style="font-size: 1.4rem; cursor: pointer; color: var(--neon);"></i>
+        </div>
+    </header>
+
+    <main class="container">
+        <section id="home" class="tab-content active">
+            <div class="vault-card">
+                <h1 id="t-title" style="font-size: 1.8rem; letter-spacing: 3px; margin-bottom: 10px;">GLOBAL VAULT & LEGACY</h1>
+                <div class="stat-grid">
+                    <div class="stat-item"><small>TOTAL SUPPLY</small><b>500,000,000</b></div>
+                    <div class="stat-item"><small>NETWORK</small><b id="net-name" style="color:var(--neon)">-</b></div>
+                </div>
+                <div class="progress-container">
+                    <div class="progress-info">
+                        <span id="t-mint">PROTOCOL MINTING STATUS</span>
+                        <span id="progText">0%</span>
+                    </div>
+                    <div class="progress-bar"><div class="progress-fill" id="progBar"></div></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="buy" class="tab-content">
+            <div class="buy-card">
+                <h2 style="text-align:center; margin-bottom:20px;">ACQUIRE $SNTL</h2>
+                <div class="coin-list">
+                    <div class="coin-btn active" onclick="setCoin(2650, this)">ETH</div>
+                    <div class="coin-btn" onclick="setCoin(48000, this)">BTC</div>
+                    <div class="coin-btn" onclick="setCoin(600, this)">BNB</div>
+                    <div class="coin-btn" onclick="setCoin(1, this)">USDT</div>
+                    <div class="coin-btn" onclick="setCoin(1, this)">MATIC</div>
+                </div>
+                <input type="number" id="amtIn" placeholder="0.00" oninput="calculate()">
+                <div style="margin-top:20px; text-align:center; padding:20px; background:rgba(0,242,255,0.03); border-radius:15px;">
+                    <small style="color:#666">ESTIMATED RECEIVE</small><br>
+                    <span id="amtOut" style="font-size:2rem; font-weight:900; color:var(--neon);">0</span> <small>$SNTL</small>
+                </div>
+                <button class="btn-main" onclick="alert('Proceeding to Secure Gateway...')">AUTHORIZE PURCHASE</button>
+            </div>
+        </section>
+
+        <section id="wp" class="tab-content">
+            <div class="vault-card" style="text-align:left;">
+                <h2 style="color:var(--neon); margin-bottom:20px;">TECHNICAL WHITEPAPER</h2>
+                <div style="color:#888; font-size:0.85rem; line-height:1.8; max-height:400px; overflow-y:auto; padding-right:15px;">
+                    <p><b>1. MISSION:</b> Sentinel Protocol is the world's first decentralized sharded heritage vault...</p>
+                    <p><b>2. ARCHITECTURE:</b> Utilizing AES-256 encryption and Shamir's Secret Sharing (SSS) to protect digital legacies across Ethereum, BNB Chain, and Polygon...</p>
+                    <p><b>3. TOKENOMICS:</b> Total Supply: 500,000,000. 40% Public, 30% Vault Rewards, 20% Liquidity (Locked), 10% Dev...</p>
+                    <p><b>4. DEAD MAN'S SWITCH:</b> Inactivity-based smart contract triggers ensure assets are transferred to designated heirs upon verified protocol conditions...</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        let curRate = 2650;
+
+        function openModal() { document.getElementById('walletModal').style.display = 'flex'; }
+        function closeModal() { document.getElementById('walletModal').style.display = 'none'; }
+        function toggleSidebar() { document.getElementById('sidebar').classList.toggle('active'); document.getElementById('overlay').style.display = document.getElementById('sidebar').classList.contains('active') ? 'block' : 'none'; }
+        function toggleDC() { const m = document.getElementById('dcMenu'); m.style.display = m.style.display === 'block' ? 'none' : 'block'; }
+        function showTab(id) { document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active')); document.getElementById(id).classList.add('active'); if(window.innerWidth < 1025) toggleSidebar(); }
+
+        async function connect(type) {
+            if(window.ethereum) {
+                if(type === 'mobile' && /iPhone|iPad|Android/i.test(navigator.userAgent)) {
+                    window.location.href = "https://metamask.app.link/dapp/" + window.location.host;
+                } else {
+                    try {
+                        const provider = new ethers.providers.Web3Provider(window.ethereum);
+                        const accounts = await provider.send("eth_requestAccounts", []);
+                        const net = await provider.getNetwork();
+                        
+                        document.getElementById('connectBtn').style.display = 'none';
+                        document.getElementById('addrBtn').style.display = 'block';
+                        document.getElementById('addrTxt').innerText = accounts[0].substring(0,6) + "..." + accounts[0].substring(38);
+                        document.getElementById('net-name').innerText = net.name.toUpperCase();
+                        
+                        document.getElementById('progBar').style.width = "48%";
+                        document.getElementById('progText').innerText = "48%";
+                        closeModal();
+                    } catch(e) { console.log(e); }
+                }
+            } else { alert("Please install MetaMask!"); }
+        }
+
+        function disconnect() {
+            document.getElementById('addrBtn').style.display = 'none';
+            document.getElementById('connectBtn').style.display = 'block';
+            document.getElementById('progBar').style.width = "0%";
+            document.getElementById('progText').innerText = "0%";
+            document.getElementById('net-name').innerText = "-";
+        }
+
+        function setCoin(r, el) {
+            curRate = r;
+            document.querySelectorAll('.coin-btn').forEach(b => b.classList.remove('active'));
+            el.classList.add('active');
+            calculate();
+        }
+
+        function calculate() {
+            let val = document.getElementById('amtIn').value;
+            document.getElementById('amtOut').innerText = (val * curRate / 0.01).toLocaleString();
+        }
+
+        function setLang(lang, el) {
+            document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+            el.classList.add('active');
+            if(lang === 'tr') {
+                document.getElementById('t-title').innerText = "KÜRESEL KASA VE MİRAS";
+                document.getElementById('t-mint').innerText = "PROTOKOL MİNTLEME DURUMU";
+            } else {
+                document.getElementById('t-title').innerText = "GLOBAL VAULT & LEGACY";
+                document.getElementById('t-mint').innerText = "PROTOCOL MINTING STATUS";
+            }
+        }
+    </script>
+</body>
+</html>
