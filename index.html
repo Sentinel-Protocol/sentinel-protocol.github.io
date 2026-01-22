@@ -3,190 +3,159 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>SENTINEL PROTOCOL | Secure Legacy</title>
+    <title>SENTINEL | Global Trustless Vault & Inheritance</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/5.7.2/ethers.umd.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root { --neon: #00f2ff; --bg: #0b0e14; --glass: rgba(15, 20, 30, 0.95); --border: rgba(0, 242, 255, 0.2); }
-        * { box-sizing: border-box; transition: 0.3s; font-family: 'Segoe UI', sans-serif; margin: 0; padding: 0; }
-        
-        body { 
-            background: var(--bg); color: white; min-height: 100vh; overflow-x: hidden;
-            background: radial-gradient(circle at center, #1a202c 0%, #0b0e14 100%);
-        }
+        :root { --neon: #00f2ff; --bg: #010204; --glass: rgba(10, 15, 25, 0.98); --border: rgba(0, 242, 255, 0.2); }
+        * { box-sizing: border-box; transition: 0.3s; font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
+        body { margin: 0; background: var(--bg); color: white; min-height: 100vh; overflow-x: hidden; background: radial-gradient(circle at top right, #001a1d, #010204); }
 
-        /* Overlay - Menüyü dışarıdan kapatmak için */
-        #menuOverlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.6); backdrop-filter: blur(4px);
-            z-index: 998; display: none;
-        }
+        /* MODAL - WALLET SELECTOR */
+        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 10000; display: none; align-items: center; justify-content: center; backdrop-filter: blur(10px); }
+        .modal-content { background: #0a0f19; border: 1px solid var(--border); border-radius: 30px; padding: 30px; width: 90%; max-width: 400px; text-align: center; }
+        .wallet-option { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); padding: 20px; border-radius: 20px; margin: 15px 0; cursor: pointer; display: flex; align-items: center; gap: 15px; font-weight: bold; }
+        .wallet-option:hover { background: rgba(0, 242, 255, 0.1); border-color: var(--neon); }
+        .wallet-option img { width: 35px; }
 
-        /* Sağ Menü (Sidebar) */
-        .sidebar {
-            position: fixed; top: 0; right: -300px; width: 280px; height: 100%;
-            background: #0d1117; border-left: 1px solid var(--border);
-            z-index: 999; transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            padding: 40px 20px;
-        }
+        /* SIDEBAR */
+        #overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 9998; display: none; }
+        .sidebar { width: 280px; height: 100vh; background: #000; border-left: 1px solid var(--border); position: fixed; right: -280px; z-index: 9999; display: flex; flex-direction: column; transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
         .sidebar.active { right: 0; }
-        .menu-item {
-            padding: 15px; margin-bottom: 10px; border-radius: 12px;
-            color: #888; cursor: pointer; display: flex; align-items: center; gap: 15px;
-        }
-        .menu-item:hover, .menu-item.active { background: rgba(0, 242, 255, 0.1); color: var(--neon); }
+        .lang-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 5px; padding: 15px; border-bottom: 1px solid var(--border); }
+        .lang-btn { background: #111; color: #555; padding: 5px; font-size: 0.6rem; border-radius: 5px; cursor: pointer; text-align: center; border: 1px solid transparent; }
+        .lang-btn.active { color: var(--neon); border-color: var(--neon); }
 
-        /* Ana İçerik */
-        .container { padding: 20px; max-width: 600px; margin: 0 auto; padding-top: 100px; }
+        /* HEADER */
+        header { display: flex; justify-content: space-between; align-items: center; padding: 20px; background: var(--glass); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 100; backdrop-filter: blur(10px); }
         
-        header {
-            position: fixed; top: 0; left: 0; width: 100%;
-            padding: 15px 20px; display: flex; justify-content: space-between; align-items: center;
-            background: var(--glass); border-bottom: 1px solid var(--border); backdrop-filter: blur(10px); z-index: 100;
-        }
+        /* WALLET ADDRESS BUTTON & DISCONNECT PANEL */
+        .wallet-container { position: relative; }
+        #wallet-info { background: rgba(0, 242, 255, 0.1); border: 1px solid var(--neon); color: var(--neon); padding: 10px 15px; border-radius: 15px; cursor: pointer; font-size: 0.8rem; font-weight: bold; display: none; }
+        .disconnect-panel { position: absolute; top: 50px; right: 0; background: #0d1117; border: 1px solid var(--border); border-radius: 15px; padding: 10px; display: none; width: 150px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .disconnect-panel button { width: 100%; background: #ff4444; color: white; border: none; padding: 8px; border-radius: 8px; cursor: pointer; font-weight: bold; }
 
-        .btn-connect {
-            background: var(--neon); color: black; padding: 10px 20px;
-            border-radius: 12px; font-weight: bold; border: none; cursor: pointer;
-            box-shadow: 0 0 15px rgba(0, 242, 255, 0.3);
-        }
+        /* MAIN CONTENT */
+        .container { padding: 20px; max-width: 1200px; margin: 0 auto; }
+        .glass-card { background: var(--glass); border: 1px solid var(--border); border-radius: 28px; padding: 30px; margin-bottom: 25px; }
 
-        /* Kart Yapıları */
-        .card {
-            background: var(--glass); border: 1px solid var(--border);
-            border-radius: 24px; padding: 25px; margin-bottom: 20px; text-align: center;
-        }
+        /* WHITE PAPER SECTION - DETAILED */
+        .wp-content { text-align: left; line-height: 1.8; color: #aaa; max-height: 500px; overflow-y: auto; padding-right: 15px; }
+        .wp-content h3 { color: var(--neon); margin-top: 25px; }
+        .wp-content b { color: #fff; }
 
-        /* Coin Seçimi */
-        .coin-selector { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin: 20px 0; }
-        .coin-btn {
-            background: rgba(255,255,255,0.03); border: 1px solid var(--border);
-            padding: 12px; border-radius: 15px; cursor: pointer; color: white;
-        }
-        .coin-btn.active { background: var(--neon); color: black; font-weight: bold; }
-
-        input {
-            width: 100%; padding: 15px; border-radius: 12px; border: 1px solid var(--border);
-            background: rgba(0,0,0,0.3); color: white; text-align: center; font-size: 1.2rem;
-        }
-
+        .btn-neon { background: var(--neon); color: black; padding: 15px 30px; border-radius: 15px; border: none; font-weight: 900; cursor: pointer; text-transform: uppercase; }
         .tab-content { display: none; }
-        .tab-content.active { display: block; animation: fadeIn 0.5s; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .tab-content.active { display: block; }
     </style>
 </head>
 <body>
 
-    <div id="menuOverlay" onclick="toggleMenu()"></div>
+    <div class="modal" id="walletModal">
+        <div class="modal-content">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+                <h3 style="margin:0">SELECT WALLET</h3>
+                <i class="fa fa-times" onclick="closeModal()" style="cursor:pointer"></i>
+            </div>
+            <div class="wallet-option" onclick="connect('browser')">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/3/36/MetaMask_Mirror.svg">
+                <div>MetaMask Browser<br><small style="color:#555">Desktop Extension</small></div>
+            </div>
+            <div class="wallet-option" onclick="connect('mobile')">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/3/36/MetaMask_Mirror.svg">
+                <div>MetaMask Mobile<br><small style="color:#555">Direct App Connect</small></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="overlay" onclick="toggleSidebar()"></div>
 
     <nav class="sidebar" id="sidebar">
-        <h2 style="color:var(--neon); margin-bottom: 30px; letter-spacing: 2px;">SENTINEL</h2>
-        <div class="menu-item active" onclick="switchTab('dash', this)"><i class="fa fa-home"></i> Dashboard</div>
-        <div class="menu-item" onclick="switchTab('swap', this)"><i class="fa fa-exchange-alt"></i> Buy $SNTL</div>
-        <div class="menu-item" onclick="switchTab('legacy', this)"><i class="fa fa-fingerprint"></i> Legacy</div>
-        <div class="menu-item" onclick="switchTab('wp', this)"><i class="fa fa-file-alt"></i> Whitepaper</div>
+        <div class="lang-grid">
+            <div class="lang-btn active">EN</div><div class="lang-btn">TR</div><div class="lang-btn">ZH</div><div class="lang-btn">RU</div><div class="lang-btn">AR</div>
+        </div>
+        <div style="padding: 20px;">
+            <div class="menu-item" onclick="showTab('home')"><i class="fa fa-th-large"></i> Dashboard</div>
+            <div class="menu-item" onclick="showTab('vault')"><i class="fa fa-vault"></i> Secure Vault</div>
+            <div class="menu-item" onclick="showTab('buy')"><i class="fa fa-shopping-cart"></i> Buy SNTL</div>
+            <div class="menu-item" onclick="showTab('wp')"><i class="fa fa-file-alt"></i> Whitepaper</div>
+        </div>
     </nav>
 
     <header>
-        <div id="status" style="font-size: 0.6rem; color: var(--neon);">SYSTEM: STANDBY</div>
-        <button class="btn-connect" id="walletBtn" onclick="connectWallet()">CONNECT WALLET</button>
-        <i class="fa fa-bars" onclick="toggleMenu()" style="font-size: 1.5rem; color: var(--neon); cursor: pointer;"></i>
+        <h2 style="margin:0; color:var(--neon); letter-spacing: 2px;">SENTINEL</h2>
+        <div style="display:flex; align-items:center; gap:15px;">
+            <div class="wallet-container">
+                <button class="btn-neon" id="connectBtn" onclick="openModal()" style="padding: 10px 20px; font-size: 0.7rem;">CONNECT</button>
+                <div id="wallet-info" onclick="toggleDisconnect()">0x...</div>
+                <div class="disconnect-panel" id="dcPanel">
+                    <button onclick="disconnect()">DISCONNECT</button>
+                </div>
+            </div>
+            <i class="fa fa-bars" onclick="toggleSidebar()" style="font-size: 1.5rem; cursor: pointer;"></i>
+        </div>
     </header>
 
     <main class="container">
-        <section id="dash" class="tab-content active">
-            <div class="card">
-                <h1 style="font-size: 1.5rem; margin-bottom: 10px;">GLOBAL <span style="color:var(--neon)">VAULT</span></h1>
-                <p style="font-size: 0.8rem; color: #888;">Total SNTL Supply: 500,000,000</p>
-                <div style="margin-top: 20px; display: flex; justify-content: space-around;">
-                    <div><small>Your ETH</small><br><b id="ethVal" style="color:var(--neon)">0.00</b></div>
-                    <div><small>Network</small><br><b style="color:var(--neon)">SECURE</b></div>
-                </div>
-            </div>
-            <div class="card" style="padding: 15px;">
-                <div style="display:flex; justify-content:space-between; font-size:0.7rem; margin-bottom:5px;">
-                    <span>Protocol Minting</span>
-                    <span id="progText">0%</span>
-                </div>
-                <div style="width:100%; height:8px; background:#111; border-radius:10px; overflow:hidden; border:1px solid var(--border);">
-                    <div id="progBar" style="width: 0%; height:100%; background:var(--neon); transition: 1s;"></div>
+        <section id="vault" class="tab-content">
+            <div class="glass-card">
+                <h2>CENTRAL VAULT GATEWAY</h2>
+                <div style="background:rgba(0,0,0,0.5); border:1px dashed var(--border); padding:40px; border-radius:20px; margin-top:20px;">
+                    <i class="fa fa-lock" style="font-size:3rem; color:var(--neon); margin-bottom:20px;"></i>
+                    <p>Connect your wallet to access your encrypted digital inheritance fragments.</p>
                 </div>
             </div>
         </section>
 
-        <section id="swap" class="tab-content">
-            <div class="card">
-                <h2>TOKEN SALE</h2>
-                <div class="coin-selector">
-                    <div class="coin-btn active" onclick="setRate(2650, this)">ETH</div>
-                    <div class="coin-btn" onclick="setRate(1, this)">USDC</div>
-                    <div class="coin-btn" onclick="setRate(1, this)">USDT</div>
-                    <div class="coin-btn" onclick="setRate(48000, this)">BTC</div>
+        <section id="wp" class="tab-content active">
+            <div class="glass-card">
+                <h1>PROTOCOL WHITEPAPER <small style="font-size: 0.5em; color: var(--neon);">v1.0.4</small></h1>
+                <div class="wp-content">
+                    <h3>1. Executive Summary</h3>
+                    <p>Sentinel Protocol is a decentralized, multi-chain custody solution designed to solve the "Digital Black Hole" problem. As of 2026, over 4.5 million BTC are lost due to death or lost keys. We provide a <b>fail-safe mechanism</b> for asset inheritance.</p>
+                    
+                    <h3>2. Multi-Chain Security Architecture</h3>
+                    <p>We deploy on <b>Ethereum (L1)</b> for ultimate security, <b>BNB Chain</b> for accessibility, and <b>Polygon</b> for scalable vault interactions. Every piece of data is fragmented via <b>Shamir's Secret Sharing (SSS)</b>.</p>
+                    
+                    <h3>3. The Vault Sharding Mechanism</h3>
+                    <p>When a user deposits a key or document into the Sentinel Vault, it is encrypted with <b>AES-256</b>. The resulting cipher is sharded into 10 pieces. These pieces are distributed across decentralized IPFS nodes. No single entity, including Sentinel, can reconstruct the data.</p>
+                    
+                    <h3>4. Tokenomics (SNTL)</h3>
+                    <p>Fixed Supply: <b>500,000,000 SNTL</b>. <br>
+                    - 40% Public Sale<br>- 25% Vault Staking Rewards<br>- 15% Development Fund (Locked)<br>- 20% Liquidity Pool.</p>
                 </div>
-                <input type="number" id="amtIn" placeholder="Enter amount" oninput="calc()">
-                <div style="margin-top: 15px; padding: 15px; background: rgba(0,242,255,0.05); border-radius: 12px;">
-                    <small>You will receive approx.</small><br>
-                    <span id="amtOut" style="font-size: 1.8rem; font-weight: bold; color: var(--neon);">0</span> $SNTL
-                </div>
-                <button class="btn-neon" onclick="buyTokens()" style="width:100%; padding:15px; margin-top:15px; border-radius:12px; background:var(--neon); border:none; font-weight:900; cursor:pointer;">AUTHORIZE TRANSACTION</button>
             </div>
-        </section>
-
-        <section id="legacy" class="tab-content">
-            <div class="card"><h2>LEGACY VAULT</h2><p>Inheritance protocol is being deployed.</p></div>
-        </section>
-        <section id="wp" class="tab-content">
-            <div class="card"><h2>WHITE PAPER</h2><p>Sentintel Tokenomics & Governance Plan.</p></div>
         </section>
     </main>
 
     <script>
-        let rate = 2650;
-        let connected = false;
+        function openModal() { document.getElementById('walletModal').style.display = 'flex'; }
+        function closeModal() { document.getElementById('walletModal').style.display = 'none'; }
+        function toggleSidebar() { document.getElementById('sidebar').classList.toggle('active'); document.getElementById('overlay').style.display = document.getElementById('sidebar').classList.contains('active') ? 'block' : 'none'; }
+        function showTab(id) { document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active')); document.getElementById(id).classList.add('active'); if(window.innerWidth < 1025) toggleSidebar(); }
+        function toggleDisconnect() { const p = document.getElementById('dcPanel'); p.style.display = p.style.display === 'block' ? 'none' : 'block'; }
 
-        function toggleMenu() {
-            document.getElementById('sidebar').classList.toggle('active');
-            const overlay = document.getElementById('menuOverlay');
-            overlay.style.display = (overlay.style.display === 'block') ? 'none' : 'block';
+        async function connect(type) {
+            if (window.ethereum) {
+                if (type === 'mobile' && /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+                    window.location.href = "https://metamask.app.link/dapp/" + window.location.host;
+                } else {
+                    const provider = new ethers.providers.Web3Provider(window.ethereum);
+                    const accounts = await provider.send("eth_requestAccounts", []);
+                    const address = accounts[0];
+                    document.getElementById('connectBtn').style.display = 'none';
+                    const info = document.getElementById('wallet-info');
+                    info.innerText = address.substring(0,6) + "..." + address.substring(38);
+                    info.style.display = 'block';
+                    closeModal();
+                }
+            } else { alert("Please install MetaMask"); }
         }
 
-        function switchTab(id, el) {
-            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.menu-item').forEach(m => m.classList.remove('active'));
-            document.getElementById(id).classList.add('active');
-            el.classList.add('active');
-            toggleMenu();
-        }
-
-        async function connectWallet() {
-            if(window.ethereum) {
-                const provider = new ethers.providers.Web3Provider(window.ethereum);
-                const accounts = await provider.send("eth_requestAccounts", []);
-                const balance = await provider.getBalance(accounts[0]);
-                document.getElementById('ethVal').innerText = parseFloat(ethers.utils.formatEther(balance)).toFixed(4);
-                document.getElementById('walletBtn').innerText = accounts[0].substring(0,6) + "...";
-                document.getElementById('status').innerText = "SYSTEM: ONLINE";
-                document.getElementById('progBar').style.width = "42%";
-                document.getElementById('progText').innerText = "42%";
-                connected = true;
-            }
-        }
-
-        function setRate(r, el) {
-            rate = r;
-            document.querySelectorAll('.coin-btn').forEach(b => b.classList.remove('active'));
-            el.classList.add('active');
-            calc();
-        }
-
-        function calc() {
-            let val = document.getElementById('amtIn').value;
-            document.getElementById('amtOut').innerText = (val * rate / 0.01).toLocaleString();
-        }
-
-        async function buyTokens() {
-            if(!connected) return await connectWallet();
-            alert("Confirming on Network...");
+        function disconnect() {
+            document.getElementById('wallet-info').style.display = 'none';
+            document.getElementById('dcPanel').style.display = 'none';
+            document.getElementById('connectBtn').style.display = 'block';
         }
     </script>
 </body>
