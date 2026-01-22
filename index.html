@@ -24,7 +24,7 @@
         
         body { 
             background-color: var(--bg); color: var(--text-main); min-height: 100vh; overflow-x: hidden;
-            background-image: url('https://images.unsplash.com/photo-1614064641938-3bbee52942c7?q=80&w=2070'); /* Kasa/Data Görseli */
+            background-image: url('https://images.unsplash.com/photo-1639322537228-f710d846310a?q=80&w=2000');
             background-size: cover; background-position: center; background-attachment: fixed;
         }
         
@@ -48,7 +48,7 @@
         }
         .btn-connect:hover { transform: scale(1.05); box-shadow: 0 0 25px rgba(0,242,255,0.4); }
 
-        /* HAMBURGER & SIDEBAR */
+        /* SIDEBAR */
         .hamburger { font-size: 1.5rem; color: var(--neon); cursor: pointer; }
         .sidebar-overlay { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:2000; display:none; backdrop-filter: blur(5px); }
         .sidebar { 
@@ -65,7 +65,7 @@
         .menu-link { color: #ccc; text-decoration: none; padding: 15px; border-radius: 8px; background: rgba(255,255,255,0.03); display: flex; align-items: center; gap: 10px; }
         .menu-link:hover { background: var(--neon-dim); color: var(--neon); }
 
-        /* ANA YAPI */
+        /* MAIN */
         .main-container { 
             display: grid; grid-template-columns: 1fr; gap: 40px; 
             padding: 100px 5% 50px 5%; max-width: 1200px; margin: 0 auto;
@@ -80,7 +80,7 @@
         .f-item { background: var(--glass); padding: 15px; border-radius: 12px; border: var(--glass-border); flex: 1; text-align: center; }
         .f-item i { font-size: 1.5rem; color: var(--neon); margin-bottom: 10px; }
 
-        /* SATIŞ WIDGETI */
+        /* PRESALE CARD */
         .presale-card { 
             background: rgba(12, 18, 28, 0.95); border: 2px solid var(--neon); 
             border-radius: 20px; padding: 25px; box-shadow: 0 0 40px rgba(0,242,255,0.1); 
@@ -98,7 +98,7 @@
         .input-group input { width: 100%; background: #05080d; border: 1px solid #333; padding: 15px; border-radius: 10px; color: white; font-size: 1.1rem; outline: none; }
         .input-group span { position: absolute; right: 15px; top: 38px; color: #666; font-weight: bold; }
 
-        /* YENİ GELİŞMİŞ WALLET MODAL */
+        /* MODAL (YENİLENMİŞ) */
         .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 5000; display: none; align-items: center; justify-content: center; backdrop-filter: blur(8px); }
         .modal-box { background: #0f1521; border: 1px solid var(--neon); border-radius: 20px; padding: 25px; width: 90%; max-width: 400px; text-align: center; box-shadow: 0 0 50px rgba(0,242,255,0.15); }
         
@@ -108,8 +108,6 @@
             display: flex; align-items: center; justify-content: space-between; border: 1px solid transparent; 
         }
         .wallet-item:hover { border-color: var(--neon); background: rgba(0, 242, 255, 0.05); }
-        .wallet-item div { display: flex; align-items: center; gap: 15px; font-weight: 600; }
-        .wallet-item img { width: 32px; height: 32px; border-radius: 8px; }
         .wallet-tag { font-size: 0.7rem; color: #888; background: #000; padding: 3px 8px; border-radius: 10px; }
 
     </style>
@@ -120,35 +118,42 @@
 
     <div class="modal" id="walletModal">
         <div class="modal-box">
-            <h3 style="color:white; font-family:'Orbitron';">BAĞLANTI SEÇİN</h3>
-            <p style="color:#666; font-size:0.8rem; margin-top:5px;">Lütfen kullanmak istediğiniz cüzdanı seçin.</p>
+            <h3 style="color:white; font-family:'Orbitron';">BAĞLANTI YÖNTEMİ</h3>
+            <p style="color:#666; font-size:0.8rem; margin-top:5px;">Mobil tarayıcıda iseniz 'Mobil App' seçin.</p>
             
             <div class="wallet-list">
-                <div class="wallet-item" onclick="connectWallet('metamask')">
-                    <div>
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/3/36/MetaMask_Mirror.svg">
-                        <span>MetaMask</span>
+                <div class="wallet-item" onclick="connectManager('metamask')">
+                    <div style="display:flex; align-items:center; gap:10px;">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/3/36/MetaMask_Mirror.svg" width="30">
+                        <div style="text-align:left;">
+                            <div style="color:white; font-weight:bold;">MetaMask</div>
+                            <small style="color:#666;">Direkt Bağlantı (App)</small>
+                        </div>
                     </div>
-                    <span class="wallet-tag">Önerilen</span>
                 </div>
 
-                <div class="wallet-item" onclick="connectWallet('bestwallet')">
-                    <div>
-                        <img src="https://play-lh.googleusercontent.com/B94-uJbJqY_rRzMhFqF4t7k8Z7_qZ7p9n7n9_qZ7p9n7n9_qZ7p9n7n9=w240-h480-rw"> <span>Best Wallet</span>
+                <div class="wallet-item" onclick="connectManager('bestwallet')">
+                     <div style="display:flex; align-items:center; gap:10px;">
+                        <img src="https://play-lh.googleusercontent.com/4N3l4h7E0r6d8YK_6Z5g2h2h8X9_9g9_9g9_9g9_9g9_9g9_9g=w240-h480-rw" width="30" style="border-radius:50%;">
+                        <div style="text-align:left;">
+                            <div style="color:white; font-weight:bold;">Best Wallet</div>
+                            <small style="color:#666;">Mobil Uygulama</small>
+                        </div>
                     </div>
-                    <span class="wallet-tag">Popüler</span>
                 </div>
 
-                <div class="wallet-item" onclick="connectWallet('walletconnect')">
-                    <div>
-                        <img src="https://raw.githubusercontent.com/WalletConnect/walletconnect-assets/master/Logo/Blue%20(Default)/Logo.svg">
-                        <span>Diğer Cüzdanlar</span>
+                <div class="wallet-item" onclick="connectManager('other')">
+                     <div style="display:flex; align-items:center; gap:10px;">
+                        <i class="fa fa-wallet" style="font-size:1.5rem; color:#888;"></i>
+                        <div style="text-align:left;">
+                            <div style="color:white; font-weight:bold;">Diğer / Trust</div>
+                            <small style="color:#666;">WalletConnect</small>
+                        </div>
                     </div>
-                    <span class="wallet-tag">Trust / Coin98</span>
                 </div>
             </div>
 
-            <button onclick="closeModal()" style="margin-top:20px; background:none; border:none; color:#555; cursor:pointer; font-size:0.9rem;">İptal Et</button>
+            <button onclick="closeModal()" style="margin-top:20px; background:none; border:none; color:#555; cursor:pointer;">Kapat</button>
         </div>
     </div>
 
@@ -180,7 +185,7 @@
     <div class="main-container">
         <div class="hero-text">
             <h1 data-lang="title">Geleceğin <br><span>Dijital Kasası</span></h1>
-            <p data-lang="desc">Sentinel Protocol ile varlıklarınızı koruyun. Askeri düzeyde şifreleme ve miras protokolü.</p>
+            <p data-lang="desc">Varlıklarınızı koruyun. Askeri düzeyde şifreleme ve miras protokolü.</p>
             
             <div class="feature-box">
                 <div class="f-item"><i class="fa fa-shield-virus"></i><h4>Güvenli</h4></div>
@@ -191,12 +196,12 @@
             <div style="background: rgba(0,242,255,0.05); padding: 20px; border-radius: 15px; border: 1px dashed var(--neon);">
                 <div style="display:flex; justify-content:space-between; align-items:center;">
                     <span style="color:var(--neon); font-weight:bold;">PROTOCOL STATUS:</span>
-                    <span style="color:#0f0;">ONLINE</span>
+                    <span id="statusTxt" style="color:#aaa;">STANDBY</span>
                 </div>
                 <div style="margin-top:10px; height:8px; background:#000; border-radius:5px; overflow:hidden;">
                     <div id="mintBar" style="width:0%; height:100%; background:var(--neon); transition:1s;"></div>
                 </div>
-                <div style="text-align:right; font-size:0.7rem; color:#aaa; margin-top:5px;">500M Supply Load...</div>
+                <div style="text-align:right; font-size:0.7rem; color:#aaa; margin-top:5px;">Target: 500M Supply</div>
             </div>
         </div>
 
@@ -248,31 +253,56 @@
             ov.style.display = sb.classList.contains('active') ? 'block' : 'none';
         }
 
-        async function connectWallet(providerType) {
-            // Gerçek projede burada "WalletConnect" veya "Best Wallet" adaptörleri kullanılır.
-            // Şimdilik MetaMask ve simülasyon üzerinden gidiyoruz.
-            if(window.ethereum) {
+        // AKILLI BAĞLANTI YÖNETİCİSİ (MOBİL ÇÖZÜMÜ)
+        async function connectManager(walletType) {
+            // 1. Eğer masaüstünde MetaMask eklentisi varsa
+            if(window.ethereum && !(/Mobi|Android/i.test(navigator.userAgent))) {
                 try {
                     const provider = new ethers.providers.Web3Provider(window.ethereum);
-                    const accounts = await provider.send("eth_requestAccounts", []);
-                    const addr = accounts[0];
-                    document.getElementById('mainConnectBtn').style.display = 'none';
-                    document.getElementById('userAddress').style.display = 'block';
-                    document.getElementById('userAddress').innerText = addr.substring(0,6) + "..." + addr.substring(38);
-                    
-                    // Bar Animasyonu
-                    document.getElementById('mintBar').style.width = "45%";
-                    
-                    isConnected = true;
-                    closeModal();
+                    await provider.send("eth_requestAccounts", []);
+                    const signer = provider.getSigner();
+                    const addr = await signer.getAddress();
+                    onConnect(addr);
                 } catch(e) { console.error(e); }
-            } else {
-                if(providerType === 'bestwallet' || providerType === 'walletconnect') {
-                    alert("Harici cüzdan entegrasyonu (WalletConnect) yakında aktif olacak! Lütfen MetaMask kullanın.");
-                } else {
-                    alert("MetaMask bulunamadı!");
-                }
+                return;
             }
+
+            // 2. MOBİL: Deep Linking (Uygulamayı Açtırma)
+            const currentUrl = window.location.host + window.location.pathname;
+            
+            if(walletType === 'metamask') {
+                // Eğer zaten MetaMask'in kendi browserındaysak window.ethereum çalışır
+                if(window.ethereum) {
+                     const provider = new ethers.providers.Web3Provider(window.ethereum);
+                     await provider.send("eth_requestAccounts", []);
+                     const signer = provider.getSigner();
+                     const addr = await signer.getAddress();
+                     onConnect(addr);
+                } else {
+                    // Chrome'daysak MetaMask App'i aç
+                    window.location.href = "https://metamask.app.link/dapp/" + currentUrl;
+                }
+            } 
+            else if (walletType === 'bestwallet') {
+                // Best Wallet için Deep Link (Örnek) veya siteye yönlendirme
+                alert("Best Wallet Uygulamasına yönlendiriliyorsunuz...");
+                // Gerçek link: window.location.href = "bw://dapp/" + currentUrl; (Örnek)
+            }
+            else {
+                // Diğerleri için WalletConnect (Tek HTML'de tam kütüphane olmadığı için uyarı)
+                alert("Lütfen bu siteyi Cüzdan uygulamanızın (Trust/Coin98) içindeki Tarayıcı kısmından açın.");
+            }
+        }
+
+        function onConnect(addr) {
+            document.getElementById('mainConnectBtn').style.display = 'none';
+            document.getElementById('userAddress').style.display = 'block';
+            document.getElementById('userAddress').innerText = addr.substring(0,6) + "..." + addr.substring(38);
+            document.getElementById('mintBar').style.width = "45%";
+            document.getElementById('statusTxt').innerText = "ONLINE";
+            document.getElementById('statusTxt').style.color = "#0f0";
+            isConnected = true;
+            closeModal();
         }
 
         function disconnect() {
@@ -280,6 +310,8 @@
                 document.getElementById('mainConnectBtn').style.display = 'block';
                 document.getElementById('userAddress').style.display = 'none';
                 document.getElementById('mintBar').style.width = "0%";
+                document.getElementById('statusTxt').innerText = "STANDBY";
+                document.getElementById('statusTxt').style.color = "#aaa";
                 isConnected = false;
             }
         }
@@ -304,19 +336,21 @@
 
         function checkBuy() {
             if(!isConnected) { openModal(); return; }
-            alert("İşlem başlatılıyor... (Tutar: " + document.getElementById('amtIn').value + " " + currentCurr.toUpperCase() + ")");
+            alert("İşlem başlatılıyor... Cüzdan onayı bekleniyor.");
         }
         
-        // Diller için basit yer tutucu (Fonksiyonel)
+        // DİL FONKSİYONU
         function setLang(l, el) {
             document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
             el.classList.add('active');
-            if(l === 'en') {
-                document.querySelector('[data-lang="title"]').innerHTML = "Future of <br><span>Digital Vault</span>";
-            } else if(l === 'tr') {
-                document.querySelector('[data-lang="title"]').innerHTML = "Geleceğin <br><span>Dijital Kasası</span>";
-            }
-            // Diğer diller buraya eklenebilir...
+            const titles = {
+                tr: "Geleceğin <br><span>Dijital Kasası</span>",
+                en: "Future of <br><span>Digital Vault</span>",
+                zh: "未来的 <br><span>数字金库</span>",
+                ru: "Будущее <br><span>Цифрового Сейфа</span>",
+                ar: "مستقبل <br><span>الخزنة الرقمية</span>"
+            };
+            if(titles[l]) document.querySelector('[data-lang="title"]').innerHTML = titles[l];
         }
     </script>
 </body>
