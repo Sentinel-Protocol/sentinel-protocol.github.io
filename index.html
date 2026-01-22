@@ -3,130 +3,141 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SENTINEL | Decentralized Legacy Protocol</title>
+    <title>SENTINEL PROTOCOL | Digital Vault & Privacy</title>
     <style>
         :root {
             --neon-blue: #00f2ff;
             --dark-bg: #05060a;
             --shield-gold: #ff9f00;
-            --glass: rgba(255, 255, 255, 0.03);
+            --glass-bg: rgba(255, 255, 255, 0.05);
         }
         body {
-            background: linear-gradient(rgba(5, 6, 10, 0.8), rgba(5, 6, 10, 0.9)), 
-                        url('https://raw.githubusercontent.com/Sentinel-Protocol/sentinel-protocol.github.io/main/vault.jpg'); /* Kasa görseli buraya gelecek */
+            /* Arka plan olarak vault.jpg kullanılıyor */
+            background: linear-gradient(rgba(5, 6, 10, 0.85), rgba(5, 6, 10, 0.95)), 
+                        url('vault.jpg') no-repeat center center fixed;
             background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
             color: white;
-            font-family: 'Inter', -apple-system, sans-serif;
+            font-family: 'Inter', sans-serif; /* Daha modern bir font */
             margin: 0;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
             text-align: center;
+            overflow: hidden; /* Taşmaları engellemek için */
         }
         .main-card {
-            background: rgba(10, 12, 18, 0.85);
-            backdrop-filter: blur(15px);
+            background: rgba(10, 12, 18, 0.8);
+            backdrop-filter: blur(10px); /* Hafif blur efekti */
             border: 1px solid rgba(0, 242, 255, 0.1);
-            padding: 60px 40px;
-            border-radius: 30px;
-            max-width: 600px;
+            padding: 50px 30px;
+            border-radius: 25px;
+            max-width: 450px;
             width: 90%;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+            box-shadow: 0 10px 30px rgba(0, 242, 255, 0.05);
+            animation: fadeIn 1s ease-out forwards; /* Kartın yavaşça görünmesi */
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         .logo-img {
-            width: 120px;
-            height: 120px;
-            margin-bottom: 20px;
-            filter: drop-shadow(0 0 15px var(--neon-blue));
+            width: 100px;
+            height: auto;
+            margin-bottom: 15px;
+            filter: drop-shadow(0 0 10px var(--neon-blue)); /* Logoya hafif parlama */
         }
         h1 {
-            font-size: 2.5rem;
-            letter-spacing: 8px;
+            font-size: 2.2rem;
+            letter-spacing: 6px;
             margin: 0;
-            color: white;
             text-transform: uppercase;
+            color: white;
         }
         .tagline {
             color: var(--neon-blue);
-            font-size: 0.9rem;
+            font-size: 0.85rem;
+            margin: 10px 0 30px 0;
             letter-spacing: 2px;
-            margin-top: 10px;
             font-weight: 300;
         }
-        .vision-text {
-            background: var(--glass);
-            border-radius: 15px;
-            padding: 20px;
-            margin: 30px 0;
-            font-size: 0.95rem;
-            line-height: 1.7;
-            color: #ccc;
-            border-left: 4px solid var(--shield-gold);
-        }
+        
         .btn-container {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
+            grid-template-columns: 1fr 1fr; /* 2 sütunlu düğme grubu */
+            gap: 12px;
             margin-top: 30px;
         }
         .btn {
-            padding: 15px 20px;
-            border-radius: 10px;
+            padding: 14px;
+            border-radius: 8px;
             text-decoration: none;
             font-weight: bold;
-            font-size: 0.8rem;
+            font-size: 0.78rem;
             text-transform: uppercase;
             transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
         }
-        .btn-primary {
-            background: var(--neon-blue);
-            color: #000;
+        .btn-primary { 
+            background: var(--neon-blue); 
+            color: var(--dark-bg);
+            box-shadow: 0 0 15px rgba(0, 242, 255, 0.3);
         }
-        .btn-secondary {
-            border: 1px solid rgba(255,255,255,0.2);
+        .btn-secondary { 
+            background: var(--glass-bg); 
+            color: white; 
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .btn-full {
+            grid-column: span 2; /* Tüm satırı kaplar */
+            background: rgba(255,255,255,0.08);
             color: white;
-            background: var(--glass);
+            border: 1px solid rgba(255,255,255,0.15);
         }
+
         .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0, 242, 255, 0.2);
+            transform: translateY(-5px); /* Hafif yukarı kalkma efekti */
+            box-shadow: 0 15px 25px rgba(0, 242, 255, 0.2);
+            filter: brightness(1.2); /* Parlaklık artışı */
         }
-        .status {
+        .btn-primary:hover {
+            box-shadow: 0 15px 25px var(--neon-blue);
+        }
+
+        .status-indicator {
             margin-top: 40px;
             font-size: 0.7rem;
-            color: #555;
-            letter-spacing: 2px;
+            color: #777;
+            letter-spacing: 1.5px;
+            animation: pulse 2s infinite; /* Hafif nabız efekti */
         }
-        .dot { color: #00ff00; animation: blink 1s infinite; }
-        @keyframes blink { 50% { opacity: 0; } }
+        .dot { color: #00ff00; margin-right: 5px; }
+        @keyframes pulse {
+            0% { opacity: 0.7; }
+            50% { opacity: 1; }
+            100% { opacity: 0.7; }
+        }
     </style>
 </head>
 <body>
     <div class="main-card">
-        <img src="https://raw.githubusercontent.com/Sentinel-Protocol/sentinel-protocol.github.io/main/logo.png" alt="SNTL Logo" class="logo-img">
+        <img src="logo.png" alt="Sentinel Protocol Logo" class="logo-img">
         <h1>SENTINEL</h1>
-        <div class="tagline">DECENTRALIZED LEGACY PROTOCOL</div>
+        <div class="tagline">UNIVERSAL DIGITAL VAULT & PRIVACY PROTOCOL</div>
         
-        <div class="vision-text">
-            Dijital varlıklarınızı sadece korumakla kalmıyoruz; onları geleceğe güvenle devretmeniz için dünyanın en güvenli merkeziyetsiz mirasını inşa ediyoruz.
-        </div>
-
         <div class="btn-container">
-            <a href="https://github.com/Sentinel-Protocol/sentinel-protocol.github.io/blob/main/whitepaper.pdf" class="btn btn-primary">White Paper</a>
+            <a href="WHITEPAPER.md" target="_blank" class="btn btn-primary">White Paper</a>
             <a href="https://x.com/SentinelProt" target="_blank" class="btn btn-secondary">X (Twitter)</a>
-            <a href="mailto:sentinel.legacysystems@gmail.com" class="btn btn-secondary" style="grid-column: span 2;">İletişim & Destek</a>
+            <a href="mailto:sentinel.legacysystems@gmail.com" class="btn btn-full">İletişim & Destek</a>
         </div>
 
-        <div class="status">
-            <span class="dot">●</span> SNTL_CORE_ACTIVE_V3.0
+        <div class="status-indicator">
+            <span class="dot">●</span> SNTL_CORE_ACTIVE_V5.0
         </div>
     </div>
 </body>
 </html>
-
