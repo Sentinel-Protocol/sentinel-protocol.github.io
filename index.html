@@ -3,215 +3,188 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>SENTINEL PROTOCOL | Future of Security</title>
+    <title>SENTINEL PROTOCOL | Secure Decentralized Vault</title>
     
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 500 500'%3E%3Cdefs%3E%3ClinearGradient id='grad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%2300f2ff;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%230066ff;stop-opacity:1' /%3E%3C/linearGradient%3E%3Cfilter id='glow'%3E%3CfeGaussianBlur stdDeviation='5' result='coloredBlur'/%3E%3CfeMerge%3E%3CfeMergeNode in='coloredBlur'/%3E%3CfeMergeNode in='SourceGraphic'/%3E%3C/feMerge%3E%3C/filter%3E%3C/defs%3E%3Cg filter='url(%23glow)'%3E%3Cpath d='M250 20 L450 100 L420 300 C400 400 300 480 250 500 C200 480 100 400 80 300 L50 100 Z' fill='none' stroke='url(%23grad)' stroke-width='20' /%3E%3Cpath d='M300 150 L200 150 L170 220 L300 220 L330 300 L170 300 L150 400 L350 400 L380 300 L250 300 L220 220 L380 220 Z' fill='url(%23grad)' opacity='0.9' /%3E%3C/g%3E%3C/svg%3E">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 500 500'%3E%3Ccircle cx='250' cy='250' r='240' fill='%230060ff' /%3E%3Cpath d='M250 100 L400 180 L370 320 C350 420 250 450 250 450 C250 450 150 420 130 320 L100 180 Z' fill='none' stroke='white' stroke-width='25' /%3E%3Cpath d='M280 180 L180 180 L160 240 L280 240 L300 300 L160 300 L140 360 L340 360 L360 300 L220 300 L200 240 L340 240 Z' fill='white' /%3E%3C/svg%3E">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/5.7.2/ethers.umd.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&family=Orbitron:wght@500;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
     
     <style>
         :root { 
-            --neon: #00f2ff; 
-            --neon-glow: 0 0 20px rgba(0, 242, 255, 0.5);
-            --glass-bg: rgba(12, 20, 35, 0.6);
-            --glass-border: 1px solid rgba(0, 242, 255, 0.2);
-            --glass-blur: blur(20px);
+            --primary: #0060ff; /* XRP Mavisi */
+            --primary-glow: 0 0 20px rgba(0, 96, 255, 0.6);
+            --bg-dark: #050b14;
+            --glass: rgba(15, 25, 40, 0.85);
+            --border: 1px solid rgba(255, 255, 255, 0.1);
             --text-main: #ffffff;
         }
         
         * { box-sizing: border-box; transition: all 0.3s ease; margin: 0; padding: 0; font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
         
         body { 
-            background-color: #000; color: var(--text-main); min-height: 100vh; overflow-x: hidden; position: relative;
+            background-color: var(--bg-dark); color: var(--text-main); min-height: 100vh; overflow-x: hidden; position: relative;
             background-image: url('https://images.unsplash.com/photo-1639322537228-f710d846310a?q=80&w=2000');
             background-size: cover; background-position: center; background-attachment: fixed;
         }
 
-        .overlay-bg { position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0, 3, 10, 0.7); z-index: 0; }
+        .overlay { position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(5, 11, 20, 0.85); z-index: 0; }
         
-        /* UÇUŞAN COINLER */
+        /* UÇUŞAN SIMGELER */
         #coinContainer { position: fixed; top:0; left:0; width:100%; height:100%; z-index: 1; pointer-events: none; overflow: hidden; }
-        .float-coin { position: absolute; opacity: 0.4; animation: floatAnim 15s infinite ease-in-out; filter: drop-shadow(0 0 10px var(--neon)); }
-        @keyframes floatAnim { 0% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-30px) rotate(15deg); } 100% { transform: translateY(0) rotate(0deg); } }
-
-        /* CAM PANELLER */
-        .glass-panel {
-            background: var(--glass-bg); backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
-            border: var(--glass-border); border-radius: 20px; box-shadow: 0 15px 35px rgba(0,0,0,0.4);
-        }
+        .float-coin { position: absolute; opacity: 0.3; animation: floatAnim 20s infinite linear; }
+        @keyframes floatAnim { 0% { transform: translateY(110vh) rotate(0deg); } 100% { transform: translateY(-10vh) rotate(360deg); } }
 
         /* HEADER */
         header { 
             position: fixed; top: 0; width: 100%; z-index: 1000; 
-            background: rgba(0, 5, 15, 0.7); backdrop-filter: blur(20px); border-bottom: var(--glass-border);
+            background: rgba(5, 11, 20, 0.9); backdrop-filter: blur(15px); border-bottom: var(--border);
             padding: 15px 5%; display: flex; justify-content: space-between; align-items: center;
         }
-        .logo-area { display: flex; align-items: center; gap: 12px; font-family: 'Orbitron', sans-serif; font-size: 1.1rem; font-weight: 900; letter-spacing: 1px; color: var(--neon); text-shadow: var(--neon-glow); }
-        .logo-area img { height: 45px; filter: drop-shadow(0 0 10px var(--neon)); }
+        .logo-area { display: flex; align-items: center; gap: 12px; font-family: 'Orbitron', sans-serif; font-size: 1.2rem; font-weight: 800; letter-spacing: 1px; color: white; }
+        .logo-area img { height: 40px; filter: drop-shadow(0 0 5px var(--primary)); }
 
-        .btn-connect { background: rgba(0, 242, 255, 0.15); color: var(--neon); border: 1px solid var(--neon); padding: 10px 20px; border-radius: 8px; font-weight: 800; cursor: pointer; box-shadow: var(--neon-glow); }
-        .btn-connect:hover { background: var(--neon); color: black; }
+        .btn-connect { 
+            background: var(--primary); color: white; border: none; padding: 12px 24px; border-radius: 8px; 
+            font-weight: 700; cursor: pointer; box-shadow: var(--primary-glow);
+        }
+        .btn-connect:hover { transform: translateY(-2px); }
+        .btn-connect.paused { background: #555; cursor: not-allowed; box-shadow: none; }
 
         /* CÜZDAN DROPDOWN */
-        .user-wallet-box { position: relative; }
-        .addr-btn { border:1px solid var(--neon); color:var(--neon); padding:8px 15px; border-radius:8px; cursor: pointer; background: rgba(0, 242, 255, 0.1); font-family: 'Orbitron'; font-size: 0.9rem; }
-        .wallet-dropdown { position: absolute; top: 120%; right: 0; background: #0a101a; border: var(--glass-border); border-radius: 10px; padding: 10px; display: none; flex-direction: column; gap: 5px; min-width: 160px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); }
+        .user-wallet-box { position: relative; z-index: 1002; }
+        .addr-btn { border: 1px solid var(--primary); color: var(--primary); padding: 10px 15px; border-radius: 8px; cursor: pointer; background: rgba(0, 96, 255, 0.1); font-family: 'Orbitron'; font-weight: bold; }
+        .wallet-dropdown { 
+            position: absolute; top: 120%; right: 0; background: #0f1520; border: var(--border); border-radius: 10px; 
+            padding: 10px; display: none; flex-direction: column; gap: 5px; min-width: 180px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); 
+        }
         .wallet-dropdown.active { display: flex; }
-        .dc-btn { background: rgba(255, 50, 50, 0.2); color: #ff5555; border: 1px solid #ff5555; padding: 10px; border-radius: 6px; cursor: pointer; text-align: center; font-size: 0.8rem; }
-        .dc-btn:hover { background: #ff5555; color: white; }
-        .copy-btn { background: rgba(255,255,255,0.1); color: #ccc; padding: 10px; border-radius: 6px; cursor: pointer; text-align: center; font-size: 0.8rem; border: 1px solid transparent; }
-        .copy-btn:hover { border-color: white; }
+        .menu-item { padding: 10px; border-radius: 6px; cursor: pointer; font-size: 0.9rem; display: flex; align-items: center; gap: 10px; color: #ccc; }
+        .menu-item:hover { background: rgba(255,255,255,0.05); color: white; }
+        .menu-item.disconnect { color: #ff5555; }
+        .menu-item.disconnect:hover { background: rgba(255, 0, 0, 0.1); }
 
-        /* SIDEBAR (HAMBURGER MENÜ) */
-        .hamburger { font-size: 1.5rem; color: var(--neon); cursor: pointer; margin-left: 15px; }
-        .sidebar-overlay { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:2000; display:none; backdrop-filter: blur(5px); }
+        /* SIDEBAR */
+        .hamburger { font-size: 1.5rem; color: white; cursor: pointer; margin-left: 20px; }
         .sidebar { 
             position: fixed; top:0; right:-320px; width:300px; height:100%; 
-            background: #080c14; border-left: var(--glass-border); 
-            z-index: 2001; padding: 30px; display: flex; flex-direction: column; transition: 0.4s;
+            background: #080c14; border-left: var(--border); z-index: 2001; padding: 30px; 
+            display: flex; flex-direction: column; transition: 0.4s;
         }
         .sidebar.active { right: 0; }
-        .sidebar-title { font-family: 'Orbitron'; color: white; font-size: 1.2rem; margin-bottom: 30px; letter-spacing: 1px; }
+        .sidebar-overlay { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:2000; display:none; }
         
-        .lang-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-bottom: 30px; padding-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.1); }
-        .lang-btn { background: rgba(255,255,255,0.05); color: #888; padding: 8px 0; border-radius: 6px; text-align: center; font-size: 0.7rem; cursor: pointer; font-weight: bold; border: 1px solid transparent; display: flex; flex-direction: column; align-items: center; gap: 3px; }
-        .lang-btn img { width: 20px; height: 15px; object-fit: cover; border-radius: 2px; opacity: 0.6; }
-        .lang-btn.active { border-color: var(--neon); color: var(--neon); background: rgba(0, 242, 255, 0.1); }
-        .lang-btn.active img { opacity: 1; }
+        .side-link { color: #ccc; text-decoration: none; padding: 15px; border-bottom: 1px solid rgba(255,255,255,0.05); display: block; font-size: 1rem; }
+        .side-link:hover { color: var(--primary); padding-left: 20px; }
+        .socials { display: flex; gap: 15px; margin-top: auto; justify-content: center; padding-top: 20px; }
+        .social-icon { width: 40px; height: 40px; background: rgba(255,255,255,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; text-decoration: none; }
+        .social-icon:hover { background: var(--primary); }
 
-        .menu-link { color: #ccc; text-decoration: none; padding: 12px; border-radius: 8px; background: rgba(255,255,255,0.03); display: flex; align-items: center; gap: 15px; margin-bottom: 10px; border: 1px solid transparent; }
-        .menu-link:hover { border-color: var(--neon); color: var(--neon); background: rgba(0, 242, 255, 0.05); }
+        /* MAIN CONTENT */
+        .main-container { 
+            position: relative; z-index: 10;
+            display: grid; grid-template-columns: 1fr; gap: 40px; 
+            padding: 130px 5% 50px 5%; max-width: 1200px; margin: 0 auto;
+        }
+        @media(min-width: 992px) { .main-container { grid-template-columns: 1.1fr 0.9fr; align-items: start; } }
+
+        .hero-text h1 { font-family: 'Orbitron'; font-size: 3rem; line-height: 1.1; margin-bottom: 20px; }
+        .hero-text h1 span { color: var(--primary); }
+        .hero-text p { color: #aaa; line-height: 1.6; margin-bottom: 30px; font-size: 1.1rem; }
+
+        /* PRESALE CARD */
+        .presale-card { background: var(--glass); border: var(--border); border-radius: 20px; padding: 30px; box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
         
-        .social-links { margin-top: auto; display: flex; justify-content: space-between; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); }
-        .social-btn { width: 45px; height: 45px; background: rgba(255,255,255,0.05); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #aaa; font-size: 1.2rem; text-decoration: none; border: 1px solid transparent; }
-        .social-btn:hover { border-color: var(--neon); color: var(--neon); background: rgba(0, 242, 255, 0.1); box-shadow: var(--neon-glow); }
+        .timer-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 20px 0; }
+        .timer-box { background: rgba(0,0,0,0.3); padding: 10px; border-radius: 8px; text-align: center; border: 1px solid rgba(255,255,255,0.05); }
+        .timer-num { font-family: 'Orbitron'; font-size: 1.5rem; font-weight: bold; color: white; }
+        .timer-lbl { font-size: 0.7rem; color: #888; }
+
+        .progress-area { margin: 20px 0; }
+        .progress-bar { width: 100%; height: 10px; background: #222; border-radius: 5px; overflow: hidden; margin-top: 5px; }
+        .progress-fill { height: 100%; background: var(--primary); width: 10%; box-shadow: var(--primary-glow); transition: width 1s; }
+
+        .tabs { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-bottom: 20px; }
+        .tab { background: rgba(255,255,255,0.05); padding: 10px; border-radius: 8px; cursor: pointer; text-align: center; font-size: 0.75rem; border: 1px solid transparent; display: flex; flex-direction: column; align-items: center; gap: 5px; }
+        .tab img { width: 20px; }
+        .tab.active { border-color: var(--primary); background: rgba(0, 96, 255, 0.1); color: var(--primary); }
+
+        .input-box { background: rgba(0,0,0,0.3); border: var(--border); padding: 15px; border-radius: 10px; margin-bottom: 10px; }
+        .input-box label { font-size: 0.8rem; color: #888; display: block; margin-bottom: 5px; }
+        .input-box input { width: 100%; background: transparent; border: none; color: white; font-size: 1.2rem; text-align: right; outline: none; }
+
+        /* DASHBOARD (KULLANICI PANELİ) */
+        .user-dashboard { 
+            display: none; /* Başlangıçta gizli */
+            margin-top: 20px; background: rgba(0, 255, 100, 0.05); border: 1px solid rgba(0, 255, 100, 0.2); 
+            border-radius: 12px; padding: 20px; text-align: center; 
+        }
+        .dash-row { display: flex; justify-content: space-between; margin-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 10px; }
+        .dash-val { font-family: 'Orbitron'; font-weight: bold; color: white; }
+
+        /* ROADMAP (ESKİ STİL - YATAY) */
+        .roadmap-container { 
+            position: relative; z-index: 10; max-width: 1200px; margin: 50px auto; padding: 0 5%;
+        }
+        .roadmap-title { font-family: 'Orbitron'; font-size: 2rem; text-align: center; margin-bottom: 40px; }
+        .stages-wrapper { display: flex; gap: 20px; overflow-x: auto; padding-bottom: 20px; }
+        .stage-card { 
+            min-width: 250px; background: var(--glass); border: var(--border); border-radius: 15px; padding: 20px; 
+            opacity: 0.5; transition: 0.3s; 
+        }
+        .stage-card.active { opacity: 1; border-color: var(--primary); box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+        .stage-header { font-family: 'Orbitron'; color: var(--primary); margin-bottom: 15px; font-size: 1.1rem; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; }
+        .stage-list { list-style: none; font-size: 0.85rem; color: #ccc; line-height: 1.6; }
+        .stage-list li::before { content: "• "; color: var(--primary); }
 
         /* ADMIN PANEL */
         #adminPanel {
             display: none; position: fixed; bottom: 0; left: 0; width: 100%;
-            background: #0a0a0a; border-top: 3px solid #ff0000;
-            padding: 20px; z-index: 9999; max-height: 350px; overflow-y: auto;
+            background: #000; border-top: 2px solid #ff4444; padding: 20px; z-index: 9999;
         }
-        .admin-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 15px; max-width: 1200px; margin: 0 auto; }
-        .admin-item label { color: #ff5555; font-size: 0.75rem; display: block; margin-bottom: 5px; font-weight: bold; }
-        .admin-item input { width: 100%; background: #220000; border: 1px solid #550000; color: white; padding: 10px; border-radius: 5px; outline: none; }
-        .btn-admin { background: #ff0000; color: white; border: none; padding: 12px; width: 100%; cursor: pointer; font-weight: bold; border-radius: 5px; }
+        .admin-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; max-width: 1200px; margin: 0 auto; }
+        .admin-input { width: 100%; padding: 8px; background: #222; border: 1px solid #444; color: white; }
+        .admin-btn { padding: 10px; background: #ff4444; color: white; border: none; cursor: pointer; font-weight: bold; width: 100%; }
 
-        /* MAIN LAYOUT */
-        .main-container { 
-            position: relative; z-index: 10;
-            display: grid; grid-template-columns: 1fr; gap: 50px; 
-            padding: 140px 5% 80px 5%; max-width: 1200px; margin: 0 auto;
-        }
-        @media(min-width: 992px) { .main-container { grid-template-columns: 1.2fr 0.8fr; align-items: start; } }
-
-        .hero-text h1 { font-family: 'Orbitron'; font-size: 3.2rem; line-height: 1.1; margin-bottom: 25px; }
-        .hero-text h1 span { color: var(--neon); text-shadow: var(--neon-glow); }
-        .hero-text p { color: #bbb; line-height: 1.6; margin-bottom: 40px; font-size: 1.1rem; }
-
-        /* PRESALE CARD */
-        .presale-card { padding: 35px; }
-        .countdown { display: flex; justify-content: center; gap: 12px; margin: 25px 0; }
-        .time-box { background: rgba(0,0,0,0.3); padding: 12px; border-radius: 10px; border: var(--glass-border); min-width: 65px; text-align: center; font-family: 'Orbitron'; }
-        
-        .pay-tabs { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 25px; }
-        .pay-tab { background: rgba(255,255,255,0.05); padding: 12px; border-radius: 10px; cursor: pointer; text-align: center; border: 1px solid transparent; display: flex; flex-direction: column; align-items: center; gap: 5px; font-size: 0.7rem; }
-        .pay-tab img { width: 22px; }
-        .pay-tab.active { border-color: var(--neon); background: rgba(0,242,255,0.1); color: var(--neon); box-shadow: var(--neon-glow); }
-
-        .input-group input { width: 100%; background: rgba(0,0,0,0.4); border: var(--glass-border); padding: 18px; border-radius: 12px; color: white; font-size: 1.3rem; text-align: right; outline: none; }
-
-        /* ROADMAP */
-        .roadmap-section { position: relative; z-index: 10; padding: 80px 5% 120px 5%; max-width: 1200px; margin: 0 auto; }
-        .roadmap-title { font-family: 'Orbitron'; font-size: 2.2rem; color: white; text-align: center; margin-bottom: 60px; }
-        .roadmap-container { display: flex; justify-content: space-between; position: relative; gap: 20px; }
-        .roadmap-line { position: absolute; top: 25px; left: 0; width: 100%; height: 4px; background: rgba(255,255,255,0.1); z-index: 0; }
-        #roadmapFill { position: absolute; top: 25px; left: 0; width: 0%; height: 4px; background: var(--neon); box-shadow: var(--neon-glow); z-index: 0; transition: width 1s ease; }
-
-        .stage-box { flex: 1; text-align: center; position: relative; z-index: 1; }
-        .stage-dot { width: 50px; height: 50px; background: #050505; border: 3px solid rgba(255,255,255,0.2); border-radius: 50%; margin: 0 auto 25px auto; display: flex; align-items: center; justify-content: center; font-weight: bold; color: #555; font-family: 'Orbitron'; transition: 0.5s; }
-        .stage-box.active .stage-dot { border-color: var(--neon); color: var(--neon); box-shadow: var(--neon-glow); background: #000; }
-        .stage-content { background: var(--glass-bg); backdrop-filter: blur(15px); border: var(--glass-border); padding: 20px; border-radius: 18px; min-height: 140px; opacity: 0.5; transition: 0.5s; }
-        .stage-box.active .stage-content { opacity: 1; box-shadow: 0 10px 30px rgba(0, 242, 255, 0.1); }
-        .stage-title { color: var(--neon); font-family: 'Orbitron'; font-size: 1rem; margin-bottom: 12px; }
-        .stage-desc { font-size: 0.8rem; color: #ccc; line-height: 1.6; text-align: left; list-style-type: none; padding: 0; margin: 0; }
-
-        @media(max-width: 768px) { .roadmap-container { display: grid; grid-template-columns: 1fr; gap: 40px; } .roadmap-line, #roadmapFill { display: none; } }
-        .modal { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); z-index:5000; align-items:center; justify-content:center; backdrop-filter: blur(8px); }
+        /* MODAL */
+        .modal { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:5000; align-items:center; justify-content:center; }
+        .modal-content { background: #111; padding: 30px; border-radius: 15px; border: 1px solid var(--primary); width: 90%; max-width: 350px; text-align: center; }
+        .wallet-opt { background: #222; padding: 15px; margin-bottom: 10px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; gap: 10px; color: white; border: 1px solid #333; }
+        .wallet-opt:hover { border-color: var(--primary); }
 
     </style>
 </head>
 <body>
 
-    <div class="overlay-bg"></div>
-    <div id="coinContainer"></div> 
+    <div class="overlay"></div>
+    <div id="coinContainer"></div>
 
     <div id="adminPanel">
-        <div style="text-align:center; color:#ff4444; font-weight:bold; margin-bottom:15px; font-family:'Orbitron'">ADMIN CONTROL</div>
+        <div style="color:red; font-weight:bold; margin-bottom:10px; text-align:center;">ADMIN CONTROL (Changes affect current session only)</div>
         <div class="admin-grid">
-            <div class="admin-item"><label>Raised ($)</label><input type="number" id="admRaised" value="250000"></div>
-            <div class="admin-item"><label>Price ($)</label><input type="number" id="admPrice" value="0.03"></div>
-            <div class="admin-item"><label>Prog (%)</label><input type="number" id="admProg" value="5"></div>
-            <div class="admin-item"><label>Stage (1-5)</label><input type="number" id="admStage" value="1"></div>
-            <div class="admin-item"><label>Days</label><input type="number" id="admDays" value="4"></div>
-            <div class="admin-item"><label>Hours</label><input type="number" id="admHours" value="12"></div>
-            <div class="admin-item" style="display:flex; align-items:flex-end;">
-                <button class="btn-admin" onclick="updateSite()">UPDATE</button>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal" id="walletModal">
-        <div style="background:#0f1216; border:1px solid var(--neon); padding:35px; border-radius:25px; width:90%; max-width:400px; text-align:center;">
-            <h3 style="color:white; margin-bottom:25px; font-family:'Orbitron'">CONNECT WALLET</h3>
-            <div onclick="connectManager('metamask')" style="background:#1a1a1a; padding:18px; border-radius:12px; margin-bottom:12px; cursor:pointer; display:flex; align-items:center; gap:15px; border:1px solid #333;">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/3/36/MetaMask_Mirror.svg" width="35">
-                <div style="text-align:left; color:white;">MetaMask<br><small style="color:#777;">Browser Extension</small></div>
-            </div>
-            <div onclick="connectManager('other')" style="background:#1a1a1a; padding:18px; border-radius:12px; margin-bottom:12px; cursor:pointer; display:flex; align-items:center; gap:15px; border:1px solid #333;">
-                <i class="fa fa-wallet" style="font-size:1.8rem; color:#777;"></i>
-                <div style="text-align:left; color:white;">WalletConnect<br><small style="color:#777;">Mobile Wallets</small></div>
-            </div>
-            <button onclick="document.getElementById('walletModal').style.display='none'" style="background:none; border:none; color:#666; cursor:pointer; margin-top:15px;">CLOSE</button>
-        </div>
-    </div>
-
-    <div class="sidebar-overlay" id="overlay" onclick="toggleSidebar()"></div>
-    <div class="sidebar" id="sidebar">
-        <div class="sidebar-title">/// MENU</div>
-        <div class="lang-grid">
-            <div class="lang-btn active"><img src="https://flagcdn.com/w40/tr.png">TR</div>
-            <div class="lang-btn"><img src="https://flagcdn.com/w40/gb.png">EN</div>
-            <div class="lang-btn"><img src="https://flagcdn.com/w40/cn.png">ZH</div>
-            <div class="lang-btn"><img src="https://flagcdn.com/w40/ru.png">RU</div>
-            <div class="lang-btn"><img src="https://flagcdn.com/w40/sa.png">AR</div>
-        </div>
-        <a href="#" class="menu-link"><i class="fa fa-home" style="color:var(--neon)"></i> Home</a>
-        <a href="#vault" class="menu-link"><i class="fa fa-shield-halved" style="color:var(--neon)"></i> Vault</a>
-        <a href="#wp" class="menu-link"><i class="fa fa-file-alt" style="color:var(--neon)"></i> Whitepaper</a>
-        <div class="social-links">
-            <a href="#" class="social-btn"><i class="fa-brands fa-x-twitter"></i></a>
-            <a href="#" class="social-btn"><i class="fa-brands fa-telegram"></i></a>
-            <a href="#" class="social-btn"><i class="fa-brands fa-instagram"></i></a>
-            <a href="#" class="social-btn"><i class="fa fa-envelope"></i></a>
+            <input type="number" id="admRaised" class="admin-input" placeholder="Raised ($)" value="250000">
+            <input type="number" id="admPrice" class="admin-input" placeholder="Price ($)" value="0.03">
+            <input type="number" id="admProg" class="admin-input" placeholder="Progress %" value="15">
+            <input type="number" id="admStage" class="admin-input" placeholder="Current Stage (1-5)" value="1">
+            <button class="admin-btn" onclick="updateSite()">UPDATE SITE</button>
+            <button class="admin-btn" style="background:orange; color:black;" id="pauseBtn" onclick="togglePause()">PAUSE SALE</button>
         </div>
     </div>
 
     <header>
         <div class="logo-area">
-            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 500 500'%3E%3Cdefs%3E%3ClinearGradient id='grad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%2300f2ff;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%230066ff;stop-opacity:1' /%3E%3C/linearGradient%3E%3Cfilter id='glow'%3E%3CfeGaussianBlur stdDeviation='5' result='coloredBlur'/%3E%3CfeMerge%3E%3CfeMergeNode in='coloredBlur'/%3E%3CfeMergeNode in='SourceGraphic'/%3E%3C/feMerge%3E%3C/filter%3E%3C/defs%3E%3Cg filter='url(%23glow)'%3E%3Cpath d='M250 20 L450 100 L420 300 C400 400 300 480 250 500 C200 480 100 400 80 300 L50 100 Z' fill='none' stroke='url(%23grad)' stroke-width='20' /%3E%3Cpath d='M300 150 L200 150 L170 220 L300 220 L330 300 L170 300 L150 400 L350 400 L380 300 L250 300 L220 220 L380 220 Z' fill='url(%23grad)' opacity='0.9' /%3E%3C/g%3E%3C/svg%3E">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 500 500'%3E%3Ccircle cx='250' cy='250' r='240' fill='%230060ff' /%3E%3Cpath d='M250 100 L400 180 L370 320 C350 420 250 450 250 450 C250 450 150 420 130 320 L100 180 Z' fill='none' stroke='white' stroke-width='25' /%3E%3Cpath d='M280 180 L180 180 L160 240 L280 240 L300 300 L160 300 L140 360 L340 360 L360 300 L220 300 L200 240 L340 240 Z' fill='white' /%3E%3C/svg%3E">
             SENTINEL PROTOCOL
         </div>
         <div style="display:flex; align-items:center; gap:15px;">
-            <button id="mainConnectBtn" class="btn-connect" onclick="document.getElementById('walletModal').style.display='flex'">CONNECT WALLET</button>
+            <button id="connectBtn" class="btn-connect" onclick="openModal()">CONNECT WALLET</button>
             
-            <div id="userWalletBox" class="user-wallet-box" style="display:none;">
-                <div id="userAddress" class="addr-btn" onclick="toggleWalletMenu()">0x...</div>
+            <div id="userMenu" class="user-wallet-box" style="display:none;">
+                <div id="userAddrDisplay" class="addr-btn" onclick="toggleDropdown()">0x...</div>
                 <div id="walletDropdown" class="wallet-dropdown">
-                    <div class="copy-btn" onclick="copyAddr()"><i class="fa fa-copy"></i> Copy Address</div>
-                    <div class="dc-btn" onclick="disconnect()"><i class="fa fa-power-off"></i> Disconnect</div>
+                    <div class="menu-item" onclick="copyAddress()"><i class="fa fa-copy"></i> Copy Address</div>
+                    <div class="menu-item disconnect" onclick="disconnect()"><i class="fa fa-power-off"></i> Disconnect</div>
                 </div>
             </div>
 
@@ -219,246 +192,269 @@
         </div>
     </header>
 
-    <div class="main-container">
-        <div class="glass-panel" style="padding:45px;">
-            <div class="hero-text">
-                <h1>SECURE YOUR <br><span>DIGITAL LEGACY</span></h1>
-                <p>Sentinel Protocol ensures your assets are never lost, protected by military-grade sharding technology.</p>
-            </div>
-            
-            <div style="background:rgba(0,0,0,0.3); padding:25px; border-radius:15px; border:1px dashed var(--neon); display:flex; align-items:center; gap:20px;">
-                <i class="fa fa-vault" style="font-size:2.5rem; color:var(--neon);"></i>
-                <div>
-                    <div style="display:flex; justify-content:space-between; font-size:0.8rem; margin-bottom:5px;">
-                        <span style="color:#aaa;">VAULT STATUS</span>
-                        <span style="color:var(--neon); font-weight:bold;">● ONLINE</span>
-                    </div>
-                    <div style="font-size:1.8rem; font-weight:900; color:white; font-family:'Orbitron'">500M SNTL</div>
-                </div>
-            </div>
+    <div class="sidebar-overlay" id="overlay" onclick="toggleSidebar()"></div>
+    <div class="sidebar" id="sidebar">
+        <h3 style="color:white; margin-bottom:20px;">MENU</h3>
+        
+        <div style="display:flex; gap:10px; margin-bottom:20px;">
+            <img src="https://flagcdn.com/w40/tr.png" width="25" style="cursor:pointer; opacity:0.7">
+            <img src="https://flagcdn.com/w40/us.png" width="25" style="cursor:pointer; opacity:1">
+            <img src="https://flagcdn.com/w40/cn.png" width="25" style="cursor:pointer; opacity:0.7">
         </div>
 
-        <div class="glass-panel presale-card">
-            <div style="text-align:center; margin-bottom:25px;">
-                <h3 style="color:white; letter-spacing:2px; font-family:'Orbitron'">PRESALE ENDS IN</h3>
-                <div class="countdown">
-                    <div class="time-box"><span id="cdDay">00</span><br>D</div>
-                    <div class="time-box"><span id="cdHour">00</span><br>H</div>
-                    <div class="time-box"><span id="cdMin">00</span><br>M</div>
-                    <div class="time-box"><span id="cdSec">00</span><br>S</div>
-                </div>
-            </div>
+        <a href="#" class="side-link">Home</a>
+        <a href="#vault" class="side-link">Sentinel Vault</a>
+        <a href="#whitepaper" class="side-link">Whitepaper</a>
+        <a href="#audit" class="side-link">Audit Report</a>
 
-            <div style="margin-bottom:25px;">
-                <div style="display:flex; justify-content:space-between; font-size:0.8rem; margin-bottom:8px;">
-                    <span id="dispRaised">Raised: $250,000</span>
-                    <span style="color:var(--neon);">Target: $5M</span>
-                </div>
-                <div style="width:100%; height:10px; background:rgba(255,255,255,0.05); border-radius:5px; border:1px solid rgba(255,255,255,0.1);">
-                    <div id="saleProgress" style="width:5%; height:100%; background:var(--neon);"></div>
-                </div>
-                <div style="text-align:center; margin-top:8px; font-size:0.85rem; color:#aaa;">Price: <span id="dispPrice" style="color:var(--neon);">$0.03</span></div>
-            </div>
-
-            <div class="pay-tabs">
-                <div class="pay-tab active" onclick="setTab('eth', this)"><img src="https://cryptologos.cc/logos/ethereum-eth-logo.png"> ETH</div>
-                <div class="pay-tab" onclick="setTab('bnb', this)"><img src="https://cryptologos.cc/logos/bnb-bnb-logo.png"> BNB</div>
-                <div class="pay-tab" onclick="setTab('matic', this)"><img src="https://cryptologos.cc/logos/polygon-matic-logo.png"> MATIC</div>
-                <div class="pay-tab" onclick="setTab('usdc', this)"><img src="https://cryptologos.cc/logos/usd-coin-usdc-logo.png"> USDC</div>
-                <div class="pay-tab" onclick="setTab('btc', this)"><img src="https://cryptologos.cc/logos/bitcoin-btc-logo.png"> BTC</div>
-            </div>
-
-            <div class="input-group" style="margin-bottom:15px;">
-                <label>You Pay (<span id="currLabel">ETH</span>)</label>
-                <input type="number" id="amtIn" placeholder="0.0" oninput="calc()">
-            </div>
-            <div class="input-group">
-                <label>You Receive (SNTL)</label>
-                <input type="number" id="amtOut" readonly placeholder="0">
-            </div>
-
-            <button id="btnBuy" class="btn-connect" style="width:100%; padding:20px; margin-top:25px; font-size:1.1rem;" onclick="checkBuy()">BUY TOKENS</button>
+        <div class="socials">
+            <a href="#" class="social-icon"><i class="fa-brands fa-x-twitter"></i></a>
+            <a href="#" class="social-icon"><i class="fa-brands fa-telegram"></i></a>
+            <a href="#" class="social-icon"><i class="fa-brands fa-instagram"></i></a>
+            <a href="#" class="social-icon"><i class="fa fa-envelope"></i></a>
         </div>
     </div>
 
-    <div class="roadmap-section">
-        <div class="roadmap-title">PROJECT <span style="color:var(--neon)">ROADMAP</span></div>
-        <div class="roadmap-container">
-            <div class="roadmap-line"></div>
-            <div id="roadmapFill"></div> 
+    <div class="main-container">
+        <div class="hero-text">
+            <h1>SECURE YOUR <br><span>DIGITAL LEGACY</span></h1>
+            <p>The ultimate decentralized vault protocol. Protect your assets with military-grade encryption and automated inheritance.</p>
+            
+            <div style="display:flex; gap:20px;">
+                <div style="background:rgba(255,255,255,0.05); padding:15px; border-radius:10px; flex:1; border:1px solid #333;">
+                    <div style="color:#888; font-size:0.8rem;">TOTAL SUPPLY</div>
+                    <div style="color:white; font-size:1.2rem; font-weight:bold;">500M SNTL</div>
+                </div>
+                <div style="background:rgba(255,255,255,0.05); padding:15px; border-radius:10px; flex:1; border:1px solid #333;">
+                    <div style="color:#888; font-size:0.8rem;">AUDIT STATUS</div>
+                    <div style="color:#00ff00; font-size:1.2rem; font-weight:bold;">PASSED</div>
+                </div>
+            </div>
+        </div>
 
-            <div class="stage-box active" id="stage1">
-                <div class="stage-dot">01</div>
-                <div class="stage-content"><div class="stage-title">FOUNDATION</div><ul class="stage-desc"><li>Protocol Concept</li><li>Website Launch</li></ul></div>
+        <div class="presale-card">
+            <div style="text-align:center; color:white; font-family:'Orbitron'; margin-bottom:15px;">PRESALE ENDS IN</div>
+            <div class="timer-grid">
+                <div class="timer-box"><div class="timer-num" id="d">04</div><div class="timer-lbl">DAYS</div></div>
+                <div class="timer-box"><div class="timer-num" id="h">12</div><div class="timer-lbl">HRS</div></div>
+                <div class="timer-box"><div class="timer-num" id="m">30</div><div class="timer-lbl">MIN</div></div>
+                <div class="timer-box"><div class="timer-num" id="s">45</div><div class="timer-lbl">SEC</div></div>
             </div>
-            <div class="stage-box" id="stage2">
-                <div class="stage-dot">02</div>
-                <div class="stage-content"><div class="stage-title">PRESALE</div><ul class="stage-desc"><li>Public Sale</li><li>Audit</li></ul></div>
+
+            <div class="progress-area">
+                <div style="display:flex; justify-content:space-between; font-size:0.85rem; margin-bottom:5px;">
+                    <span style="color:#ccc;" id="raisedTxt">Raised: $250,000</span>
+                    <span style="color:var(--primary);">Target: $5,000,000</span>
+                </div>
+                <div class="progress-bar"><div class="progress-fill" id="progBar"></div></div>
             </div>
-            <div class="stage-box" id="stage3">
-                <div class="stage-dot">03</div>
-                <div class="stage-content"><div class="stage-title">LAUNCH</div><ul class="stage-desc"><li>DEX Listing</li><li>Staking</li></ul></div>
+
+            <div class="tabs">
+                <div class="tab active" onclick="setCurr('eth', this)"><img src="https://cryptologos.cc/logos/ethereum-eth-logo.png"> ETH</div>
+                <div class="tab" onclick="setCurr('bnb', this)"><img src="https://cryptologos.cc/logos/bnb-bnb-logo.png"> BNB</div>
+                <div class="tab" onclick="setCurr('matic', this)"><img src="https://cryptologos.cc/logos/polygon-matic-logo.png"> MATIC</div>
+                <div class="tab" onclick="setCurr('usdc', this)"><img src="https://cryptologos.cc/logos/usd-coin-usdc-logo.png"> USDC</div>
+                <div class="tab" onclick="setCurr('btc', this)"><img src="https://cryptologos.cc/logos/bitcoin-btc-logo.png"> BTC</div>
             </div>
-            <div class="stage-box" id="stage4">
-                <div class="stage-dot">04</div>
-                <div class="stage-content"><div class="stage-title">VAULT</div><ul class="stage-desc"><li>App Beta</li><li>Partnerships</li></ul></div>
+
+            <div class="input-box">
+                <label>You Pay (<span id="currLbl">ETH</span>)</label>
+                <input type="number" id="amtIn" placeholder="0.0" oninput="calc()">
             </div>
-            <div class="stage-box" id="stage5">
-                <div class="stage-dot">05</div>
-                <div class="stage-content"><div class="stage-title">GLOBAL</div><ul class="stage-desc"><li>CEX Listing</li><li>DAO</li></ul></div>
+            <div class="input-box">
+                <label>You Get (SNTL)</label>
+                <input type="number" id="amtOut" readonly placeholder="0">
             </div>
+
+            <button id="buyBtn" class="btn-connect" style="width:100%; margin-top:10px;" onclick="buy()">BUY TOKENS</button>
+
+            <div id="userDashboard" class="user-dashboard">
+                <h4 style="color:white; margin-bottom:15px; border-bottom:1px solid #333; padding-bottom:10px;">MY INVESTMENT</h4>
+                <div class="dash-row"><span>My SNTL:</span> <span class="dash-val" id="mySntl">0</span></div>
+                <div class="dash-row"><span>Status:</span> <span style="color:orange; font-size:0.8rem;">LOCKED (Vesting)</span></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="roadmap-container">
+        <div class="roadmap-title">PROJECT <span style="color:var(--primary)">ROADMAP</span></div>
+        <div class="stages-wrapper">
+            <div class="stage-card active" id="st1">
+                <div class="stage-header">STAGE 01: FOUNDATION</div>
+                <ul class="stage-list">
+                    <li>Protocol Concept</li>
+                    <li>Website Launch</li>
+                    <li>Private Sale</li>
+                </ul>
+            </div>
+            <div class="stage-card" id="st2">
+                <div class="stage-header">STAGE 02: PRESALE</div>
+                <ul class="stage-list">
+                    <li>Public Round Live</li>
+                    <li>Marketing Campaign</li>
+                    <li>Audit Completed</li>
+                </ul>
+            </div>
+            <div class="stage-card" id="st3">
+                <div class="stage-header">STAGE 03: LAUNCH</div>
+                <ul class="stage-list">
+                    <li>DEX Listings</li>
+                    <li>Staking Live</li>
+                    <li>Token Distribution</li>
+                </ul>
+            </div>
+            <div class="stage-card" id="st4">
+                <div class="stage-header">STAGE 04: EXPANSION</div>
+                <ul class="stage-list">
+                    <li>CEX Listings</li>
+                    <li>Mobile App Beta</li>
+                    <li>Partnerships</li>
+                </ul>
+            </div>
+             <div class="stage-card" id="st5">
+                <div class="stage-header">STAGE 05: GLOBAL</div>
+                <ul class="stage-list">
+                    <li>Cross-Chain Bridge</li>
+                    <li>DAO Governance</li>
+                    <li>Institutional API</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="walletModal">
+        <div class="modal-content">
+            <h3 style="color:white; margin-bottom:20px;">CONNECT WALLET</h3>
+            <div class="wallet-opt" onclick="connectWallet('metamask')">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/3/36/MetaMask_Mirror.svg" width="30">
+                <div>MetaMask</div>
+            </div>
+            <div class="wallet-opt" onclick="connectWallet('wc')">
+                <img src="https://raw.githubusercontent.com/WalletConnect/walletconnect-assets/master/Logo/Blue%20(Default)/Logo.svg" width="30">
+                <div>WalletConnect</div>
+            </div>
+            <button onclick="closeModal()" style="background:none; border:none; color:#666; margin-top:10px; cursor:pointer;">Close</button>
         </div>
     </div>
 
     <script>
-        // --- BURAYA CÜZDANINI YAZ ---
-        const OWNER_ADDRESS = "0xd81f6b82683b4b8a2a08998dBcf33ebC5498715D"; 
-        
-        // MATIC EKLENDİ (Polygon)
-        let rates = { eth: 2650, bnb: 600, usdc: 1, matic: 0.80, btc: 48000 };
-        let currentCurr = 'eth';
-        let isConnected = false;
-        let sntlPrice = 0.03;
-        let totalSeconds = 0;
-        let timerInterval;
-        let currentStage = 1;
-        let userAddress = "";
+        // --- AYARLAR ---
+        const OWNER_ADDRESS = "0xd81f6b82683b4b8a2a08998dBcf33ebC5498715D";
+        let rates = { eth: 2650, bnb: 600, matic: 0.80, usdc: 1, btc: 48000 };
+        let curr = 'eth';
+        let price = 0.03;
+        let isPaused = false;
+        let account = null;
+        let myTokens = 0;
 
-        // SAYFA YÜKLENİNCE
+        // --- ZAMANLAYICI ---
+        let time = 380000;
+        setInterval(() => {
+            time--;
+            let d = Math.floor(time/86400);
+            let h = Math.floor((time%86400)/3600);
+            let m = Math.floor((time%3600)/60);
+            let s = time%60;
+            document.getElementById('d').innerText = d;
+            document.getElementById('h').innerText = h;
+            document.getElementById('m').innerText = m;
+            document.getElementById('s').innerText = s;
+        }, 1000);
+
+        // --- UÇUŞAN COINLER ---
         window.onload = function() {
-            createCoins();
-            // Sayacı başlat (4 Gün 12 Saat)
-            totalSeconds = (4 * 24 * 3600) + (12 * 3600);
-            startTimer();
-            updateRoadmapUI();
-        };
-
-        function startTimer() {
-            if(timerInterval) clearInterval(timerInterval);
-            timerInterval = setInterval(() => {
-                if(totalSeconds > 0) { totalSeconds--; updateTimerUI(); }
-            }, 1000);
-        }
-
-        function updateTimerUI() {
-            const d = Math.floor(totalSeconds / 86400);
-            const h = Math.floor((totalSeconds % 86400) / 3600);
-            const m = Math.floor((totalSeconds % 3600) / 60);
-            const s = Math.floor(totalSeconds % 60);
-            document.getElementById('cdDay').innerText = d < 10 ? "0"+d : d;
-            document.getElementById('cdHour').innerText = h < 10 ? "0"+h : h;
-            document.getElementById('cdMin').innerText = m < 10 ? "0"+m : m;
-            document.getElementById('cdSec').innerText = s < 10 ? "0"+s : s;
-        }
-
-        function createCoins() {
-            const container = document.getElementById('coinContainer');
-            const coinImg = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 500 500'%3E%3Cdefs%3E%3ClinearGradient id='grad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%2300f2ff;stop-opacity:0.4' /%3E%3Cstop offset='100%25' style='stop-color:%230066ff;stop-opacity:0.4' /%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M250 20 L450 100 L420 300 C400 400 300 480 250 500 C200 480 100 400 80 300 L50 100 Z' fill='none' stroke='url(%23grad)' stroke-width='20' /%3E%3Cpath d='M300 150 L200 150 L170 220 L300 220 L330 300 L170 300 L150 400 L350 400 L380 300 L250 300 L220 220 L380 220 Z' fill='url(%23grad)' opacity='0.9' /%3E%3C/svg%3E";
+            const cont = document.getElementById('coinContainer');
+            // Mavi Yuvarlak Logo SVG
+            const svgUrl = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 500 500'%3E%3Ccircle cx='250' cy='250' r='240' fill='%230060ff' opacity='0.5' /%3E%3Cpath d='M280 180 L180 180 L160 240 L280 240 L300 300 L160 300 L140 360 L340 360 L360 300 L220 300 L200 240 L340 240 Z' fill='white' /%3E%3C/svg%3E";
             
-            for(let i=0; i<12; i++) {
+            for(let i=0; i<15; i++){
                 let img = document.createElement('img');
-                img.src = coinImg;
+                img.src = svgUrl;
                 img.className = 'float-coin';
-                img.style.left = Math.random() * 100 + 'vw';
-                img.style.top = Math.random() * 100 + 'vh';
-                img.style.width = (Math.random() * 60 + 40) + 'px';
-                img.style.animationDuration = (Math.random() * 10 + 10) + 's';
-                img.style.animationDelay = (Math.random() * 5) + 's';
-                container.appendChild(img);
+                img.style.left = Math.random()*100 + 'vw';
+                img.style.animationDuration = (15 + Math.random()*10) + 's';
+                img.style.width = (30 + Math.random()*40) + 'px';
+                cont.appendChild(img);
             }
+            
+            // Eğer daha önce alım yaptıysa hatırla
+            let saved = localStorage.getItem('sntl_bal');
+            if(saved) myTokens = parseInt(saved);
         }
 
-        // MENÜ & MODAL
+        // --- UI İŞLEMLERİ ---
+        function openModal() { document.getElementById('walletModal').style.display='flex'; }
+        function closeModal() { document.getElementById('walletModal').style.display='none'; }
         function toggleSidebar() { 
             const sb = document.getElementById('sidebar');
-            sb.classList.toggle('active');
-            document.getElementById('overlay').style.display = sb.classList.contains('active') ? 'block' : 'none';
+            const ov = document.getElementById('overlay');
+            if(sb.style.right === '0px') { sb.style.right = '-320px'; ov.style.display='none'; }
+            else { sb.style.right = '0px'; ov.style.display='block'; }
         }
-        function toggleWalletMenu() { document.getElementById('walletDropdown').classList.toggle('active'); }
+        function toggleDropdown() {
+            const dd = document.getElementById('walletDropdown');
+            dd.style.display = dd.style.display === 'flex' ? 'none' : 'flex';
+        }
 
-        async function connectManager(type) {
-             if(window.ethereum) {
+        // --- CÜZDAN ---
+        async function connectWallet(type) {
+            if(window.ethereum) {
                 const provider = new ethers.providers.Web3Provider(window.ethereum);
-                const accounts = await provider.send("eth_requestAccounts", []);
-                onConnect(accounts[0]);
-            } else {
-                 if(type === 'metamask') window.location.href = "https://metamask.app.link/dapp/" + window.location.host;
-                 else alert("App not found");
-            }
-        }
+                const accs = await provider.send("eth_requestAccounts", []);
+                account = accs[0];
+                
+                document.getElementById('connectBtn').style.display = 'none';
+                document.getElementById('userMenu').style.display = 'block';
+                document.getElementById('userAddrDisplay').innerText = account.substring(0,6) + "...";
+                closeModal();
+                
+                // Dashboard Göster
+                document.getElementById('userDashboard').style.display = 'block';
+                document.getElementById('mySntl').innerText = myTokens.toLocaleString();
 
-        function onConnect(addr) {
-            userAddress = addr;
-            document.getElementById('mainConnectBtn').style.display = 'none';
-            document.getElementById('userWalletBox').style.display = 'block';
-            document.getElementById('userAddress').innerText = addr.substring(0,6) + "...";
-            if(addr.toLowerCase() === OWNER_ADDRESS.toLowerCase()) document.getElementById('adminPanel').style.display = 'block';
-            isConnected = true;
-            document.getElementById('walletModal').style.display='none';
+                // Admin Kontrolü
+                if(account.toLowerCase() === OWNER_ADDRESS.toLowerCase()) {
+                    document.getElementById('adminPanel').style.display = 'block';
+                }
+            } else {
+                alert("Please install MetaMask or use a dApp browser.");
+            }
         }
 
         function disconnect() {
-            if(confirm("Disconnect wallet?")) location.reload();
+            account = null;
+            location.reload();
         }
-        function copyAddr() {
-            navigator.clipboard.writeText(userAddress);
+        function copyAddress() {
+            navigator.clipboard.writeText(account);
             alert("Copied!");
-            toggleWalletMenu();
+            toggleDropdown();
         }
 
-        // ADMIN UPDATE
-        function updateSite() {
-            let raised = document.getElementById('admRaised').value;
-            let price = document.getElementById('admPrice').value;
-            let prog = document.getElementById('admProg').value;
-            currentStage = parseInt(document.getElementById('admStage').value);
-            let days = parseInt(document.getElementById('admDays').value);
-            let hours = parseInt(document.getElementById('admHours').value);
-
-            document.getElementById('dispRaised').innerText = "Raised: $" + Number(raised).toLocaleString();
-            document.getElementById('dispPrice').innerText = "$" + price;
-            document.getElementById('saleProgress').style.width = prog + "%";
-            sntlPrice = price;
-            
-            totalSeconds = (days * 24 * 3600) + (hours * 3600);
-            startTimer();
-            updateRoadmapUI();
-            alert("Updated!");
-        }
-
-        function updateRoadmapUI() {
-            for(let i=1; i<=5; i++) document.getElementById('stage'+i).classList.remove('active');
-            for(let i=1; i<=currentStage; i++) document.getElementById('stage'+i).classList.add('active');
-            const roadmapFill = document.getElementById('roadmapFill');
-            if(roadmapFill) {
-                let w = "0%";
-                if(currentStage==1) w="10%"; else if(currentStage==2) w="30%"; else if(currentStage==3) w="50%";
-                else if(currentStage==4) w="75%"; else if(currentStage==5) w="100%";
-                roadmapFill.style.width = w;
-            }
-        }
-
-        // SATIŞ
-        function setTab(c, el) {
-            currentCurr = c;
-            document.querySelectorAll('.pay-tab').forEach(t => t.classList.remove('active'));
+        // --- HESAPLAMA ---
+        function setCurr(c, el) {
+            curr = c;
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
             el.classList.add('active');
-            document.getElementById('currLabel').innerText = c.toUpperCase();
+            document.getElementById('currLbl').innerText = c.toUpperCase();
             calc();
         }
-
         function calc() {
             let val = document.getElementById('amtIn').value;
-            if(val > 0) document.getElementById('amtOut').value = Math.floor((val * rates[currentCurr]) / sntlPrice).toLocaleString();
+            if(val > 0) document.getElementById('amtOut').value = Math.floor((val * rates[curr]) / price).toLocaleString();
             else document.getElementById('amtOut').value = "";
         }
 
-        async function checkBuy() {
-            if(!isConnected) { document.getElementById('walletModal').style.display='flex'; return; }
-            let val = document.getElementById('amtIn').value;
-            if(!val || val <= 0) { alert("Enter Amount"); return; }
-            if(currentCurr === 'btc') { alert("Manual BTC Required"); return; }
+        // --- SATIN ALMA (CORE) ---
+        async function buy() {
+            if(isPaused) { alert("SALE PAUSED"); return; }
+            if(!account) { openModal(); return; }
             
+            let val = document.getElementById('amtIn').value;
+            if(!val || val <= 0) return;
+
+            if(curr === 'btc') { alert("BTC requires manual transfer."); return; }
+
             try {
                 const provider = new ethers.providers.Web3Provider(window.ethereum);
                 const signer = provider.getSigner();
@@ -467,18 +463,59 @@
                     value: ethers.utils.parseEther(val)
                 });
                 
-                // YEŞİL ONAY MESAJI
-                let tokens = Math.floor((val * rates[currentCurr]) / sntlPrice);
-                const btn = document.getElementById('btnBuy');
-                btn.innerHTML = `<i class="fa fa-check-circle"></i> SUCCESS! YOU OWN ${tokens.toLocaleString()} SNTL`;
+                // BAŞARILI
+                let bought = Math.floor((val * rates[curr]) / price);
+                myTokens += bought;
+                localStorage.setItem('sntl_bal', myTokens);
+                
+                // Dashboard Güncelle
+                document.getElementById('mySntl').innerText = myTokens.toLocaleString();
+                
+                const btn = document.getElementById('buyBtn');
+                btn.innerText = "SUCCESS! TOKENS RESERVED";
                 btn.style.background = "#00ff00";
-                btn.style.color = "black";
-                alert("TX Success! Hash: " + tx.hash);
-
+                setTimeout(() => { btn.innerText = "BUY TOKENS"; btn.style.background = "#0060ff"; }, 3000);
+                
+                alert("Transaction Sent! Hash: " + tx.hash);
             } catch(e) {
-                alert("Transaction Failed");
+                alert("Transaction Failed.");
             }
         }
+
+        // --- ADMIN ACTIONS ---
+        function updateSite() {
+            let r = document.getElementById('admRaised').value;
+            let p = document.getElementById('admPrice').value;
+            let pr = document.getElementById('admProg').value;
+            let st = document.getElementById('admStage').value;
+
+            document.getElementById('raisedTxt').innerText = "Raised: $" + Number(r).toLocaleString();
+            document.getElementById('progBar').style.width = pr + "%";
+            price = p;
+
+            // Stage Güncelleme
+            document.querySelectorAll('.stage-card').forEach(s => s.classList.remove('active'));
+            document.getElementById('st'+st).classList.add('active');
+
+            alert("Site View Updated (Local Session)");
+        }
+
+        function togglePause() {
+            isPaused = !isPaused;
+            let btn = document.getElementById('buyBtn');
+            let pBtn = document.getElementById('pauseBtn');
+            
+            if(isPaused) {
+                btn.innerText = "SALE PAUSED";
+                btn.classList.add('paused');
+                pBtn.innerText = "RESUME";
+            } else {
+                btn.innerText = "BUY TOKENS";
+                btn.classList.remove('paused');
+                pBtn.innerText = "PAUSE SALE";
+            }
+        }
+
     </script>
 </body>
 </html>
