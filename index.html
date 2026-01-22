@@ -1,10 +1,10 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>SENTINEL | Secure Vault & Presale</title>
-    <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/2332/2332039.png">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%2300f2ff;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%230066ff;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='50' cy='50' r='48' fill='%23000' stroke='url(%23g)' stroke-width='2'/%3E%3Cpath d='M50 20 L80 35 L80 65 L50 80 L20 65 L20 35 Z' fill='none' stroke='url(%23g)' stroke-width='2'/%3E%3Ctext x='50' y='62' font-family='Orbitron, sans-serif' font-size='32' font-weight='900' fill='url(%23g)' text-anchor='middle'%3ES%3C/text%3E%3C/svg%3E">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/5.7.2/ethers.umd.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&family=Orbitron:wght@500;900&display=swap" rel="stylesheet">
@@ -12,10 +12,11 @@
     <style>
         :root { 
             --neon: #00f2ff; 
-            --neon-glow: 0 0 10px rgba(0, 242, 255, 0.5);
-            --glass-bg: rgba(255, 255, 255, 0.03);
-            --glass-border: 1px solid rgba(255, 255, 255, 0.1);
-            --glass-blur: blur(12px);
+            --neon-glow: 0 0 15px rgba(0, 242, 255, 0.6);
+            /* DAHA ŞEFFAF CAM AYARI */
+            --glass-bg: rgba(20, 30, 40, 0.3); /* Daha koyu ama şeffaf */
+            --glass-border: 1px solid rgba(0, 242, 255, 0.15);
+            --glass-blur: blur(20px); /* Daha güçlü blur */
             --text-main: #ffffff;
         }
         
@@ -23,49 +24,49 @@
         
         body { 
             background-color: #000; color: var(--text-main); min-height: 100vh; overflow-x: hidden; position: relative;
-            /* BURAYA ARKA PLAN KASA GÖRSELİNİ KOYACAĞIZ */
+            /* KASA GÖRSELİ */
             background-image: url('https://images.unsplash.com/photo-1614064641938-3bbee52942c7?q=80&w=2070');
             background-size: cover; background-position: center; background-attachment: fixed;
         }
 
-        /* KARARTMA PERDESİ */
-        .overlay-bg { position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0, 5, 15, 0.7); z-index: 0; }
+        /* KARARTMA */
+        .overlay-bg { position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0, 5, 15, 0.5); z-index: 0; }
 
-        /* UÇUŞAN COINLER İÇİN ALAN */
+        /* UÇUŞAN COINLER ALANI */
         #coinContainer { position: fixed; top:0; left:0; width:100%; height:100%; z-index: 1; pointer-events: none; overflow: hidden; }
-        .float-coin { position: absolute; opacity: 0.4; animation: floatAnim 10s infinite ease-in-out; filter: drop-shadow(0 0 5px var(--neon)); }
+        .float-coin { position: absolute; opacity: 0.6; animation: floatAnim 12s infinite ease-in-out; }
         @keyframes floatAnim { 
-            0% { transform: translateY(0) rotate(0deg); } 
-            50% { transform: translateY(-20px) rotate(10deg); } 
-            100% { transform: translateY(0) rotate(0deg); } 
+            0% { transform: translateY(0) rotate(0deg) scale(1); } 
+            50% { transform: translateY(-40px) rotate(20deg) scale(1.05); } 
+            100% { transform: translateY(0) rotate(0deg) scale(1); } 
         }
 
-        /* CAM TASARIM (GLASSMORPHISM) */
+        /* CAM PANEL (GLASSMORPHISM) */
         .glass-panel {
             background: var(--glass-bg);
             backdrop-filter: var(--glass-blur);
             -webkit-backdrop-filter: var(--glass-blur);
             border: var(--glass-border);
             border-radius: 20px;
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
         }
 
         /* HEADER */
         header { 
             position: fixed; top: 0; width: 100%; z-index: 1000; 
-            background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(15px); border-bottom: var(--glass-border);
+            background: rgba(0, 0, 0, 0.3); backdrop-filter: blur(15px); border-bottom: var(--glass-border);
             padding: 15px 5%; display: flex; justify-content: space-between; align-items: center;
         }
         
         .logo-area { display: flex; align-items: center; gap: 10px; font-family: 'Orbitron', sans-serif; font-size: 1.2rem; font-weight: 900; letter-spacing: 2px; color: var(--neon); text-shadow: var(--neon-glow); }
 
         .btn-connect { 
-            background: linear-gradient(135deg, rgba(0, 242, 255, 0.8), rgba(0, 100, 255, 0.8)); 
+            background: linear-gradient(135deg, rgba(0, 242, 255, 0.9), rgba(0, 100, 255, 0.9)); 
             color: #fff; border: 1px solid rgba(255,255,255,0.2);
             padding: 10px 20px; border-radius: 12px; font-weight: 800; cursor: pointer; 
-            backdrop-filter: blur(5px); box-shadow: 0 0 15px rgba(0, 242, 255, 0.2);
+            backdrop-filter: blur(5px); box-shadow: 0 0 15px rgba(0, 242, 255, 0.3);
         }
-        .btn-connect:hover { transform: scale(1.05); box-shadow: 0 0 25px rgba(0, 242, 255, 0.5); }
+        .btn-connect:hover { transform: scale(1.05); box-shadow: 0 0 25px rgba(0, 242, 255, 0.6); }
 
         /* ADMIN PANEL */
         #adminPanel {
@@ -93,7 +94,7 @@
         .presale-card { padding: 30px; position: relative; overflow: hidden; }
         
         .countdown { display: flex; justify-content: center; gap: 10px; margin: 20px 0; }
-        .time-box { background: rgba(0, 0, 0, 0.4); padding: 10px 15px; border-radius: 10px; font-family: 'Orbitron'; min-width: 60px; border: 1px solid rgba(255,255,255,0.1); text-align: center; }
+        .time-box { background: rgba(0, 0, 0, 0.4); padding: 10px 15px; border-radius: 10px; font-family: 'Orbitron'; min-width: 60px; border: var(--glass-border); text-align: center; }
         .time-label { font-size: 0.6rem; color: var(--neon); display: block; margin-top: 3px; }
 
         .pay-tabs { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-bottom: 20px; }
@@ -103,7 +104,7 @@
         .pay-tab.active img { filter: grayscale(0%); }
         .pay-tab.test-tab { border-color: #ffaa00; color: #ffaa00; }
 
-        .input-group input { width: 100%; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); padding: 18px; border-radius: 12px; color: white; font-size: 1.2rem; outline: none; text-align: right; }
+        .input-group input { width: 100%; background: rgba(0,0,0,0.4); border: var(--glass-border); padding: 18px; border-radius: 12px; color: white; font-size: 1.2rem; outline: none; text-align: right; }
         .input-group label { margin-bottom: 8px; display: block; font-size: 0.8rem; color: #aaa; }
 
         /* USER BALANCE DISPLAY */
@@ -161,7 +162,7 @@
 
     <header>
         <div class="logo-area">
-            <img src="https://cdn-icons-png.flaticon.com/512/2332/2332039.png" width="30"> 
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%2300f2ff;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%230066ff;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='50' cy='50' r='48' fill='none' stroke='url(%23g)' stroke-width='2'/%3E%3Cpath d='M50 20 L80 35 L80 65 L50 80 L20 65 L20 35 Z' fill='none' stroke='url(%23g)' stroke-width='2'/%3E%3Ctext x='50' y='62' font-family='Orbitron, sans-serif' font-size='32' font-weight='900' fill='url(%23g)' text-anchor='middle'%3ES%3C/text%3E%3C/svg%3E" width="35" style="filter: drop-shadow(0 0 5px var(--neon));"> 
             SENTINEL
         </div>
         <div style="display:flex; align-items:center; gap:15px;">
@@ -226,7 +227,10 @@
                 <div class="pay-tab" onclick="setTab('bnb', this)"><img src="https://cryptologos.cc/logos/bnb-bnb-logo.png"> BNB</div>
                 <div class="pay-tab" onclick="setTab('usdc', this)"><img src="https://cryptologos.cc/logos/usd-coin-usdc-logo.png"> USDC</div>
                 <div class="pay-tab" onclick="setTab('btc', this)"><img src="https://cryptologos.cc/logos/bitcoin-btc-logo.png"> BTC</div>
-                <div class="pay-tab test-tab" onclick="setTab('sepolia', this)"><i class="fa fa-vial"></i> TEST</div>
+                <div class="pay-tab test-tab" onclick="setTab('sepolia', this)">
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23ffaa00;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%23ffdd00;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='50' cy='50' r='48' fill='none' stroke='url(%23g)' stroke-width='2'/%3E%3Cpath d='M50 20 L80 35 L80 65 L50 80 L20 65 L20 35 Z' fill='none' stroke='url(%23g)' stroke-width='2'/%3E%3Ctext x='50' y='62' font-family='Orbitron, sans-serif' font-size='32' font-weight='900' fill='url(%23g)' text-anchor='middle'%3ES%3C/text%3E%3C/svg%3E" style="filter: drop-shadow(0 0 3px #ffaa00);">
+                    TEST
+                </div>
             </div>
 
             <div class="input-group">
@@ -251,11 +255,11 @@
         // --- AYARLAR ---
         const OWNER_ADDRESS = "0xd81f6b82683b4b8a2a08998dBcf33ebC5498715D"; 
         
-        // --- 3D COIN OLUŞTURUCU ---
-        // Bu script ekranın arkasına rastgele uçan coinler ekler
+        // --- 3D COIN OLUŞTURUCU (SNTL LOGOSU) ---
         function createCoins() {
             const container = document.getElementById('coinContainer');
-            const coinImg = "https://cdn-icons-png.flaticon.com/512/2332/2332039.png"; // BURAYA TOKEN LOGO URL'Nİ KOYABİLİRSİN
+            // SNTL SVG LOGO DATA URI
+            const coinImg = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%2300f2ff;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%230066ff;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='50' cy='50' r='48' fill='rgba(0,242,255,0.1)' stroke='url(%23g)' stroke-width='2'/%3E%3Cpath d='M50 20 L80 35 L80 65 L50 80 L20 65 L20 35 Z' fill='none' stroke='url(%23g)' stroke-width='2'/%3E%3Ctext x='50' y='62' font-family='Orbitron, sans-serif' font-size='32' font-weight='900' fill='url(%23g)' text-anchor='middle'%3ES%3C/text%3E%3C/svg%3E";
             
             for(let i=0; i<15; i++) {
                 let img = document.createElement('img');
@@ -263,8 +267,8 @@
                 img.className = 'float-coin';
                 img.style.left = Math.random() * 100 + 'vw';
                 img.style.top = Math.random() * 100 + 'vh';
-                img.style.width = (Math.random() * 50 + 20) + 'px'; // 20px ile 70px arası boyut
-                img.style.animationDuration = (Math.random() * 10 + 10) + 's'; // Farklı hızlar
+                img.style.width = (Math.random() * 40 + 20) + 'px'; // Boyut
+                img.style.animationDuration = (Math.random() * 15 + 12) + 's'; // Hız
                 img.style.animationDelay = (Math.random() * 5) + 's';
                 container.appendChild(img);
             }
@@ -276,14 +280,14 @@
         let isConnected = false;
         let sntlPrice = 0.03;
         let totalSeconds = 380000;
-        let userBalance = 0; // Kullanıcının aldığı SNTL miktarı (Simülasyon)
+        let userBalance = 0; 
 
         // --- BAŞLANGIÇ ---
         window.onload = function() {
             createCoins();
             setInterval(() => { totalSeconds--; updateTimer(); }, 1000);
             
-            // Eğer daha önce alım yaptıysa LocalStorage'dan hatırla
+            // LocalStorage'dan hatırla
             let savedBal = localStorage.getItem('sntlBalance');
             if(savedBal) { userBalance = parseFloat(savedBal); updateBalanceUI(); }
         };
@@ -333,7 +337,7 @@
 
         function disconnect() { if(confirm("Disconnect?")) location.reload(); }
 
-        // --- SATIN ALMA (SIMULASYON) ---
+        // --- SATIN ALMA ---
         function setTab(c, el) {
             currentCurr = c;
             document.querySelectorAll('.pay-tab').forEach(t => t.classList.remove('active'));
@@ -355,7 +359,6 @@
 
             try {
                 if(currentCurr === 'sepolia') {
-                   // Test ağına zorla
                    try { await window.ethereum.request({ method: 'wallet_switchEthereumChain', params: [{ chainId: '0xaa36a7' }] }); } catch(e) {}
                 }
 
@@ -366,11 +369,9 @@
                     value: ethers.utils.parseEther(amountIn)
                 });
                 
-                // --- İŞLEM BAŞARILI OLUNCA BAKİYE EKLE ---
+                // --- BAKİYE GÜNCELLE ---
                 let tokensBought = Math.floor((amountIn * rates[currentCurr]) / sntlPrice);
                 userBalance += tokensBought;
-                
-                // Tarayıcıya kaydet (Claim sistemi simülasyonu)
                 localStorage.setItem('sntlBalance', userBalance);
                 
                 updateBalanceUI();
