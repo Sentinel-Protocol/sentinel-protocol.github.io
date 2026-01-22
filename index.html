@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>SENTINEL PROTOCOL | Future of DeFi Security</title>
     
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 500 500'%3E%3Cdefs%3E%3ClinearGradient id='metal' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23ffffff;stop-opacity:1' /%3E%3Cstop offset='50%25' style='stop-color:%23a0a0a0;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%23ffffff;stop-opacity:1' /%3E%3C/linearGradient%3E%3ClinearGradient id='blueglow' x1='0%25' y1='0%25' x2='0%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23000000;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%230055ff;stop-opacity:1' /%3E%3C/linearGradient%3E%3Cfilter id='shadow'%3E%3CfeDropShadow dx='0' dy='5' stdDeviation='10' flood-color='%2300aaff'/%3E%3C/filter%3E%3C/defs%3E%3Crect width='500' height='500' fill='url(%23blueglow)' rx='100' /%3E%3Cpath d='M250 80 L420 160 L390 350 C380 420 250 460 250 460 C250 460 120 420 110 350 L80 160 Z' fill='none' stroke='url(%23metal)' stroke-width='30' filter='url(%23shadow)' /%3E%3Cpath d='M300 180 L200 180 L180 240 L300 240 L320 300 L180 300 L160 360 L360 360 L380 300 L240 300 L220 240 L360 240 Z' fill='url(%23metal)' filter='url(%23shadow)' /%3E%3C/svg%3E">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 500 500'%3E%3Cdefs%3E%3ClinearGradient id='metal' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23ffffff;stop-opacity:1' /%3E%3Cstop offset='50%25' style='stop-color:%23d0d0d0;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%23ffffff;stop-opacity:1' /%3E%3C/linearGradient%3E%3Cfilter id='shadow'%3E%3CfeDropShadow dx='0' dy='4' stdDeviation='8' flood-color='rgba(0,0,0,0.5)'/%3E%3C/filter%3E%3C/defs%3E%3C!-- Arka Plan Mavi Daire --%3E%3Ccircle cx='250' cy='250' r='240' fill='%230055ff' stroke='white' stroke-width='10' /%3E%3C!-- NET S HARFİ --%3E%3Cpath d='M350 130 L180 130 L150 220 L320 220 L340 280 L170 280 L150 370 L320 370 L350 280 L380 280 L350 400 L120 400 L150 250 L120 250 L150 100 L380 100 Z' fill='url(%23metal)' filter='url(%23shadow)' /%3E%3C/svg%3E">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/5.7.2/ethers.umd.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -16,7 +16,7 @@
             --primary: #0088ff; 
             --primary-glow: 0 0 25px rgba(0, 136, 255, 0.6);
             --bg-dark: #020617;
-            --glass: rgba(10, 15, 30, 0.8);
+            --glass: rgba(10, 15, 30, 0.9);
             --border: 1px solid rgba(0, 136, 255, 0.3);
             --text-main: #ffffff;
         }
@@ -28,15 +28,15 @@
             background-image: radial-gradient(circle at 50% 50%, #0a1025 0%, #000000 100%);
         }
 
-        /* KAYAN YAZI (MARQUEE) */
-        .marquee-container { background: linear-gradient(90deg, #000, #002244, #000); padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.1); overflow: hidden; white-space: nowrap; position: fixed; top:0; width:100%; z-index: 1002; }
-        .marquee-text { display: inline-block; animation: marquee 20s linear infinite; color: var(--primary); font-weight: bold; font-family: 'Orbitron'; font-size: 0.8rem; letter-spacing: 2px; }
+        /* KAYAN YAZI */
+        .marquee-container { background: #000; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.1); overflow: hidden; white-space: nowrap; position: fixed; top:0; width:100%; z-index: 1002; }
+        .marquee-text { display: inline-block; animation: marquee 25s linear infinite; color: var(--primary); font-weight: bold; font-family: 'Orbitron'; font-size: 0.8rem; letter-spacing: 2px; }
         @keyframes marquee { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
 
         /* HEADER */
         header { 
             position: fixed; top: 35px; width: 100%; z-index: 1000; 
-            background: rgba(2, 6, 23, 0.8); backdrop-filter: blur(15px); border-bottom: var(--border);
+            background: rgba(2, 6, 23, 0.85); backdrop-filter: blur(15px); border-bottom: var(--border);
             padding: 15px 5%; display: flex; justify-content: space-between; align-items: center;
         }
         .logo-area { display: flex; align-items: center; gap: 12px; font-family: 'Orbitron', sans-serif; font-size: 1.3rem; font-weight: 900; letter-spacing: 1px; color: white; }
@@ -48,7 +48,7 @@
         }
         .btn-connect:hover { transform: scale(1.05); }
 
-        /* CÜZDAN DROPDOWN */
+        /* CÜZDAN MENÜSÜ */
         .user-wallet-box { position: relative; }
         .addr-btn { border: 1px solid var(--primary); color: var(--primary); padding: 10px 20px; border-radius: 8px; cursor: pointer; background: rgba(0, 136, 255, 0.1); font-family: 'Orbitron'; font-weight: bold; }
         .wallet-dropdown { 
@@ -60,7 +60,7 @@
         .menu-item:hover { background: rgba(255,255,255,0.1); color: white; }
         .menu-item.disconnect { color: #ff4444; border-top: 1px solid rgba(255,255,255,0.1); margin-top: 5px; }
 
-        /* SIDEBAR */
+        /* SIDEBAR (MENÜ) */
         .hamburger { font-size: 1.6rem; color: white; cursor: pointer; margin-left: 20px; }
         .sidebar { 
             position: fixed; top:0; right:-320px; width:300px; height:100%; 
@@ -70,19 +70,18 @@
         .sidebar.active { right: 0; }
         .sidebar-overlay { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:2000; display:none; backdrop-filter: blur(5px); }
         
-        .side-link { color: #ccc; text-decoration: none; padding: 15px; border-bottom: 1px solid rgba(255,255,255,0.05); display: block; font-size: 1.1rem; font-weight: 500; }
-        .side-link:hover { color: var(--primary); padding-left: 10px; border-color: var(--primary); }
+        .side-link { color: #ccc; text-decoration: none; padding: 15px; border-bottom: 1px solid rgba(255,255,255,0.05); display: block; font-size: 1.1rem; font-weight: 500; cursor: pointer; }
+        .side-link:hover { color: var(--primary); padding-left: 10px; border-color: var(--primary); background: rgba(255,255,255,0.02); }
         
         .socials { display: flex; gap: 15px; margin-top: auto; justify-content: center; padding-top: 20px; }
         .social-icon { width: 45px; height: 45px; background: rgba(255,255,255,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; text-decoration: none; border: 1px solid transparent; }
         .social-icon:hover { background: var(--primary); border-color: white; transform: translateY(-3px); }
 
-        /* DİL BUTONLARI */
         .lang-bar { display: flex; gap: 10px; margin-bottom: 20px; justify-content: center; }
         .lang-flag { width: 30px; height: 20px; cursor: pointer; opacity: 0.5; transition: 0.2s; border-radius: 3px; }
         .lang-flag.active, .lang-flag:hover { opacity: 1; transform: scale(1.1); box-shadow: 0 0 10px white; }
 
-        /* MAIN CONTENT */
+        /* HERO & SECTIONS */
         .main-container { 
             position: relative; z-index: 10;
             display: grid; grid-template-columns: 1fr; gap: 50px; 
@@ -94,15 +93,12 @@
         .hero-text h1 span { color: var(--primary); }
         .hero-text p { color: #bbb; line-height: 1.7; margin-bottom: 30px; font-size: 1.2rem; max-width: 90%; }
 
-        /* PARTNER BANDI */
         .partners { display: flex; gap: 20px; margin-top: 40px; opacity: 0.7; }
         .partner-logo { height: 30px; filter: grayscale(100%); transition: 0.3s; }
         .partner-logo:hover { filter: grayscale(0%); }
 
         /* PRESALE CARD */
         .presale-card { background: var(--glass); border: var(--border); border-radius: 25px; padding: 35px; box-shadow: 0 20px 50px rgba(0,0,0,0.6); position: relative; overflow: hidden; }
-        .presale-card::before { content:''; position: absolute; top:0; left:0; width:100%; height:5px; background: linear-gradient(90deg, var(--primary), #fff, var(--primary)); }
-
         .timer-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 20px 0; }
         .timer-box { background: rgba(0,0,0,0.4); padding: 12px; border-radius: 10px; text-align: center; border: 1px solid rgba(255,255,255,0.05); }
         .timer-num { font-family: 'Orbitron'; font-size: 1.8rem; font-weight: bold; color: white; }
@@ -118,37 +114,35 @@
         .tab.active { border-color: var(--primary); background: rgba(0, 136, 255, 0.15); color: white; box-shadow: 0 0 10px rgba(0,136,255,0.2); }
 
         .input-box { background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); padding: 18px; border-radius: 12px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
-        .input-box label { font-size: 0.8rem; color: #888; }
         .input-box input { background: transparent; border: none; color: white; font-size: 1.4rem; text-align: right; outline: none; width: 60%; font-family: 'Orbitron'; }
 
-        /* DASHBOARD */
         .user-dashboard { 
             display: none; margin-top: 20px; background: rgba(0, 255, 100, 0.05); border: 1px solid rgba(0, 255, 100, 0.2); 
             border-radius: 12px; padding: 20px; text-align: center; animation: fadeIn 0.5s;
         }
-        .dash-val { font-family: 'Orbitron'; font-weight: bold; color: #00ff88; font-size: 1.2rem; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* ROADMAP */
-        .roadmap-section { padding: 80px 5%; background: rgba(0,0,0,0.3); border-top: 1px solid rgba(255,255,255,0.05); }
-        .roadmap-container { 
-             max-width: 1200px; margin: 0 auto; 
-        }
-        .roadmap-title { font-family: 'Orbitron'; font-size: 2.5rem; text-align: center; margin-bottom: 60px; color: white; }
-        .roadmap-line-container { position: relative; height: 4px; background: #333; margin-bottom: 40px; border-radius: 2px; display: flex; align-items: center; }
-        #roadmapProgress { position: absolute; left: 0; top: 0; height: 100%; width: 0%; background: var(--primary); box-shadow: 0 0 15px var(--primary); transition: width 1s; }
+        /* SECTION STYLES */
+        .section-box { padding: 100px 5%; border-top: 1px solid rgba(255,255,255,0.05); }
+        .sec-title { font-family: 'Orbitron'; font-size: 2.5rem; text-align: center; margin-bottom: 50px; color: white; }
         
-        .stages-row { display: flex; justify-content: space-between; position: relative; top: -23px; }
-        .stage-point { width: 50px; height: 50px; background: #111; border: 3px solid #444; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; color: #666; font-family: 'Orbitron'; position: relative; z-index: 2; transition: 0.3s; cursor: default; }
+        /* ROADMAP */
+        .roadmap-line-container { position: relative; height: 4px; background: #333; margin-bottom: 40px; border-radius: 2px; display: flex; align-items: center; max-width:1000px; margin: 0 auto 40px auto; }
+        #roadmapProgress { position: absolute; left: 0; top: 0; height: 100%; width: 0%; background: var(--primary); box-shadow: 0 0 15px var(--primary); transition: width 1s; }
+        .stages-row { width:100%; display:flex; justify-content:space-between; position:absolute; top:-23px; }
+        .stage-point { width: 50px; height: 50px; background: #111; border: 3px solid #444; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; color: #666; font-family: 'Orbitron'; position: relative; z-index: 2; transition: 0.3s; }
         .stage-point.active { border-color: var(--primary); color: var(--primary); background: #000; box-shadow: 0 0 20px var(--primary); }
         
-        .stage-details { display: flex; justify-content: space-between; margin-top: 10px; }
+        .stage-details { display: flex; justify-content: space-between; max-width: 1000px; margin: 0 auto; }
         .stage-card { width: 18%; background: var(--glass); padding: 15px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.05); opacity: 0.5; font-size: 0.8rem; }
         .stage-card.active { opacity: 1; border-color: var(--primary); }
-        .stage-head { color: var(--primary); font-weight: bold; margin-bottom: 5px; font-family: 'Orbitron'; }
 
-        /* FOOTER */
-        footer { border-top: 1px solid rgba(255,255,255,0.05); padding: 50px 5%; text-align: center; background: #02040a; color: #666; font-size: 0.9rem; margin-top: 50px; }
+        /* FEATURES GRID */
+        .feat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; max-width: 1200px; margin: 0 auto; }
+        .feat-box { background: rgba(255,255,255,0.03); padding: 30px; border-radius: 15px; text-align: center; border: 1px solid rgba(255,255,255,0.05); transition: 0.3s; }
+        .feat-box:hover { transform: translateY(-10px); border-color: var(--primary); }
+        .feat-icon { font-size: 2.5rem; color: var(--primary); margin-bottom: 20px; }
+
+        footer { border-top: 1px solid rgba(255,255,255,0.05); padding: 50px 5%; text-align: center; background: #02040a; color: #666; font-size: 0.9rem; }
 
         /* ADMIN */
         #adminPanel { display: none; position: fixed; bottom: 0; left: 0; width: 100%; background: #000; border-top: 2px solid #ff4444; padding: 20px; z-index: 9999; }
@@ -194,7 +188,7 @@
 
     <header>
         <div class="logo-area">
-            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 500 500'%3E%3Cdefs%3E%3ClinearGradient id='metal' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23ffffff;stop-opacity:1' /%3E%3Cstop offset='50%25' style='stop-color:%23a0a0a0;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%23ffffff;stop-opacity:1' /%3E%3C/linearGradient%3E%3ClinearGradient id='blueglow' x1='0%25' y1='0%25' x2='0%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23000000;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%230055ff;stop-opacity:1' /%3E%3C/linearGradient%3E%3Cfilter id='shadow'%3E%3CfeDropShadow dx='0' dy='5' stdDeviation='10' flood-color='%2300aaff'/%3E%3C/filter%3E%3C/defs%3E%3Crect width='500' height='500' fill='url(%23blueglow)' rx='100' /%3E%3Cpath d='M250 80 L420 160 L390 350 C380 420 250 460 250 460 C250 460 120 420 110 350 L80 160 Z' fill='none' stroke='url(%23metal)' stroke-width='30' filter='url(%23shadow)' /%3E%3Cpath d='M300 180 L200 180 L180 240 L300 240 L320 300 L180 300 L160 360 L360 360 L380 300 L240 300 L220 240 L360 240 Z' fill='url(%23metal)' filter='url(%23shadow)' /%3E%3C/svg%3E">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 500 500'%3E%3Cdefs%3E%3ClinearGradient id='metal' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23ffffff;stop-opacity:1' /%3E%3Cstop offset='50%25' style='stop-color:%23d0d0d0;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%23ffffff;stop-opacity:1' /%3E%3C/linearGradient%3E%3Cfilter id='shadow'%3E%3CfeDropShadow dx='0' dy='4' stdDeviation='8' flood-color='rgba(0,0,0,0.5)'/%3E%3C/filter%3E%3C/defs%3E%3Ccircle cx='250' cy='250' r='240' fill='%230055ff' stroke='white' stroke-width='10' /%3E%3Cpath d='M350 130 L180 130 L150 220 L320 220 L340 280 L170 280 L150 370 L320 370 L350 280 L380 280 L350 400 L120 400 L150 250 L120 250 L150 100 L380 100 Z' fill='url(%23metal)' filter='url(%23shadow)' /%3E%3C/svg%3E">
             SENTINEL PROTOCOL
         </div>
         <div style="display:flex; align-items:center; gap:15px;">
@@ -220,14 +214,12 @@
             <img src="https://flagcdn.com/w40/gb.png" class="lang-flag active" onclick="setLang('en', this)">
             <img src="https://flagcdn.com/w40/tr.png" class="lang-flag" onclick="setLang('tr', this)">
             <img src="https://flagcdn.com/w40/de.png" class="lang-flag" onclick="setLang('de', this)">
-            <img src="https://flagcdn.com/w40/fr.png" class="lang-flag" onclick="setLang('fr', this)">
-            <img src="https://flagcdn.com/w40/sa.png" class="lang-flag" onclick="setLang('ar', this)">
         </div>
 
-        <a href="#home" class="side-link" onclick="toggleSidebar()" data-lang="home">Home</a>
-        <a href="#vault" class="side-link" onclick="toggleSidebar()" data-lang="vault">Features</a>
-        <a href="#roadmap" class="side-link" onclick="toggleSidebar()" data-lang="roadmap">Roadmap</a>
-        <a href="#whitepaper" class="side-link" onclick="toggleSidebar()" data-lang="wp">Whitepaper</a>
+        <a href="#home" class="side-link" onclick="toggleSidebar()">Home</a>
+        <a href="#features" class="side-link" onclick="toggleSidebar()">Features</a>
+        <a href="#roadmap" class="side-link" onclick="toggleSidebar()">Roadmap</a>
+        <a href="#whitepaper" class="side-link" onclick="toggleSidebar()">Whitepaper</a>
 
         <div class="socials">
             <a href="#" class="social-icon"><i class="fa-brands fa-x-twitter"></i></a>
@@ -243,21 +235,20 @@
             <p data-lang="hero_desc">The world's first decentralized inheritance protocol. Protect your assets with military-grade encryption and automated fail-safe mechanisms.</p>
             
             <div class="partners">
-                <img src="https://cryptologos.cc/logos/bnb-bnb-logo.png" class="partner-logo" title="BSC">
-                <img src="https://cryptologos.cc/logos/ethereum-eth-logo.png" class="partner-logo" title="Ethereum">
-                <img src="https://cryptologos.cc/logos/polygon-matic-logo.png" class="partner-logo" title="Polygon">
-                <img src="https://cryptologos.cc/logos/chainlink-link-logo.png" class="partner-logo" title="Chainlink">
-                <i class="fa fa-shield-halved" style="font-size:30px; color:#555;" title="Certik Audited"></i>
+                <img src="https://cryptologos.cc/logos/bnb-bnb-logo.png" class="partner-logo">
+                <img src="https://cryptologos.cc/logos/ethereum-eth-logo.png" class="partner-logo">
+                <img src="https://cryptologos.cc/logos/polygon-matic-logo.png" class="partner-logo">
+                <img src="https://cryptologos.cc/logos/chainlink-link-logo.png" class="partner-logo">
             </div>
         </div>
 
         <div class="presale-card">
             <div style="text-align:center; color:white; font-family:'Orbitron'; margin-bottom:15px; letter-spacing:1px;" data-lang="ends_in">PRESALE STAGE 1 ENDS IN</div>
             <div class="timer-grid">
-                <div class="timer-box"><div class="timer-num" id="d">00</div><div class="timer-lbl">DAYS</div></div>
-                <div class="timer-box"><div class="timer-num" id="h">00</div><div class="timer-lbl">HRS</div></div>
-                <div class="timer-box"><div class="timer-num" id="m">00</div><div class="timer-lbl">MIN</div></div>
-                <div class="timer-box"><div class="timer-num" id="s">00</div><div class="timer-lbl">SEC</div></div>
+                <div class="timer-box"><div class="timer-num" id="d">04</div><div class="timer-lbl">DAYS</div></div>
+                <div class="timer-box"><div class="timer-num" id="h">12</div><div class="timer-lbl">HRS</div></div>
+                <div class="timer-box"><div class="timer-num" id="m">30</div><div class="timer-lbl">MIN</div></div>
+                <div class="timer-box"><div class="timer-num" id="s">45</div><div class="timer-lbl">SEC</div></div>
             </div>
 
             <div class="progress-area">
@@ -295,12 +286,33 @@
         </div>
     </div>
 
-    <div class="roadmap-section" id="roadmap">
-        <div class="roadmap-title">PROJECT <span style="color:var(--primary)">ROADMAP</span></div>
+    <div class="section-box" id="features">
+        <h2 class="sec-title">ECOSYSTEM <span style="color:var(--primary)">FEATURES</span></h2>
+        <div class="feat-grid">
+            <div class="feat-box">
+                <i class="fa fa-shield-halved feat-icon"></i>
+                <h3>Secure Vault</h3>
+                <p style="color:#aaa; font-size:0.9rem;">Military-grade storage for your digital assets.</p>
+            </div>
+            <div class="feat-box">
+                <i class="fa fa-people-arrows feat-icon"></i>
+                <h3>Inheritance</h3>
+                <p style="color:#aaa; font-size:0.9rem;">Automated transfer to heirs if inactivity is detected.</p>
+            </div>
+            <div class="feat-box">
+                <i class="fa fa-coins feat-icon"></i>
+                <h3>Staking Rewards</h3>
+                <p style="color:#aaa; font-size:0.9rem;">Earn up to 45% APY by staking your SNTL tokens.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-box" id="roadmap">
+        <h2 class="sec-title">PROJECT <span style="color:var(--primary)">ROADMAP</span></h2>
         
         <div class="roadmap-line-container">
             <div id="roadmapProgress"></div>
-            <div class="stages-row" style="width:100%; display:flex; justify-content:space-between; position:absolute; top:-23px;">
+            <div class="stages-row">
                 <div class="stage-point active" id="p1">01</div>
                 <div class="stage-point" id="p2">02</div>
                 <div class="stage-point" id="p3">03</div>
@@ -310,32 +322,17 @@
         </div>
 
         <div class="stage-details">
-            <div class="stage-card active" id="c1">
-                <div class="stage-head">FOUNDATION</div>
-                Website Launch<br>Protocol Concept
-            </div>
-            <div class="stage-card" id="c2">
-                <div class="stage-head">PRESALE</div>
-                Public Sale<br>Audit Completed
-            </div>
-            <div class="stage-card" id="c3">
-                <div class="stage-head">LAUNCH</div>
-                DEX Listings<br>Staking Live
-            </div>
-            <div class="stage-card" id="c4">
-                <div class="stage-head">EXPANSION</div>
-                CEX Listings<br>Partnerships
-            </div>
-            <div class="stage-card" id="c5">
-                <div class="stage-head">GLOBAL</div>
-                DAO Governance<br>Cross-Chain
-            </div>
+            <div class="stage-card active" id="c1"><div class="stage-head">FOUNDATION</div>Protocol Concept<br>Website Launch</div>
+            <div class="stage-card" id="c2"><div class="stage-head">PRESALE</div>Public Sale<br>Audit Completed</div>
+            <div class="stage-card" id="c3"><div class="stage-head">LAUNCH</div>DEX Listings<br>Staking Live</div>
+            <div class="stage-card" id="c4"><div class="stage-head">EXPANSION</div>CEX Listings<br>Partnerships</div>
+            <div class="stage-card" id="c5"><div class="stage-head">GLOBAL</div>DAO Governance<br>Cross-Chain</div>
         </div>
     </div>
 
-    <div id="whitepaper" style="padding:100px 5%; text-align:center;">
-        <h2 style="font-family:'Orbitron'; color:white; margin-bottom:20px;">TECHNICAL WHITEPAPER</h2>
-        <p style="color:#aaa; max-width:600px; margin:0 auto 30px auto;">Read the full technical documentation of Sentinel Protocol, including security audits, tokenomics, and the inheritance mechanism.</p>
+    <div class="section-box" id="whitepaper" style="text-align:center;">
+        <h2 class="sec-title">TECHNICAL WHITEPAPER</h2>
+        <p style="color:#aaa; max-width:600px; margin:0 auto 30px auto;">Read the full technical documentation of Sentinel Protocol.</p>
         <button class="btn-connect" style="background:transparent; border:1px solid var(--primary);">DOWNLOAD PDF</button>
     </div>
 
@@ -343,7 +340,7 @@
         <div class="socials" style="margin-bottom:20px;">
             <a href="#" class="social-icon"><i class="fa-brands fa-x-twitter"></i></a>
             <a href="#" class="social-icon"><i class="fa-brands fa-telegram"></i></a>
-            <a href="#" class="social-icon"><i class="fa-brands fa-github"></i></a>
+            <a href="#" class="social-icon"><i class="fa-brands fa-instagram"></i></a>
         </div>
         <p>&copy; 2024 Sentinel Protocol. All Rights Reserved.</p>
     </footer>
@@ -364,7 +361,6 @@
     </div>
 
     <script>
-        // --- CONFIG ---
         const OWNER_ADDRESS = "0xd81f6b82683b4b8a2a08998dBcf33ebC5498715D";
         let rates = { eth: 2650, bnb: 600, matic: 0.80, usdc: 1, btc: 48000 };
         let curr = 'eth';
@@ -373,68 +369,60 @@
         let myTokens = 0;
         let isPaused = false;
         
-        // --- DIL SÖZLÜĞÜ (GERÇEK ÇEVİRİ) ---
         const translations = {
-            en: { connect: "CONNECT WALLET", home: "Home", vault: "Features", roadmap: "Roadmap", wp: "Whitepaper", hero_title: "SECURE YOUR <br><span>DIGITAL LEGACY</span>", hero_desc: "The world's first decentralized inheritance protocol. Protect your assets with military-grade encryption.", ends_in: "PRESALE STAGE 1 ENDS IN", pay: "You Pay", get: "You Get", buy_btn: "BUY TOKENS" },
-            tr: { connect: "CÜZDAN BAĞLA", home: "Ana Sayfa", vault: "Özellikler", roadmap: "Yol Haritası", wp: "Teknik Belge", hero_title: "DİJİTAL MİRASINI <br><span>GÜVENCEYE AL</span>", hero_desc: "Dünyanın ilk merkeziyetsiz miras protokolü. Varlıklarınızı askeri düzeyde şifreleme ile koruyun.", ends_in: "ÖN SATIŞ 1. AŞAMA BİTİŞİ", pay: "Ödenen", get: "Alınan", buy_btn: "TOKEN SATIN AL" },
-            de: { connect: "GELDBÖRSE VERBINDEN", home: "Startseite", vault: "Funktionen", roadmap: "Fahrplan", wp: "Weißbuch", hero_title: "SICHERN SIE IHR <br><span>DIGITALES ERBE</span>", hero_desc: "Das weltweit erste dezentrale Erbschaftsprotokoll. Schützen Sie Ihr Vermögen.", ends_in: "VORVERKAUF ENDET IN", pay: "Sie zahlen", get: "Sie erhalten", buy_btn: "TOKEN KAUFEN" },
-            fr: { connect: "CONNECTER PORTEFEUILLE", home: "Accueil", vault: "Fonctionnalités", roadmap: "Feuille de route", wp: "Livre blanc", hero_title: "SÉCURISEZ VOTRE <br><span>HÉRITAGE NUMÉRIQUE</span>", hero_desc: "Le premier protocole d'héritage décentralisé au monde.", ends_in: "PRÉVENTE SE TERMINE DANS", pay: "Vous payez", get: "Vous obtenez", buy_btn: "ACHETER DES JETONS" },
-            ar: { connect: "ربط المحفظة", home: "الرئيسية", vault: "الميزات", roadmap: "خارطة الطريق", wp: "الورقة البيضاء", hero_title: "أمّن إرثك <br><span>الرقمي</span>", hero_desc: "أول بروتوكول ميراث لامركزي في العالم. احمِ أصولك.", ends_in: "ينتهي البيع المسبق في", pay: "أنت تدفع", get: "أنت تحصل", buy_btn: "شراء الرموز" }
+            en: { connect: "CONNECT WALLET", hero_title: "SECURE YOUR <br><span>DIGITAL LEGACY</span>", hero_desc: "The world's first decentralized inheritance protocol.", ends_in: "PRESALE STAGE 1 ENDS IN", pay: "You Pay", get: "You Get", buy_btn: "BUY TOKENS" },
+            tr: { connect: "CÜZDAN BAĞLA", hero_title: "DİJİTAL MİRASINI <br><span>GÜVENCEYE AL</span>", hero_desc: "Dünyanın ilk merkeziyetsiz miras protokolü.", ends_in: "ÖN SATIŞ BİTİŞİ", pay: "Ödenen", get: "Alınan", buy_btn: "TOKEN SATIN AL" },
+            de: { connect: "VERBINDEN", hero_title: "SICHERN SIE IHR <br><span>DIGITALES ERBE</span>", hero_desc: "Das weltweit erste dezentrale Erbschaftsprotokoll.", ends_in: "VORVERKAUF ENDET IN", pay: "Sie zahlen", get: "Sie erhalten", buy_btn: "KAUFEN" }
         };
 
         function setLang(l, el) {
-            // Buton aktifliği
             document.querySelectorAll('.lang-flag').forEach(f => f.classList.remove('active'));
             el.classList.add('active');
-            
-            // Metinleri değiştir
             document.querySelectorAll('[data-lang]').forEach(elem => {
                 const key = elem.getAttribute('data-lang');
                 if(translations[l][key]) {
-                    // Span varsa HTML olarak, yoksa Text olarak
-                    if(elem.innerHTML.includes('<span')) {
-                        // Basit replace veya ID ile özel işlem gerekebilir, burada basit tutuyoruz
-                        // Spanlı özel başlıklar için manuel kontrol:
-                        if(key === 'hero_title') elem.innerHTML = translations[l][key];
-                        else if(key === 'pay') elem.innerHTML = translations[l][key] + ` (<span id="currLbl">${curr.toUpperCase()}</span>)`;
-                        else elem.innerText = translations[l][key];
-                    } else {
-                        elem.innerText = translations[l][key];
-                    }
+                    if(key === 'hero_title' || key === 'pay') elem.innerHTML = translations[l][key]; 
+                    else elem.innerText = translations[l][key];
                 }
             });
         }
 
-        // --- ZAMANLAYICI (HEDEF TARİH) ---
-        // Şu anki zamandan 4 gün sonrasını hedefle (Sabit kalması için)
-        const targetDate = new Date().getTime() + (4 * 24 * 60 * 60 * 1000) + (12 * 60 * 60 * 1000);
-
+        // ZAMANLAYICI
+        let time = (4 * 24 * 3600) + (12 * 3600);
         setInterval(() => {
-            const now = new Date().getTime();
-            const dist = targetDate - now;
-
-            if (dist > 0) {
-                document.getElementById('d').innerText = Math.floor(dist / (1000 * 60 * 60 * 24));
-                document.getElementById('h').innerText = Math.floor((dist % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                document.getElementById('m').innerText = Math.floor((dist % (1000 * 60 * 60)) / (1000 * 60));
-                document.getElementById('s').innerText = Math.floor((dist % (1000 * 60)) / 1000);
-            }
+            time--;
+            if(time < 0) time = 86400; 
+            document.getElementById('d').innerText = Math.floor(time/86400);
+            document.getElementById('h').innerText = Math.floor((time%86400)/3600);
+            document.getElementById('m').innerText = Math.floor((time%3600)/60);
+            document.getElementById('s').innerText = time%60;
         }, 1000);
 
-        // --- INIT ---
         window.onload = function() {
-            // LocalStorage bakiye kontrol
             let bal = localStorage.getItem('sntl_balance');
-            if(bal) { myTokens = parseInt(bal); }
-            
-            // ProgressBar Animasyon
+            if(bal) myTokens = parseInt(bal);
             setTimeout(() => { document.getElementById('progBar').style.width = "45%"; }, 500);
-            
-            // Roadmap Başlangıç
             updateRoadmap(2);
+            createCoins();
         }
 
-        // --- UI ---
+        function createCoins() {
+            const cont = document.getElementById('coinContainer');
+            if(!cont) return;
+            // S Logosunu uçuralım
+            const svgUrl = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 500 500'%3E%3Cpath d='M350 130 L180 130 L150 220 L320 220 L340 280 L170 280 L150 370 L320 370 L350 280 L380 280 L350 400 L120 400 L150 250 L120 250 L150 100 L380 100 Z' fill='rgba(0,136,255,0.3)' /%3E%3C/svg%3E";
+            
+            for(let i=0; i<10; i++){
+                let img = document.createElement('img');
+                img.src = svgUrl;
+                img.style.position='fixed'; img.style.opacity='0.2'; img.style.width='50px';
+                img.style.left = Math.random()*100+'vw'; img.style.top = Math.random()*100+'vh';
+                img.style.zIndex='0';
+                document.body.appendChild(img);
+            }
+        }
+
+        // UI
         function openModal() { document.getElementById('walletModal').style.display='flex'; }
         function closeModal() { document.getElementById('walletModal').style.display='none'; }
         function toggleSidebar() { 
@@ -448,19 +436,14 @@
             d.style.display = d.style.display === 'flex' ? 'none' : 'flex';
         }
 
-        // --- CÜZDAN ---
         async function connectWallet(type) {
-            if(type === 'metamask') {
-                if(window.ethereum) {
-                    const provider = new ethers.providers.Web3Provider(window.ethereum);
-                    const accs = await provider.send("eth_requestAccounts", []);
-                    handleLogin(accs[0]);
-                } else { alert("MetaMask not found!"); }
-            } else if (type === 'wc') {
-                // WalletConnect Simülasyonu (Gerçek kütüphane olmadığı için)
-                // Normalde burada WalletConnect Provider'ı açılır.
-                alert("WalletConnect scanned! Connecting...");
-                setTimeout(() => { handleLogin("0xWC...Connected"); }, 1500);
+            if(type === 'metamask' && window.ethereum) {
+                const provider = new ethers.providers.Web3Provider(window.ethereum);
+                const accs = await provider.send("eth_requestAccounts", []);
+                handleLogin(accs[0]);
+            } else {
+                // WalletConnect Simülasyon
+                setTimeout(() => { handleLogin("0xWC...Connected"); }, 1000);
             }
         }
 
@@ -470,29 +453,16 @@
             document.getElementById('connectBtn').style.display = 'none';
             document.getElementById('userMenu').style.display = 'block';
             document.getElementById('userAddrDisplay').innerText = addr.substring(0,6) + "...";
-            
-            // Bakiye varsa göster
             if(myTokens > 0) {
                 document.getElementById('userDashboard').style.display = 'block';
                 document.getElementById('mySntl').innerText = myTokens.toLocaleString();
             }
-
-            if(addr.toLowerCase() === OWNER_ADDRESS.toLowerCase()) {
-                document.getElementById('adminPanel').style.display = 'block';
-            }
+            if(addr.toLowerCase() === OWNER_ADDRESS.toLowerCase()) document.getElementById('adminPanel').style.display = 'block';
         }
 
-        function disconnect() {
-            account = null;
-            location.reload();
-        }
-        function copyAddress() {
-            navigator.clipboard.writeText(account);
-            alert("Address Copied!");
-            toggleDropdown();
-        }
+        function disconnect() { account = null; location.reload(); }
+        function copyAddress() { navigator.clipboard.writeText(account); alert("Copied!"); toggleDropdown(); }
 
-        // --- SATIN ALMA ---
         function setCurr(c, el) {
             curr = c;
             document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
@@ -512,71 +482,38 @@
             let val = document.getElementById('amtIn').value;
             if(!val || val <= 0) return;
 
-            if(curr === 'btc') { alert("Please send BTC manually to the vault address."); return; }
-
             try {
-                // Sadece ETH/BNB/MATIC için gerçek işlem tetikler
-                // WC simülasyonu için 'fake' işlem
-                if(account.startsWith("0xWC")) {
-                    finishBuy(val);
-                } else {
+                if(!account.startsWith("0xWC")) {
                     const provider = new ethers.providers.Web3Provider(window.ethereum);
                     const signer = provider.getSigner();
-                    const tx = await signer.sendTransaction({
-                        to: OWNER_ADDRESS,
-                        value: ethers.utils.parseEther(val)
-                    });
-                    finishBuy(val, tx.hash);
+                    const tx = await signer.sendTransaction({ to: OWNER_ADDRESS, value: ethers.utils.parseEther(val) });
                 }
-            } catch(e) {
-                console.log(e);
-                alert("Transaction Cancelled");
-            }
+                finishBuy(val);
+            } catch(e) { alert("Transaction Cancelled"); }
         }
 
-        function finishBuy(val, hash = "0x...") {
+        function finishBuy(val) {
             let tokens = Math.floor((val * rates[curr]) / price);
             myTokens += tokens;
             localStorage.setItem('sntl_balance', myTokens);
-            
             document.getElementById('userDashboard').style.display = 'block';
             document.getElementById('mySntl').innerText = myTokens.toLocaleString();
-            
-            const btn = document.getElementById('buyBtn');
-            btn.innerHTML = `SUCCESS! +${tokens.toLocaleString()} SNTL`;
-            btn.style.background = "#00ff88";
-            btn.style.color = "black";
-            
-            setTimeout(() => {
-                btn.innerHTML = "BUY TOKENS";
-                btn.style.background = "linear-gradient(135deg, var(--primary), #0044cc)";
-                btn.style.color = "white";
-            }, 3000);
-            
-            alert("Payment Successful!\nTokens allocated to your dashboard.");
+            alert("SUCCESS! Tokens allocated.");
         }
 
-        // --- ADMIN & ROADMAP ---
         function updateSite() {
-            let raised = document.getElementById('admRaised').value;
-            let p = document.getElementById('admPrice').value;
+            let r = document.getElementById('admRaised').value;
             let pr = document.getElementById('admProg').value;
             let st = document.getElementById('admStage').value;
-
-            document.getElementById('raisedTxt').innerText = "Raised: $" + Number(raised).toLocaleString();
+            document.getElementById('raisedTxt').innerText = "Raised: $" + Number(r).toLocaleString();
             document.getElementById('progBar').style.width = pr + "%";
-            price = p;
-            
             updateRoadmap(st);
-            alert("Site Updated!");
+            alert("Updated!");
         }
 
         function updateRoadmap(stage) {
-            // Stage 1=20%, 2=40%, 3=60%, 4=80%, 5=100%
             let w = (stage * 20) + "%";
             document.getElementById('roadmapProgress').style.width = w;
-
-            // Noktaları Aktif Et
             for(let i=1; i<=5; i++) {
                 document.getElementById('p'+i).classList.remove('active');
                 document.getElementById('c'+i).classList.remove('active');
@@ -588,16 +525,8 @@
         function togglePause() {
             isPaused = !isPaused;
             const btn = document.getElementById('buyBtn');
-            const pBtn = document.getElementById('pauseBtn');
-            if(isPaused) {
-                btn.classList.add('paused');
-                btn.innerText = "SALE PAUSED";
-                pBtn.innerText = "RESUME";
-            } else {
-                btn.classList.remove('paused');
-                btn.innerText = "BUY TOKENS";
-                pBtn.innerText = "PAUSE";
-            }
+            btn.innerText = isPaused ? "SALE PAUSED" : "BUY TOKENS";
+            btn.style.background = isPaused ? "#555" : "linear-gradient(135deg, var(--primary), #0044cc)";
         }
     </script>
 </body>
