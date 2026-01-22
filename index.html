@@ -1,10 +1,12 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>SENTINEL | Secure Vault & Presale</title>
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%2300f2ff;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%230066ff;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='50' cy='50' r='48' fill='%23000' stroke='url(%23g)' stroke-width='2'/%3E%3Cpath d='M50 20 L80 35 L80 65 L50 80 L20 65 L20 35 Z' fill='none' stroke='url(%23g)' stroke-width='2'/%3E%3Ctext x='50' y='62' font-family='Orbitron, sans-serif' font-size='32' font-weight='900' fill='url(%23g)' text-anchor='middle'%3ES%3C/text%3E%3C/svg%3E">
+    <title>SENTINEL PROTOCOL | Future of DeFi Security</title>
+    
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 500 500'%3E%3Cdefs%3E%3ClinearGradient id='grad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%2300f2ff;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%230066ff;stop-opacity:1' /%3E%3C/linearGradient%3E%3Cfilter id='glow'%3E%3CfeGaussianBlur stdDeviation='15' result='coloredBlur'/%3E%3CfeMerge%3E%3CfeMergeNode in='coloredBlur'/%3E%3CfeMergeNode in='SourceGraphic'/%3E%3C/feMerge%3E%3C/filter%3E%3C/defs%3E%3C!-- Main Shield Body --%3E%3Cpath d='M250 50 L450 120 L450 250 C450 380 350 480 250 500 C150 480 50 380 50 250 L50 120 Z' fill='rgba(0,10,20,0.9)' stroke='url(%23grad)' stroke-width='15' filter='url(%23glow)'/%3E%3C!-- Inner S Circuit --%3E%3Cpath d='M320 150 L180 150 L150 220 L280 220 L300 280 L150 280 L150 380 L350 380 L380 280 L250 280 L230 220 L380 220 Z' fill='none' stroke='url(%23grad)' stroke-width='12' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='250' cy='100' r='10' fill='%2300f2ff'/%3E%3Ccircle cx='250' cy='450' r='10' fill='%2300f2ff'/%3E%3C/svg%3E">
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/5.7.2/ethers.umd.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&family=Orbitron:wght@500;900&display=swap" rel="stylesheet">
@@ -12,11 +14,10 @@
     <style>
         :root { 
             --neon: #00f2ff; 
-            --neon-glow: 0 0 15px rgba(0, 242, 255, 0.6);
-            /* DAHA ŞEFFAF CAM AYARI */
-            --glass-bg: rgba(20, 30, 40, 0.3); /* Daha koyu ama şeffaf */
-            --glass-border: 1px solid rgba(0, 242, 255, 0.15);
-            --glass-blur: blur(20px); /* Daha güçlü blur */
+            --neon-glow: 0 0 20px rgba(0, 242, 255, 0.4);
+            --glass-bg: rgba(10, 20, 30, 0.4); /* DAHA ŞEFFAF */
+            --glass-border: 1px solid rgba(0, 242, 255, 0.2);
+            --glass-blur: blur(15px);
             --text-main: #ffffff;
         }
         
@@ -24,202 +25,196 @@
         
         body { 
             background-color: #000; color: var(--text-main); min-height: 100vh; overflow-x: hidden; position: relative;
-            /* KASA GÖRSELİ */
-            background-image: url('https://images.unsplash.com/photo-1614064641938-3bbee52942c7?q=80&w=2070');
+            background-image: url('https://images.unsplash.com/photo-1639322537228-f710d846310a?q=80&w=2000'); /* KASA GÖRSELİ */
             background-size: cover; background-position: center; background-attachment: fixed;
         }
 
-        /* KARARTMA */
-        .overlay-bg { position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0, 5, 15, 0.5); z-index: 0; }
-
-        /* UÇUŞAN COINLER ALANI */
+        .overlay-bg { position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0, 0, 0, 0.6); z-index: 0; }
+        
+        /* UÇUŞAN COINLER */
         #coinContainer { position: fixed; top:0; left:0; width:100%; height:100%; z-index: 1; pointer-events: none; overflow: hidden; }
-        .float-coin { position: absolute; opacity: 0.6; animation: floatAnim 12s infinite ease-in-out; }
+        .float-coin { position: absolute; opacity: 0.5; animation: floatAnim 15s infinite ease-in-out; filter: drop-shadow(0 0 10px var(--neon)); }
         @keyframes floatAnim { 
-            0% { transform: translateY(0) rotate(0deg) scale(1); } 
-            50% { transform: translateY(-40px) rotate(20deg) scale(1.05); } 
-            100% { transform: translateY(0) rotate(0deg) scale(1); } 
+            0% { transform: translateY(0) rotate(0deg); } 
+            50% { transform: translateY(-30px) rotate(15deg); } 
+            100% { transform: translateY(0) rotate(0deg); } 
         }
 
-        /* CAM PANEL (GLASSMORPHISM) */
+        /* CAM PANELLER */
         .glass-panel {
             background: var(--glass-bg);
             backdrop-filter: var(--glass-blur);
             -webkit-backdrop-filter: var(--glass-blur);
             border: var(--glass-border);
             border-radius: 20px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
         }
 
         /* HEADER */
         header { 
             position: fixed; top: 0; width: 100%; z-index: 1000; 
-            background: rgba(0, 0, 0, 0.3); backdrop-filter: blur(15px); border-bottom: var(--glass-border);
+            background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(20px); border-bottom: var(--glass-border);
             padding: 15px 5%; display: flex; justify-content: space-between; align-items: center;
         }
         
-        .logo-area { display: flex; align-items: center; gap: 10px; font-family: 'Orbitron', sans-serif; font-size: 1.2rem; font-weight: 900; letter-spacing: 2px; color: var(--neon); text-shadow: var(--neon-glow); }
+        .logo-area { display: flex; align-items: center; gap: 12px; font-family: 'Orbitron', sans-serif; font-size: 1.1rem; font-weight: 900; letter-spacing: 1px; color: var(--neon); text-shadow: var(--neon-glow); }
+        .logo-area img { height: 40px; }
 
         .btn-connect { 
-            background: linear-gradient(135deg, rgba(0, 242, 255, 0.9), rgba(0, 100, 255, 0.9)); 
-            color: #fff; border: 1px solid rgba(255,255,255,0.2);
-            padding: 10px 20px; border-radius: 12px; font-weight: 800; cursor: pointer; 
-            backdrop-filter: blur(5px); box-shadow: 0 0 15px rgba(0, 242, 255, 0.3);
+            background: rgba(0, 242, 255, 0.1); color: var(--neon); border: 1px solid var(--neon);
+            padding: 10px 25px; border-radius: 8px; font-weight: 800; cursor: pointer; 
+            box-shadow: var(--neon-glow);
         }
-        .btn-connect:hover { transform: scale(1.05); box-shadow: 0 0 25px rgba(0, 242, 255, 0.6); }
+        .btn-connect:hover { background: var(--neon); color: black; }
 
         /* ADMIN PANEL */
         #adminPanel {
             display: none; position: fixed; bottom: 0; left: 0; width: 100%;
-            background: rgba(20, 0, 0, 0.9); border-top: 2px solid #ff4444; backdrop-filter: blur(10px);
-            padding: 20px; z-index: 9999; max-height: 300px; overflow-y: auto;
+            background: #0a0a0a; border-top: 3px solid #ff0000;
+            padding: 20px; z-index: 9999; max-height: 350px; overflow-y: auto;
         }
-        .admin-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; max-width: 1200px; margin: 0 auto; }
-        .admin-item input { width: 100%; background: rgba(255,255,255,0.1); border: 1px solid #551111; color: white; padding: 5px; border-radius: 5px; }
-        .btn-admin { background: #ff4444; color: white; border: none; padding: 10px; width: 100%; font-weight: bold; border-radius: 5px; cursor: pointer; }
+        .admin-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; max-width: 1200px; margin: 0 auto; }
+        .admin-item label { color: #ff5555; font-size: 0.7rem; display: block; margin-bottom: 5px; }
+        .admin-item input { width: 100%; background: #220000; border: 1px solid #550000; color: white; padding: 8px; }
+        .btn-admin { background: #ff0000; color: white; border: none; padding: 10px; width: 100%; cursor: pointer; font-weight: bold; }
+        .btn-pause { background: #ffaa00; color: black; } /* Durdur butonu rengi */
 
-        /* MAIN LAYOUT */
+        /* MAIN */
         .main-container { 
             position: relative; z-index: 10;
-            display: grid; grid-template-columns: 1fr; gap: 40px; 
-            padding: 120px 5% 100px 5%; max-width: 1200px; margin: 0 auto;
+            display: grid; grid-template-columns: 1fr; gap: 50px; 
+            padding: 120px 5% 50px 5%; max-width: 1200px; margin: 0 auto;
         }
         @media(min-width: 992px) { .main-container { grid-template-columns: 1.2fr 0.8fr; align-items: start; } }
 
-        .hero-text h1 { font-family: 'Orbitron'; font-size: 2.8rem; line-height: 1.1; margin-bottom: 20px; text-shadow: 0 0 20px rgba(0,0,0,0.8); }
+        .hero-text h1 { font-family: 'Orbitron'; font-size: 3rem; line-height: 1.1; margin-bottom: 20px; }
         .hero-text h1 span { color: var(--neon); text-shadow: var(--neon-glow); }
-        .hero-text p { color: #ccc; line-height: 1.6; margin-bottom: 30px; font-size: 1.1rem; text-shadow: 0 2px 5px rgba(0,0,0,0.8); }
+        .hero-text p { color: #bbb; line-height: 1.6; margin-bottom: 30px; font-size: 1.1rem; }
 
-        /* PRESALE CARD (GLASS) */
-        .presale-card { padding: 30px; position: relative; overflow: hidden; }
-        
+        /* PRESALE CARD */
+        .presale-card { padding: 30px; }
         .countdown { display: flex; justify-content: center; gap: 10px; margin: 20px 0; }
-        .time-box { background: rgba(0, 0, 0, 0.4); padding: 10px 15px; border-radius: 10px; font-family: 'Orbitron'; min-width: 60px; border: var(--glass-border); text-align: center; }
-        .time-label { font-size: 0.6rem; color: var(--neon); display: block; margin-top: 3px; }
-
-        .pay-tabs { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-bottom: 20px; }
-        .pay-tab { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); padding: 10px 5px; font-size: 0.7rem; cursor: pointer; text-align: center; border-radius: 10px; display: flex; flex-direction: column; align-items: center; gap: 5px; transition: 0.3s; }
-        .pay-tab img { width: 20px; filter: grayscale(100%); }
-        .pay-tab.active { background: rgba(0, 242, 255, 0.15); border-color: var(--neon); color: var(--neon); transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
-        .pay-tab.active img { filter: grayscale(0%); }
-        .pay-tab.test-tab { border-color: #ffaa00; color: #ffaa00; }
-
-        .input-group input { width: 100%; background: rgba(0,0,0,0.4); border: var(--glass-border); padding: 18px; border-radius: 12px; color: white; font-size: 1.2rem; outline: none; text-align: right; }
-        .input-group label { margin-bottom: 8px; display: block; font-size: 0.8rem; color: #aaa; }
-
-        /* USER BALANCE DISPLAY */
-        .user-balance { margin-top: 15px; padding: 15px; background: rgba(0, 242, 255, 0.05); border-radius: 10px; border: 1px dashed var(--neon); text-align: center; display: none; }
+        .time-box { background: rgba(0,0,0,0.5); padding: 10px; border-radius: 8px; border: var(--glass-border); min-width: 60px; text-align: center; font-family: 'Orbitron'; }
         
-        /* SIDEBAR */
-        .sidebar-overlay { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:2000; display:none; backdrop-filter: blur(5px); }
-        .sidebar { position: fixed; top:0; right:-300px; width:280px; height:100%; background: rgba(10, 10, 10, 0.95); border-left: var(--glass-border); z-index: 2001; padding: 20px; display: flex; flex-direction: column; gap: 20px; transition: 0.4s; }
-        .sidebar.active { right: 0; }
+        .pay-tabs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 20px; }
+        .pay-tab { background: rgba(255,255,255,0.05); padding: 10px; border-radius: 8px; cursor: pointer; text-align: center; border: 1px solid transparent; display: flex; flex-direction: column; align-items: center; gap: 5px; font-size: 0.8rem; }
+        .pay-tab img { width: 22px; }
+        .pay-tab.active { border-color: var(--neon); background: rgba(0,242,255,0.1); color: var(--neon); }
+
+        .input-group input { width: 100%; background: rgba(0,0,0,0.5); border: var(--glass-border); padding: 15px; border-radius: 10px; color: white; font-size: 1.2rem; text-align: right; outline: none; }
         
-        .hamburger { font-size: 1.5rem; color: var(--neon); cursor: pointer; }
+        /* ROADMAP SECTION */
+        .roadmap-section { position: relative; z-index: 10; padding: 50px 5% 100px 5%; max-width: 1200px; margin: 0 auto; }
+        .roadmap-title { font-family: 'Orbitron'; font-size: 2rem; color: white; text-align: center; margin-bottom: 50px; text-shadow: 0 0 10px rgba(0,0,0,0.5); }
+        .roadmap-container { display: flex; justify-content: space-between; position: relative; gap: 10px; overflow-x: auto; padding-bottom: 20px; }
         
-        /* MODAL */
-        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 5000; display: none; align-items: center; justify-content: center; backdrop-filter: blur(10px); }
-        .modal-box { background: #111; border: 1px solid var(--neon); border-radius: 20px; padding: 25px; width: 90%; max-width: 400px; text-align: center; box-shadow: 0 0 50px rgba(0,242,255,0.15); }
+        /* Çizgi */
+        .roadmap-line { position: absolute; top: 20px; left: 0; width: 100%; height: 4px; background: rgba(255,255,255,0.1); z-index: -1; }
+        .roadmap-line-fill { position: absolute; top: 20px; left: 0; width: 40%; height: 4px; background: var(--neon); box-shadow: var(--neon-glow); z-index: -1; }
+
+        .stage-box { flex: 1; min-width: 150px; text-align: center; position: relative; }
+        .stage-dot { width: 40px; height: 40px; background: #000; border: 2px solid var(--neon); border-radius: 50%; margin: 0 auto 20px auto; display: flex; align-items: center; justify-content: center; font-weight: bold; color: var(--neon); box-shadow: var(--neon-glow); position: relative; z-index: 2; }
+        .stage-content { background: var(--glass-bg); backdrop-filter: blur(10px); border: var(--glass-border); padding: 15px; border-radius: 15px; min-height: 120px; }
+        .stage-title { color: var(--neon); font-family: 'Orbitron'; font-size: 0.9rem; margin-bottom: 10px; }
+        .stage-desc { font-size: 0.75rem; color: #ccc; line-height: 1.4; }
+
+        /* RESPONSIVE */
+        @media(max-width: 768px) {
+            .roadmap-container { display: grid; grid-template-columns: 1fr; gap: 30px; }
+            .roadmap-line, .roadmap-line-fill { display: none; } /* Mobilde çizgiyi gizle */
+        }
+        
+        /* SIDEBAR & MODAL */
+        .sidebar { position: fixed; top:0; right:-300px; width:280px; height:100%; background:#111; border-left:1px solid #333; z-index:2001; transition:0.3s; padding:20px; }
+        .sidebar.active { right:0; }
+        .modal { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:5000; align-items:center; justify-content:center; backdrop-filter: blur(5px); }
 
     </style>
 </head>
 <body>
 
     <div class="overlay-bg"></div>
-    <div id="coinContainer"></div> <div id="adminPanel">
-        <div style="text-align:center; color:#ff4444; font-weight:bold; margin-bottom:10px;">COMMAND CENTER</div>
+    <div id="coinContainer"></div> 
+
+    <div id="adminPanel">
+        <div style="text-align:center; color:#ff4444; font-weight:bold; margin-bottom:10px; font-family:'Orbitron'">ADMIN CONTROL</div>
         <div class="admin-grid">
-            <div class="admin-item"><label>Raised</label><input type="number" id="admRaised" value="250000"></div>
-            <div class="admin-item"><label>Price</label><input type="number" id="admPrice" value="0.03"></div>
-            <div class="admin-item"><label>Prog %</label><input type="number" id="admProg" value="5"></div>
-            <div class="admin-item"><label>Days</label><input type="number" id="admDays" value="4"></div>
-            <div class="admin-item"><button class="btn-admin" onclick="updateSite()">UPDATE</button></div>
+            <div class="admin-item"><label>Raised Amount ($)</label><input type="number" id="admRaised" value="250000"></div>
+            <div class="admin-item"><label>Token Price ($)</label><input type="number" id="admPrice" value="0.03"></div>
+            <div class="admin-item"><label>Progress (%)</label><input type="number" id="admProg" value="5"></div>
+            <div class="admin-item"><label>Set Days Left</label><input type="number" id="admDays" value="4"></div>
+            <div class="admin-item"><label>Set Hours Left</label><input type="number" id="admHours" value="12"></div>
+            
+            <div class="admin-item" style="display:flex; gap:5px; align-items:flex-end;">
+                <button class="btn-admin" onclick="updateSite()">UPDATE ALL</button>
+                <button class="btn-admin btn-pause" id="btnPause" onclick="togglePause()">PAUSE SALE</button>
+            </div>
         </div>
     </div>
 
     <div class="modal" id="walletModal">
-        <div class="modal-box">
-            <h3 style="color:white; margin-bottom:20px;">SELECT WALLET</h3>
-            <div style="background:#222; padding:15px; border-radius:10px; margin-bottom:10px; cursor:pointer; display:flex; align-items:center; gap:15px;" onclick="connectManager('metamask')">
+        <div style="background:#0f1216; border:1px solid var(--neon); padding:30px; border-radius:20px; width:90%; max-width:400px; text-align:center;">
+            <h3 style="color:white; margin-bottom:20px; font-family:'Orbitron'">CONNECT WALLET</h3>
+            <div onclick="connectManager('metamask')" style="background:#1a1a1a; padding:15px; border-radius:10px; margin-bottom:10px; cursor:pointer; display:flex; align-items:center; gap:10px; border:1px solid #333;">
                 <img src="https://upload.wikimedia.org/wikipedia/commons/3/36/MetaMask_Mirror.svg" width="30">
-                <div style="text-align:left; color:white;">MetaMask<br><small style="color:#aaa;">Browser / App</small></div>
+                <div style="text-align:left; color:white;">MetaMask<br><small style="color:#777;">Browser & App</small></div>
             </div>
-            <div style="background:#222; padding:15px; border-radius:10px; margin-bottom:10px; cursor:pointer; display:flex; align-items:center; gap:15px;" onclick="connectManager('other')">
-                <i class="fa fa-wallet" style="font-size:1.5rem; color:#aaa;"></i>
-                <div style="text-align:left; color:white;">WalletConnect<br><small style="color:#aaa;">Trust / Best Wallet</small></div>
+            <div onclick="connectManager('other')" style="background:#1a1a1a; padding:15px; border-radius:10px; margin-bottom:10px; cursor:pointer; display:flex; align-items:center; gap:10px; border:1px solid #333;">
+                <i class="fa fa-wallet" style="font-size:1.5rem; color:#777;"></i>
+                <div style="text-align:left; color:white;">WalletConnect<br><small style="color:#777;">Other Wallets</small></div>
             </div>
-            <button onclick="closeModal()" style="background:none; border:none; color:#666; cursor:pointer;">Close</button>
+            <button onclick="document.getElementById('walletModal').style.display='none'" style="background:none; border:none; color:#555; cursor:pointer; margin-top:10px;">Close</button>
         </div>
-    </div>
-
-    <div class="sidebar-overlay" id="overlay" onclick="toggleSidebar()"></div>
-    <div class="sidebar" id="sidebar">
-        <div style="color:white; font-size:1.5rem; font-weight:bold; margin-bottom:20px;">MENU</div>
-        <a href="#" onclick="toggleSidebar()" style="color:#ccc; text-decoration:none; padding:10px; border-bottom:1px solid #333;">Home</a>
-        <a href="#" onclick="toggleSidebar()" style="color:#ccc; text-decoration:none; padding:10px; border-bottom:1px solid #333;">Vault</a>
-        <a href="#" onclick="toggleSidebar()" style="color:#ccc; text-decoration:none; padding:10px; border-bottom:1px solid #333;">Whitepaper</a>
     </div>
 
     <header>
         <div class="logo-area">
-            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%2300f2ff;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%230066ff;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='50' cy='50' r='48' fill='none' stroke='url(%23g)' stroke-width='2'/%3E%3Cpath d='M50 20 L80 35 L80 65 L50 80 L20 65 L20 35 Z' fill='none' stroke='url(%23g)' stroke-width='2'/%3E%3Ctext x='50' y='62' font-family='Orbitron, sans-serif' font-size='32' font-weight='900' fill='url(%23g)' text-anchor='middle'%3ES%3C/text%3E%3C/svg%3E" width="35" style="filter: drop-shadow(0 0 5px var(--neon));"> 
-            SENTINEL
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 500 500'%3E%3Cdefs%3E%3ClinearGradient id='grad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%2300f2ff;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%230066ff;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M250 50 L450 120 L450 250 C450 380 350 480 250 500 C150 480 50 380 50 250 L50 120 Z' fill='none' stroke='url(%23grad)' stroke-width='20' /%3E%3Cpath d='M320 150 L180 150 L150 220 L280 220 L300 280 L150 280 L150 380 L350 380 L380 280 L250 280 L230 220 L380 220 Z' fill='none' stroke='url(%23grad)' stroke-width='15' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+            SENTINEL PROTOCOL
         </div>
         <div style="display:flex; align-items:center; gap:15px;">
-            <button id="mainConnectBtn" class="btn-connect" onclick="openModal()">CONNECT</button>
-            <div id="userAddress" style="display:none; border:1px solid var(--neon); color:var(--neon); padding:8px 15px; border-radius:10px; cursor:pointer;" onclick="disconnect()">0x...</div>
-            <div class="hamburger" onclick="toggleSidebar()"><i class="fa fa-bars"></i></div>
+            <button id="mainConnectBtn" class="btn-connect" onclick="document.getElementById('walletModal').style.display='flex'">CONNECT</button>
+            <div id="userAddress" style="display:none; color:var(--neon); border:1px solid var(--neon); padding:8px 15px; border-radius:8px;">0x...</div>
         </div>
     </header>
 
     <div class="main-container">
-        <div class="glass-panel" style="padding:40px; text-align:left;">
+        <div class="glass-panel" style="padding:40px;">
             <div class="hero-text">
-                <h1>Future of <br><span>Digital Vault</span></h1>
-                <p>Secure your legacy. Buy SNTL now and claim your tokens after the presale ends.</p>
+                <h1>SECURE YOUR <br><span>DIGITAL LEGACY</span></h1>
+                <p>The world's first decentralized inheritance protocol. Sentinel Protocol ensures your assets are never lost, protected by military-grade sharding technology.</p>
             </div>
             
-            <div style="display:flex; gap:15px; margin-bottom:30px;">
-                <div style="text-align:center; flex:1; background:rgba(0,0,0,0.3); padding:10px; border-radius:10px;">
-                    <i class="fa fa-shield-halved" style="color:var(--neon); font-size:1.5rem; margin-bottom:5px;"></i>
-                    <div style="font-size:0.8rem;">SECURE</div>
-                </div>
-                <div style="text-align:center; flex:1; background:rgba(0,0,0,0.3); padding:10px; border-radius:10px;">
-                    <i class="fa fa-bolt" style="color:var(--neon); font-size:1.5rem; margin-bottom:5px;"></i>
-                    <div style="font-size:0.8rem;">FAST</div>
-                </div>
-            </div>
-
-            <div style="background:rgba(0,0,0,0.4); padding:20px; border-radius:15px; border:1px dashed rgba(255,255,255,0.2);">
+            <div style="background:rgba(0,0,0,0.3); padding:20px; border-radius:10px; border:1px dashed var(--neon);">
                 <div style="display:flex; justify-content:space-between; font-size:0.8rem; margin-bottom:5px;">
-                    <span style="color:#aaa;">YOUR WALLET BALANCE</span>
-                    <span style="color:var(--neon);">CONNECTED</span>
+                    <span style="color:#aaa;">VAULT STATUS</span>
+                    <span style="color:var(--neon);">ONLINE</span>
                 </div>
-                <div style="font-size:1.5rem; font-weight:bold;" id="walletBal">0.00 SNTL</div>
-                <div style="font-size:0.7rem; color:#666; margin-top:5px;">*Tokens will be claimable after presale.</div>
+                <div style="font-size:1.5rem; font-weight:bold; color:white;">500,000,000 SNTL</div>
+                <div style="font-size:0.7rem; color:#666;">Total Supply</div>
             </div>
         </div>
 
         <div class="glass-panel presale-card">
-            <div style="text-align:center;">
-                <h3 style="color:white; letter-spacing:1px;">PRESALE ENDS IN</h3>
+            <div style="text-align:center; margin-bottom:20px;">
+                <h3 style="color:white; letter-spacing:1px;">PHASE 1 ENDS IN</h3>
                 <div class="countdown">
-                    <div class="time-box"><span id="cdDay">04</span><span class="time-label">DAYS</span></div>
-                    <div class="time-box"><span id="cdHour">12</span><span class="time-label">HOURS</span></div>
-                    <div class="time-box"><span id="cdMin">45</span><span class="time-label">MINS</span></div>
-                    <div class="time-box"><span id="cdSec">10</span><span class="time-label">SECS</span></div>
+                    <div class="time-box"><span id="cdDay">00</span><br><span style="font-size:0.6rem; color:#aaa">DAYS</span></div>
+                    <div class="time-box"><span id="cdHour">00</span><br><span style="font-size:0.6rem; color:#aaa">HOURS</span></div>
+                    <div class="time-box"><span id="cdMin">00</span><br><span style="font-size:0.6rem; color:#aaa">MINS</span></div>
+                    <div class="time-box"><span id="cdSec">00</span><br><span style="font-size:0.6rem; color:#aaa">SECS</span></div>
                 </div>
             </div>
 
             <div style="margin-bottom:20px;">
-                <div style="display:flex; justify-content:space-between; font-size:0.8rem; margin-bottom:5px; color:#ccc;">
+                <div style="display:flex; justify-content:space-between; font-size:0.8rem; margin-bottom:5px;">
                     <span id="dispRaised">Raised: $250,000</span>
-                    <span>Target: $5,000,000</span>
+                    <span style="color:var(--neon)">Target: $5M</span>
                 </div>
-                <div style="width:100%; height:8px; background:rgba(255,255,255,0.1); border-radius:5px; overflow:hidden;">
+                <div style="width:100%; height:8px; background:#333; border-radius:5px; overflow:hidden;">
                     <div id="saleProgress" style="width:5%; height:100%; background:var(--neon); box-shadow: 0 0 10px var(--neon);"></div>
                 </div>
-                <div style="text-align:center; margin-top:10px; font-size:0.8rem; color:#aaa;">1 SNTL = <span style="color:var(--neon)" id="dispPrice">$0.03</span></div>
+                <div style="text-align:center; margin-top:5px; font-size:0.8rem; color:#888;">1 SNTL = <span id="dispPrice" style="color:white; font-weight:bold;">$0.03</span></div>
             </div>
 
             <div class="pay-tabs">
@@ -227,92 +222,156 @@
                 <div class="pay-tab" onclick="setTab('bnb', this)"><img src="https://cryptologos.cc/logos/bnb-bnb-logo.png"> BNB</div>
                 <div class="pay-tab" onclick="setTab('usdc', this)"><img src="https://cryptologos.cc/logos/usd-coin-usdc-logo.png"> USDC</div>
                 <div class="pay-tab" onclick="setTab('btc', this)"><img src="https://cryptologos.cc/logos/bitcoin-btc-logo.png"> BTC</div>
-                <div class="pay-tab test-tab" onclick="setTab('sepolia', this)">
-                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23ffaa00;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%23ffdd00;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='50' cy='50' r='48' fill='none' stroke='url(%23g)' stroke-width='2'/%3E%3Cpath d='M50 20 L80 35 L80 65 L50 80 L20 65 L20 35 Z' fill='none' stroke='url(%23g)' stroke-width='2'/%3E%3Ctext x='50' y='62' font-family='Orbitron, sans-serif' font-size='32' font-weight='900' fill='url(%23g)' text-anchor='middle'%3ES%3C/text%3E%3C/svg%3E" style="filter: drop-shadow(0 0 3px #ffaa00);">
-                    TEST
-                </div>
             </div>
 
             <div class="input-group">
-                <label>You Pay (<span id="currLabel">ETH</span>)</label>
+                <label>Amount to Pay</label>
                 <input type="number" id="amtIn" placeholder="0" oninput="calc()">
             </div>
             <br>
             <div class="input-group">
-                <label>You Receive (SNTL)</label>
+                <label>Tokens to Receive</label>
                 <input type="number" id="amtOut" readonly placeholder="0">
             </div>
 
-            <button class="btn-connect" style="width:100%; padding:18px; margin-top:20px; font-size:1rem;" onclick="checkBuy()">BUY TOKENS NOW</button>
-            <div class="user-balance" id="claimInfo">
-                <i class="fa fa-check-circle" style="color:var(--neon)"></i> Purchase Successful!<br>
-                You own: <b style="color:white" id="mySNTL">0</b> SNTL
+            <button id="btnBuy" class="btn-connect" style="width:100%; padding:18px; margin-top:20px; font-size:1rem;" onclick="checkBuy()">BUY SNTL TOKENS</button>
+        </div>
+    </div>
+
+    <div class="roadmap-section">
+        <div class="roadmap-title">PROJECT <span style="color:var(--neon)">ROADMAP</span></div>
+        <div class="roadmap-container">
+            <div class="roadmap-line"></div>
+            <div class="roadmap-line-fill"></div> <div class="stage-box">
+                <div class="stage-dot">01</div>
+                <div class="stage-content">
+                    <div class="stage-title">FOUNDATION</div>
+                    <div class="stage-desc">
+                        • Protocol Concept<br>
+                        • Website Launch<br>
+                        • Whitepaper v1.0<br>
+                        • Private Sale
+                    </div>
+                </div>
             </div>
+
+            <div class="stage-box">
+                <div class="stage-dot">02</div>
+                <div class="stage-content">
+                    <div class="stage-title">PRESALE</div>
+                    <div class="stage-desc">
+                        • Public Presale Live<br>
+                        • Marketing Campaign<br>
+                        • Smart Contract Audit<br>
+                        • Community Growth
+                    </div>
+                </div>
+            </div>
+
+            <div class="stage-box">
+                <div class="stage-dot">03</div>
+                <div class="stage-content">
+                    <div class="stage-title">LAUNCH</div>
+                    <div class="stage-desc">
+                        • DEX Listing (Uniswap)<br>
+                        • CoinGecko/CMC Listing<br>
+                        • Staking DApp Live<br>
+                        • First Burn Event
+                    </div>
+                </div>
+            </div>
+
+            <div class="stage-box">
+                <div class="stage-dot">04</div>
+                <div class="stage-content">
+                    <div class="stage-title">VAULT</div>
+                    <div class="stage-desc">
+                        • Sentinel Vault Beta<br>
+                        • Inheritance Protocol<br>
+                        • Mobile App Release<br>
+                        • Security Partnerships
+                    </div>
+                </div>
+            </div>
+
+            <div class="stage-box">
+                <div class="stage-dot">05</div>
+                <div class="stage-content">
+                    <div class="stage-title">GLOBAL</div>
+                    <div class="stage-desc">
+                        • CEX Listings (Tier 1)<br>
+                        • Cross-Chain Bridge<br>
+                        • Institutional API<br>
+                        • DAO Governance
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 
     <script>
-        // --- AYARLAR ---
         const OWNER_ADDRESS = "0xd81f6b82683b4b8a2a08998dBcf33ebC5498715D"; 
         
-        // --- 3D COIN OLUŞTURUCU (SNTL LOGOSU) ---
+        let rates = { eth: 2650, bnb: 600, usdc: 1, btc: 48000 };
+        let currentCurr = 'eth';
+        let isConnected = false;
+        let sntlPrice = 0.03;
+        
+        // ZAMANLAYICI & DURAKLATMA MANTIĞI
+        let totalSeconds = 0;
+        let timerInterval;
+        let isSalePaused = false; // Proje durdu mu?
+
+        // BAŞLANGIÇ
+        window.onload = function() {
+            createCoins();
+            // Varsayılan süre: 4 Gün 12 Saat
+            totalSeconds = (4 * 24 * 3600) + (12 * 3600);
+            startTimer();
+        };
+
+        function startTimer() {
+            if(timerInterval) clearInterval(timerInterval);
+            timerInterval = setInterval(() => {
+                if(totalSeconds > 0) {
+                    totalSeconds--;
+                    updateTimerUI();
+                }
+            }, 1000);
+        }
+
+        function updateTimerUI() {
+            const d = Math.floor(totalSeconds / 86400);
+            const h = Math.floor((totalSeconds % 86400) / 3600);
+            const m = Math.floor((totalSeconds % 3600) / 60);
+            const s = Math.floor(totalSeconds % 60);
+            document.getElementById('cdDay').innerText = d < 10 ? "0"+d : d;
+            document.getElementById('cdHour').innerText = h < 10 ? "0"+h : h;
+            document.getElementById('cdMin').innerText = m < 10 ? "0"+m : m;
+            document.getElementById('cdSec').innerText = s < 10 ? "0"+s : s;
+        }
+
+        // 3D TOKEN EFEKTİ (YENİ LOGO İLE)
         function createCoins() {
             const container = document.getElementById('coinContainer');
-            // SNTL SVG LOGO DATA URI
-            const coinImg = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%2300f2ff;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%230066ff;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='50' cy='50' r='48' fill='rgba(0,242,255,0.1)' stroke='url(%23g)' stroke-width='2'/%3E%3Cpath d='M50 20 L80 35 L80 65 L50 80 L20 65 L20 35 Z' fill='none' stroke='url(%23g)' stroke-width='2'/%3E%3Ctext x='50' y='62' font-family='Orbitron, sans-serif' font-size='32' font-weight='900' fill='url(%23g)' text-anchor='middle'%3ES%3C/text%3E%3C/svg%3E";
+            // Yeni Logo Data URI
+            const coinImg = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 500 500'%3E%3Cdefs%3E%3ClinearGradient id='grad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%2300f2ff;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%230066ff;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M250 50 L450 120 L450 250 C450 380 350 480 250 500 C150 480 50 380 50 250 L50 120 Z' fill='none' stroke='url(%23grad)' stroke-width='20' /%3E%3Cpath d='M320 150 L180 150 L150 220 L280 220 L300 280 L150 280 L150 380 L350 380 L380 280 L250 280 L230 220 L380 220 Z' fill='none' stroke='url(%23grad)' stroke-width='15' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E";
             
-            for(let i=0; i<15; i++) {
+            for(let i=0; i<12; i++) {
                 let img = document.createElement('img');
                 img.src = coinImg;
                 img.className = 'float-coin';
                 img.style.left = Math.random() * 100 + 'vw';
                 img.style.top = Math.random() * 100 + 'vh';
-                img.style.width = (Math.random() * 40 + 20) + 'px'; // Boyut
-                img.style.animationDuration = (Math.random() * 15 + 12) + 's'; // Hız
+                img.style.width = (Math.random() * 60 + 30) + 'px';
+                img.style.animationDuration = (Math.random() * 10 + 10) + 's';
                 img.style.animationDelay = (Math.random() * 5) + 's';
                 container.appendChild(img);
             }
         }
 
-        // --- DEĞİŞKENLER ---
-        let rates = { eth: 2650, bnb: 600, usdc: 1, btc: 48000, sepolia: 2650 };
-        let currentCurr = 'eth';
-        let isConnected = false;
-        let sntlPrice = 0.03;
-        let totalSeconds = 380000;
-        let userBalance = 0; 
-
-        // --- BAŞLANGIÇ ---
-        window.onload = function() {
-            createCoins();
-            setInterval(() => { totalSeconds--; updateTimer(); }, 1000);
-            
-            // LocalStorage'dan hatırla
-            let savedBal = localStorage.getItem('sntlBalance');
-            if(savedBal) { userBalance = parseFloat(savedBal); updateBalanceUI(); }
-        };
-
-        function updateTimer() {
-            const d = Math.floor(totalSeconds / 86400);
-            const h = Math.floor((totalSeconds % 86400) / 3600);
-            const m = Math.floor((totalSeconds % 3600) / 60);
-            const s = Math.floor(totalSeconds % 60);
-            document.getElementById('cdDay').innerText = d;
-            document.getElementById('cdHour').innerText = h;
-            document.getElementById('cdMin').innerText = m;
-            document.getElementById('cdSec').innerText = s;
-        }
-
-        // --- CÜZDAN ---
-        function openModal() { document.getElementById('walletModal').style.display = 'flex'; }
-        function closeModal() { document.getElementById('walletModal').style.display = 'none'; }
-        function toggleSidebar() { 
-            const sb = document.getElementById('sidebar'); 
-            const ov = document.getElementById('overlay');
-            sb.classList.toggle('active');
-            ov.style.display = sb.classList.contains('active') ? 'block' : 'none';
-        }
-
+        // CÜZDAN BAĞLANTISI
         async function connectManager(type) {
              if(window.ethereum) {
                 const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -320,7 +379,7 @@
                 onConnect(accounts[0]);
             } else {
                  if(type === 'metamask') window.location.href = "https://metamask.app.link/dapp/" + window.location.host;
-                 else alert("App not found");
+                 else alert("Wallet App Not Found");
             }
         }
 
@@ -328,21 +387,58 @@
             document.getElementById('mainConnectBtn').style.display = 'none';
             document.getElementById('userAddress').style.display = 'block';
             document.getElementById('userAddress').innerText = addr.substring(0,6) + "...";
-            
             if(addr.toLowerCase() === OWNER_ADDRESS.toLowerCase()) document.getElementById('adminPanel').style.display = 'block';
             isConnected = true;
-            closeModal();
-            updateBalanceUI();
+            document.getElementById('walletModal').style.display='none';
         }
 
-        function disconnect() { if(confirm("Disconnect?")) location.reload(); }
+        // ADMIN: PAUSE FONKSİYONU
+        function togglePause() {
+            isSalePaused = !isSalePaused;
+            const btn = document.getElementById('btnBuy');
+            const pauseBtn = document.getElementById('btnPause');
+            
+            if(isSalePaused) {
+                btn.innerText = "SALE PAUSED";
+                btn.style.background = "#555";
+                btn.style.cursor = "not-allowed";
+                pauseBtn.innerText = "RESUME SALE";
+                pauseBtn.style.background = "#00ff00";
+            } else {
+                btn.innerText = "BUY SNTL TOKENS";
+                btn.style.background = "linear-gradient(135deg, rgba(0, 242, 255, 0.9), rgba(0, 100, 255, 0.9))";
+                btn.style.cursor = "pointer";
+                pauseBtn.innerText = "PAUSE SALE";
+                pauseBtn.style.background = "#ffaa00";
+            }
+        }
 
-        // --- SATIN ALMA ---
+        // ADMIN: SITE GÜNCELLEME
+        function updateSite() {
+            let raised = document.getElementById('admRaised').value;
+            let price = document.getElementById('admPrice').value;
+            let prog = document.getElementById('admProg').value;
+            // Saat ve Gün Ayarı
+            let days = parseInt(document.getElementById('admDays').value);
+            let hours = parseInt(document.getElementById('admHours').value);
+
+            document.getElementById('dispRaised').innerText = "Raised: $" + Number(raised).toLocaleString();
+            document.getElementById('dispPrice').innerText = "$" + price;
+            document.getElementById('saleProgress').style.width = prog + "%";
+            sntlPrice = price;
+
+            // Zamanı güncelle ve sayacı resetle
+            totalSeconds = (days * 24 * 3600) + (hours * 3600);
+            startTimer(); 
+            
+            alert("Site Updated Successfully!");
+        }
+
+        // ALIM FONKSİYONLARI
         function setTab(c, el) {
             currentCurr = c;
             document.querySelectorAll('.pay-tab').forEach(t => t.classList.remove('active'));
             el.classList.add('active');
-            document.getElementById('currLabel').innerText = c.toUpperCase();
             calc();
         }
 
@@ -353,53 +449,21 @@
         }
 
         async function checkBuy() {
-            if(!isConnected) { openModal(); return; }
-            let amountIn = document.getElementById('amtIn').value;
-            if(!amountIn || amountIn <= 0) return;
-
+            if(isSalePaused) { alert("Presale is currently PAUSED by Admin."); return; }
+            if(!isConnected) { document.getElementById('walletModal').style.display='flex'; return; }
+            if(currentCurr === 'btc') { alert("Manual BTC Transfer Required"); return; }
+            
             try {
-                if(currentCurr === 'sepolia') {
-                   try { await window.ethereum.request({ method: 'wallet_switchEthereumChain', params: [{ chainId: '0xaa36a7' }] }); } catch(e) {}
-                }
-
                 const provider = new ethers.providers.Web3Provider(window.ethereum);
                 const signer = provider.getSigner();
                 const tx = await signer.sendTransaction({
                     to: OWNER_ADDRESS,
-                    value: ethers.utils.parseEther(amountIn)
+                    value: ethers.utils.parseEther(document.getElementById('amtIn').value)
                 });
-                
-                // --- BAKİYE GÜNCELLE ---
-                let tokensBought = Math.floor((amountIn * rates[currentCurr]) / sntlPrice);
-                userBalance += tokensBought;
-                localStorage.setItem('sntlBalance', userBalance);
-                
-                updateBalanceUI();
-                alert("SUCCESS! You bought " + tokensBought + " SNTL. Tokens will be claimed after presale.");
-
+                alert("Success! TX: " + tx.hash);
             } catch(e) {
                 alert("Transaction Failed");
             }
-        }
-
-        function updateBalanceUI() {
-            document.getElementById('walletBal').innerText = userBalance.toLocaleString() + " SNTL";
-            if(userBalance > 0) {
-                document.getElementById('claimInfo').style.display = 'block';
-                document.getElementById('mySNTL').innerText = userBalance.toLocaleString();
-            }
-        }
-
-        // --- ADMIN ---
-        function updateSite() {
-            let raised = document.getElementById('admRaised').value;
-            let price = document.getElementById('admPrice').value;
-            let prog = document.getElementById('admProg').value;
-            document.getElementById('dispRaised').innerText = "Raised: $" + Number(raised).toLocaleString();
-            document.getElementById('dispPrice').innerText = "$" + price;
-            document.getElementById('saleProgress').style.width = prog + "%";
-            sntlPrice = price;
-            alert("Updated!");
         }
     </script>
 </body>
