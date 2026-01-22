@@ -1,26 +1,21 @@
-   <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SENTINEL PROTOCOL | Digital Vault & Privacy</title>
+    <title>SENTINEL PROTOCOL | Digital Vault</title>
     <style>
-        :root {
-            --neon-blue: #00f2ff;
-        }
         body, html {
             margin: 0;
             padding: 0;
             height: 100%;
-            background-color: #05060a;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: white;
+            background-color: #000;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            overflow: hidden;
         }
         .vault-bg {
-            background: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.4)), 
+            /* Kasa görselini merkeze alan ve tam ekran yapan ayar */
+            background: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.2)), 
                         url('vault.jpg') no-repeat center center fixed;
             background-size: cover;
             width: 100%;
@@ -29,42 +24,37 @@
             justify-content: center;
             align-items: center;
         }
-        /* Ultra-Transparent Glass Panel */
+        /* ULTRA TRANSPARENT GLASS PANEL */
         .overlay-card {
-            background: rgba(0, 0, 0, 0.35); /* High transparency */
-            backdrop-filter: blur(12px); /* Blurred glass effect */
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(0, 242, 255, 0.2);
-            border-radius: 30px;
-            padding: 50px 25px;
-            width: 85%;
-            max-width: 420px;
+            background: rgba(255, 255, 255, 0.05); /* Siyahlığı tamamen sildik, sadece %5 beyazlık */
+            backdrop-filter: blur(10px); /* Cam efekti */
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 242, 255, 0.4); /* Neon mavi çerçeve */
+            border-radius: 20px;
+            padding: 40px 20px;
+            width: 90%; /* Mobilde daha geniş durması için */
+            max-width: 380px;
             text-align: center;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
-            animation: fadeIn 1.2s ease-in-out;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
         }
         .logo-img {
-            width: 110px;
+            width: 100px;
             margin-bottom: 20px;
-            filter: drop-shadow(0 0 15px rgba(0, 242, 255, 0.4));
+            filter: drop-shadow(0 0 10px #00f2ff);
         }
         h1 {
-            font-size: 2.4rem;
-            letter-spacing: 7px;
+            color: white;
+            font-size: 2.2rem;
+            letter-spacing: 6px;
             margin: 0;
-            font-weight: 800;
+            text-transform: uppercase;
         }
         .tagline {
-            color: var(--neon-blue);
+            color: #00f2ff;
             font-size: 0.7rem;
-            letter-spacing: 2px;
-            margin: 12px 0 35px 0;
-            text-transform: uppercase;
-            font-weight: 400;
+            letter-spacing: 1px;
+            margin: 10px 0 30px 0;
+            font-weight: bold;
         }
         .btn-row {
             display: flex;
@@ -73,57 +63,39 @@
         }
         .btn {
             flex: 1;
-            padding: 16px;
-            border-radius: 12px;
+            padding: 14px;
+            border-radius: 8px;
             text-decoration: none;
-            font-weight: 700;
+            font-weight: bold;
             font-size: 0.75rem;
             text-transform: uppercase;
-            transition: all 0.3s ease;
-            border: 1px solid rgba(255,255,255,0.15);
+            transition: 0.3s;
             display: flex;
             align-items: center;
             justify-content: center;
-            letter-spacing: 1px;
+            border: 1px solid rgba(255,255,255,0.2);
         }
-        .btn-wp { 
-            background: var(--neon-blue); 
-            color: #000; 
-            border: none;
-            box-shadow: 0 0 20px rgba(0, 242, 255, 0.2);
-        }
-        .btn-wp:hover {
-            box-shadow: 0 0 30px var(--neon-blue);
-        }
-        .btn-sec { 
-            background: rgba(255,255,255,0.05); 
-            color: white; 
-        }
+        .btn-wp { background: #00f2ff; color: #000; border: none; }
+        .btn-sec { background: rgba(255,255,255,0.1); color: white; }
         .btn-full {
             width: 100%;
-            background: rgba(255,255,255,0.05);
+            background: rgba(255,255,255,0.1);
             color: white;
             box-sizing: border-box;
         }
-        .btn:hover { 
-            transform: translateY(-3px);
-            background: rgba(255, 255, 255, 0.1);
-            border-color: var(--neon-blue);
-        }
+        .btn:hover { background: rgba(0, 242, 255, 0.3); transform: scale(1.02); }
         .status {
-            margin-top: 35px;
-            color: rgba(255,255,255,0.4);
+            margin-top: 30px;
+            color: rgba(255,255,255,0.5);
             font-size: 0.6rem;
-            letter-spacing: 3px;
+            letter-spacing: 2px;
         }
-        .dot { color: #00ff00; animation: blink 1.5s infinite; }
-        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
     </style>
 </head>
 <body>
     <div class="vault-bg">
         <div class="overlay-card">
-            <img src="logo.png" alt="Sentinel Logo" class="logo-img">
+            <img src="logo.png" alt="SNTL" class="logo-img">
             <h1>SENTINEL</h1>
             <div class="tagline">DECENTRALIZED VAULT & PRIVACY PROTOCOL</div>
             
@@ -135,10 +107,9 @@
             <a href="mailto:sentinel.legacysystems@gmail.com" class="btn btn-full">CONTACT SUPPORT</a>
 
             <div class="status">
-                <span class="dot">●</span> CORE_SYSTEM_ACTIVE_V5.5
+                <span style="color: #00ff00;">●</span> CORE_SYSTEM_ACTIVE_V5.8
             </div>
         </div>
     </div>
 </body>
 </html>
-   
