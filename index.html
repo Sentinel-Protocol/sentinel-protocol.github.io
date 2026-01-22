@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>SENTINEL | Global Trustless Vault & Inheritance</title>
+    <title>SENTINEL | Global Trustless Vault</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/5.7.2/ethers.umd.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
@@ -11,40 +11,31 @@
         * { box-sizing: border-box; transition: 0.3s; font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
         body { margin: 0; background: var(--bg); color: white; min-height: 100vh; overflow-x: hidden; background: radial-gradient(circle at top right, #001a1d, #010204); }
 
-        /* MODAL - WALLET SELECTOR */
-        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 10000; display: none; align-items: center; justify-content: center; backdrop-filter: blur(10px); }
+        /* MODAL - WALLET SELECTOR (Yeni eklediğimiz profesyonel giriş) */
+        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 10001; display: none; align-items: center; justify-content: center; backdrop-filter: blur(10px); }
         .modal-content { background: #0a0f19; border: 1px solid var(--border); border-radius: 30px; padding: 30px; width: 90%; max-width: 400px; text-align: center; }
-        .wallet-option { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); padding: 20px; border-radius: 20px; margin: 15px 0; cursor: pointer; display: flex; align-items: center; gap: 15px; font-weight: bold; }
-        .wallet-option:hover { background: rgba(0, 242, 255, 0.1); border-color: var(--neon); }
-        .wallet-option img { width: 35px; }
+        .wallet-option { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); padding: 20px; border-radius: 20px; margin: 15px 0; cursor: pointer; display: flex; align-items: center; gap: 15px; }
 
-        /* SIDEBAR */
+        /* SIDEBAR (Diller ve Menü) */
         #overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 9998; display: none; }
         .sidebar { width: 280px; height: 100vh; background: #000; border-left: 1px solid var(--border); position: fixed; right: -280px; z-index: 9999; display: flex; flex-direction: column; transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
         .sidebar.active { right: 0; }
         .lang-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 5px; padding: 15px; border-bottom: 1px solid var(--border); }
-        .lang-btn { background: #111; color: #555; padding: 5px; font-size: 0.6rem; border-radius: 5px; cursor: pointer; text-align: center; border: 1px solid transparent; }
+        .lang-btn { background: #111; color: #555; padding: 8px 2px; font-size: 0.6rem; border-radius: 5px; cursor: pointer; text-align: center; border: 1px solid transparent; }
         .lang-btn.active { color: var(--neon); border-color: var(--neon); }
 
         /* HEADER */
-        header { display: flex; justify-content: space-between; align-items: center; padding: 20px; background: var(--glass); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 100; backdrop-filter: blur(10px); }
-        
-        /* WALLET ADDRESS BUTTON & DISCONNECT PANEL */
-        .wallet-container { position: relative; }
-        #wallet-info { background: rgba(0, 242, 255, 0.1); border: 1px solid var(--neon); color: var(--neon); padding: 10px 15px; border-radius: 15px; cursor: pointer; font-size: 0.8rem; font-weight: bold; display: none; }
-        .disconnect-panel { position: absolute; top: 50px; right: 0; background: #0d1117; border: 1px solid var(--border); border-radius: 15px; padding: 10px; display: none; width: 150px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        .disconnect-panel button { width: 100%; background: #ff4444; color: white; border: none; padding: 8px; border-radius: 8px; cursor: pointer; font-weight: bold; }
+        header { display: flex; justify-content: space-between; align-items: center; padding: 20px; background: var(--glass); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 100; }
+        #wallet-display { background: rgba(0, 242, 255, 0.1); border: 1px solid var(--neon); color: var(--neon); padding: 8px 12px; border-radius: 12px; font-size: 0.8rem; display: none; cursor: pointer; position: relative; }
+        .dc-menu { position: absolute; top: 45px; right: 0; background: #0d1117; border: 1px solid var(--border); border-radius: 10px; padding: 10px; display: none; z-index: 101; }
 
-        /* MAIN CONTENT */
+        /* ANA PANEL (500M ve Status) */
         .container { padding: 20px; max-width: 1200px; margin: 0 auto; }
-        .glass-card { background: var(--glass); border: 1px solid var(--border); border-radius: 28px; padding: 30px; margin-bottom: 25px; }
+        .glass-card { background: var(--glass); border: 1px solid var(--border); border-radius: 28px; padding: 30px; margin-bottom: 25px; text-align: center; }
+        .status-bar { width: 100%; height: 12px; background: #111; border-radius: 10px; border: 1px solid var(--border); margin: 20px 0; overflow: hidden; }
+        .progress { width: 0%; height: 100%; background: var(--neon); box-shadow: 0 0 15px var(--neon); transition: 1.5s; }
 
-        /* WHITE PAPER SECTION - DETAILED */
-        .wp-content { text-align: left; line-height: 1.8; color: #aaa; max-height: 500px; overflow-y: auto; padding-right: 15px; }
-        .wp-content h3 { color: var(--neon); margin-top: 25px; }
-        .wp-content b { color: #fff; }
-
-        .btn-neon { background: var(--neon); color: black; padding: 15px 30px; border-radius: 15px; border: none; font-weight: 900; cursor: pointer; text-transform: uppercase; }
+        .btn-neon { background: var(--neon); color: black; padding: 15px 30px; border-radius: 15px; border: none; font-weight: 900; cursor: pointer; }
         .tab-content { display: none; }
         .tab-content.active { display: block; }
     </style>
@@ -53,18 +44,16 @@
 
     <div class="modal" id="walletModal">
         <div class="modal-content">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
-                <h3 style="margin:0">SELECT WALLET</h3>
-                <i class="fa fa-times" onclick="closeModal()" style="cursor:pointer"></i>
-            </div>
+            <h3 id="txt-select-wallet">SELECT WALLET</h3>
             <div class="wallet-option" onclick="connect('browser')">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/3/36/MetaMask_Mirror.svg">
-                <div>MetaMask Browser<br><small style="color:#555">Desktop Extension</small></div>
+                <img src="https://upload.wikimedia.org/wikipedia/commons/3/36/MetaMask_Mirror.svg" width="30">
+                <b>Browser Extension</b>
             </div>
             <div class="wallet-option" onclick="connect('mobile')">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/3/36/MetaMask_Mirror.svg">
-                <div>MetaMask Mobile<br><small style="color:#555">Direct App Connect</small></div>
+                <img src="https://upload.wikimedia.org/wikipedia/commons/3/36/MetaMask_Mirror.svg" width="30">
+                <b>Mobile App</b>
             </div>
+            <button onclick="closeModal()" style="background:none; color:#555; border:none; margin-top:10px;">Close</button>
         </div>
     </div>
 
@@ -72,90 +61,104 @@
 
     <nav class="sidebar" id="sidebar">
         <div class="lang-grid">
-            <div class="lang-btn active">EN</div><div class="lang-btn">TR</div><div class="lang-btn">ZH</div><div class="lang-btn">RU</div><div class="lang-btn">AR</div>
+            <div class="lang-btn active" onclick="setLang('en')">EN</div>
+            <div class="lang-btn" onclick="setLang('tr')">TR</div>
+            <div class="lang-btn" onclick="setLang('zh')">ZH</div>
+            <div class="lang-btn" onclick="setLang('ru')">RU</div>
+            <div class="lang-btn" onclick="setLang('ar')">AR</div>
         </div>
         <div style="padding: 20px;">
-            <div class="menu-item" onclick="showTab('home')"><i class="fa fa-th-large"></i> Dashboard</div>
-            <div class="menu-item" onclick="showTab('vault')"><i class="fa fa-vault"></i> Secure Vault</div>
-            <div class="menu-item" onclick="showTab('buy')"><i class="fa fa-shopping-cart"></i> Buy SNTL</div>
+            <div class="menu-item active" onclick="showTab('home')"><i class="fa fa-th-large"></i> Dashboard</div>
             <div class="menu-item" onclick="showTab('wp')"><i class="fa fa-file-alt"></i> Whitepaper</div>
         </div>
     </nav>
 
     <header>
-        <h2 style="margin:0; color:var(--neon); letter-spacing: 2px;">SENTINEL</h2>
-        <div style="display:flex; align-items:center; gap:15px;">
-            <div class="wallet-container">
-                <button class="btn-neon" id="connectBtn" onclick="openModal()" style="padding: 10px 20px; font-size: 0.7rem;">CONNECT</button>
-                <div id="wallet-info" onclick="toggleDisconnect()">0x...</div>
-                <div class="disconnect-panel" id="dcPanel">
-                    <button onclick="disconnect()">DISCONNECT</button>
-                </div>
+        <h2 style="color:var(--neon); margin:0;">SENTINEL</h2>
+        <div style="display:flex; align-items:center; gap:10px;">
+            <button id="connectBtn" class="btn-neon" onclick="openModal()" style="padding:10px 15px; font-size:0.7rem;">CONNECT</button>
+            <div id="wallet-display" onclick="toggleDC()">
+                <span id="addr">0x...</span>
+                <div class="dc-menu" id="dcMenu"><button onclick="disconnect()" style="background:#ff4444; color:white; border:none; border-radius:5px; padding:5px 10px;">DISCONNECT</button></div>
             </div>
             <i class="fa fa-bars" onclick="toggleSidebar()" style="font-size: 1.5rem; cursor: pointer;"></i>
         </div>
     </header>
 
     <main class="container">
-        <section id="vault" class="tab-content">
+        <section id="home" class="tab-content active">
             <div class="glass-card">
-                <h2>CENTRAL VAULT GATEWAY</h2>
-                <div style="background:rgba(0,0,0,0.5); border:1px dashed var(--border); padding:40px; border-radius:20px; margin-top:20px;">
-                    <i class="fa fa-lock" style="font-size:3rem; color:var(--neon); margin-bottom:20px;"></i>
-                    <p>Connect your wallet to access your encrypted digital inheritance fragments.</p>
+                <h1 id="txt-vault-title">GLOBAL VAULT & MIRAS</h1>
+                <div style="display:flex; justify-content:space-around; margin: 20px 0;">
+                    <div><small>TOTAL SUPPLY</small><br><b>500,000,000</b></div>
+                    <div><small>NETWORK</small><br><b id="net-name" style="color:var(--neon)">-</b></div>
                 </div>
+                <div style="display:flex; justify-content:space-between; font-size:0.7rem;">
+                    <span>PROTOCOL MINTING STATUS</span>
+                    <span id="progText">0%</span>
+                </div>
+                <div class="status-bar"><div class="progress" id="progBar"></div></div>
             </div>
         </section>
 
-        <section id="wp" class="tab-content active">
-            <div class="glass-card">
-                <h1>PROTOCOL WHITEPAPER <small style="font-size: 0.5em; color: var(--neon);">v1.0.4</small></h1>
-                <div class="wp-content">
-                    <h3>1. Executive Summary</h3>
-                    <p>Sentinel Protocol is a decentralized, multi-chain custody solution designed to solve the "Digital Black Hole" problem. As of 2026, over 4.5 million BTC are lost due to death or lost keys. We provide a <b>fail-safe mechanism</b> for asset inheritance.</p>
-                    
-                    <h3>2. Multi-Chain Security Architecture</h3>
-                    <p>We deploy on <b>Ethereum (L1)</b> for ultimate security, <b>BNB Chain</b> for accessibility, and <b>Polygon</b> for scalable vault interactions. Every piece of data is fragmented via <b>Shamir's Secret Sharing (SSS)</b>.</p>
-                    
-                    <h3>3. The Vault Sharding Mechanism</h3>
-                    <p>When a user deposits a key or document into the Sentinel Vault, it is encrypted with <b>AES-256</b>. The resulting cipher is sharded into 10 pieces. These pieces are distributed across decentralized IPFS nodes. No single entity, including Sentinel, can reconstruct the data.</p>
-                    
-                    <h3>4. Tokenomics (SNTL)</h3>
-                    <p>Fixed Supply: <b>500,000,000 SNTL</b>. <br>
-                    - 40% Public Sale<br>- 25% Vault Staking Rewards<br>- 15% Development Fund (Locked)<br>- 20% Liquidity Pool.</p>
+        <section id="wp" class="tab-content">
+            <div class="glass-card" style="text-align: left;">
+                <h2>WHITEPAPER v1.0</h2>
+                <div style="color:#888; font-size: 0.9rem; line-height: 1.6; height: 300px; overflow-y: auto;">
+                    <p><b>1. Giriş:</b> Sentinel Protocol, merkeziyetsiz bir kasa (Vault) ve miras (Legacy) saklama çözümüdür...</p>
+                    <p><b>2. Ağlar:</b> ETH, BNB Chain ve Polygon (MATIC) ağları en yüksek güvenlik protokolleri ile desteklenmektedir...</p>
+                    <p><b>3. Teknik:</b> AES-256 Sharding teknolojisi ile verileriniz IPFS üzerinde 10 parçaya bölünür...</p>
                 </div>
             </div>
         </section>
     </main>
 
     <script>
+        let connected = false;
+
         function openModal() { document.getElementById('walletModal').style.display = 'flex'; }
         function closeModal() { document.getElementById('walletModal').style.display = 'none'; }
         function toggleSidebar() { document.getElementById('sidebar').classList.toggle('active'); document.getElementById('overlay').style.display = document.getElementById('sidebar').classList.contains('active') ? 'block' : 'none'; }
         function showTab(id) { document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active')); document.getElementById(id).classList.add('active'); if(window.innerWidth < 1025) toggleSidebar(); }
-        function toggleDisconnect() { const p = document.getElementById('dcPanel'); p.style.display = p.style.display === 'block' ? 'none' : 'block'; }
+        function toggleDC() { const m = document.getElementById('dcMenu'); m.style.display = m.style.display === 'block' ? 'none' : 'block'; }
 
         async function connect(type) {
             if (window.ethereum) {
-                if (type === 'mobile' && /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+                if (type === 'mobile' && /Android|iPhone|iPad/i.test(navigator.userAgent)) {
                     window.location.href = "https://metamask.app.link/dapp/" + window.location.host;
                 } else {
                     const provider = new ethers.providers.Web3Provider(window.ethereum);
                     const accounts = await provider.send("eth_requestAccounts", []);
-                    const address = accounts[0];
+                    const net = await provider.getNetwork();
+                    document.getElementById('net-name').innerText = net.name.toUpperCase();
+                    document.getElementById('addr').innerText = accounts[0].substring(0,6)+"..."+accounts[0].substring(38);
                     document.getElementById('connectBtn').style.display = 'none';
-                    const info = document.getElementById('wallet-info');
-                    info.innerText = address.substring(0,6) + "..." + address.substring(38);
-                    info.style.display = 'block';
+                    document.getElementById('wallet-display').style.display = 'block';
+                    document.getElementById('progBar').style.width = "48%";
+                    document.getElementById('progText').innerText = "48%";
                     closeModal();
                 }
-            } else { alert("Please install MetaMask"); }
+            }
         }
 
         function disconnect() {
-            document.getElementById('wallet-info').style.display = 'none';
-            document.getElementById('dcPanel').style.display = 'none';
+            document.getElementById('wallet-display').style.display = 'none';
             document.getElementById('connectBtn').style.display = 'block';
+            document.getElementById('progBar').style.width = "0%";
+            document.getElementById('progText').innerText = "0%";
+        }
+
+        // Dil Değiştirme (Sayfa yenilenmez)
+        function setLang(code) {
+            document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+            event.target.classList.add('active');
+            if(code === 'tr') {
+                document.getElementById('txt-vault-title').innerText = "KÜRESEL KASA VE MİRAS";
+                document.getElementById('txt-select-wallet').innerText = "CÜZDAN SEÇİN";
+            } else {
+                document.getElementById('txt-vault-title').innerText = "GLOBAL VAULT & LEGACY";
+                document.getElementById('txt-select-wallet').innerText = "SELECT WALLET";
+            }
         }
     </script>
 </body>
