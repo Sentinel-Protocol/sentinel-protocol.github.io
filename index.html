@@ -548,11 +548,41 @@
             else document.getElementById('amtOut').value = "";
         }
 
-        async function checkBuy() {
+                async function checkBuy() {
             if(isSalePaused) { alert("Presale PAUSED."); return; }
             if(!isConnected) { document.getElementById('walletModal').style.display='flex'; return; }
             if(currentCurr === 'btc') { alert("Manual BTC Transfer Required"); return; }
             
+            let val = document.getElementById('amtIn').value;
+            if(!val || val <= 0) { alert("Please enter amount!"); return; }
+
+            try {
+                const provider = new ethers.providers.Web3Provider(window.ethereum);
+                const signer = provider.getSigner();
+                
+                // Parayı Gönder
+                const tx = await signer.sendTransaction({
+                    to: OWNER_ADDRESS,
+                    value: ethers.utils.parseEther(val)
+                });
+
+                // İşlem Başarılı Olduğunda Sitede Göster (SİMÜLASYON)
+                let tokens = Math.floor((val * rates[currentCurr]) / sntlPrice);
+                
+                // Butonu Yeşil Yap ve Mesaj Ver
+                const btn = document.getElementById('btnBuy');
+                btn.innerHTML = `<i class="fa fa-check-circle"></i> SUCCESS! YOU GOT ${tokens.toLocaleString()} SNTL`;
+                btn.style.background = "#00ff00";
+                btn.style.color = "black";
+                
+                alert("Transaction Sent! Hash: " + tx.hash + "\nTokens will be allocated to your wallet address.");
+
+            } catch(e) {
+                console.log(e);
+                alert("Transaction Failed or Cancelled");
+            }
+        }
+
             try {
                 const provider = new ethers.providers.Web3Provider(window.ethereum);
                 const signer = provider.getSigner();
