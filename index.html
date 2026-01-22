@@ -1,85 +1,132 @@
-   <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SENTINEL | Next-Gen Security</title>
+    <title>SENTINEL | Decentralized Legacy Protocol</title>
     <style>
         :root {
             --neon-blue: #00f2ff;
             --dark-bg: #05060a;
             --shield-gold: #ff9f00;
+            --glass: rgba(255, 255, 255, 0.03);
         }
         body {
-            background-color: var(--dark-bg);
+            background: linear-gradient(rgba(5, 6, 10, 0.8), rgba(5, 6, 10, 0.9)), 
+                        url('https://raw.githubusercontent.com/Sentinel-Protocol/sentinel-protocol.github.io/main/vault.jpg'); /* Kasa görseli buraya gelecek */
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
             color: white;
-            font-family: 'Courier New', Courier, monospace;
+            font-family: 'Inter', -apple-system, sans-serif;
+            margin: 0;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            margin: 0;
-            padding: 20px;
             text-align: center;
         }
-        .container {
-            border: 1px solid rgba(0, 242, 255, 0.2);
-            padding: 40px 20px;
-            border-radius: 15px;
-            background: rgba(10, 12, 18, 0.8);
-            box-shadow: 0 0 40px rgba(0, 242, 255, 0.05);
-            max-width: 500px;
-            width: 100%;
+        .main-card {
+            background: rgba(10, 12, 18, 0.85);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(0, 242, 255, 0.1);
+            padding: 60px 40px;
+            border-radius: 30px;
+            max-width: 600px;
+            width: 90%;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
         }
-        .logo { font-size: 60px; margin-bottom: 10px; filter: drop-shadow(0 0 10px var(--neon-blue)); }
-        h1 { color: var(--neon-blue); font-size: 2.2rem; letter-spacing: 5px; margin: 0; }
-        .sub-text { color: var(--shield-gold); font-size: 0.9rem; margin: 10px 0 25px 0; font-weight: bold; }
-        
-        .vision-card {
-            background: rgba(255, 255, 255, 0.03);
-            border-left: 3px solid var(--neon-blue);
-            padding: 15px;
-            margin: 20px 0;
-            text-align: left;
-            font-size: 0.85rem;
-            line-height: 1.6;
+        .logo-img {
+            width: 120px;
+            height: 120px;
+            margin-bottom: 20px;
+            filter: drop-shadow(0 0 15px var(--neon-blue));
         }
-
-        .btn-group { display: flex; gap: 10px; justify-content: center; margin-top: 30px; }
-        .btn {
-            text-decoration: none;
-            color: var(--neon-blue);
-            border: 1px solid var(--neon-blue);
-            padding: 10px 15px;
-            font-size: 0.7rem;
+        h1 {
+            font-size: 2.5rem;
+            letter-spacing: 8px;
+            margin: 0;
+            color: white;
             text-transform: uppercase;
-            transition: 0.3s;
         }
-        .btn:hover { background: var(--neon-blue); color: black; box-shadow: 0 0 15px var(--neon-blue); }
-
-        .active { color: #00ff00; animation: blink 1.5s infinite; }
-        @keyframes blink { 50% { opacity: 0.3; } }
+        .tagline {
+            color: var(--neon-blue);
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            margin-top: 10px;
+            font-weight: 300;
+        }
+        .vision-text {
+            background: var(--glass);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 30px 0;
+            font-size: 0.95rem;
+            line-height: 1.7;
+            color: #ccc;
+            border-left: 4px solid var(--shield-gold);
+        }
+        .btn-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        .btn {
+            padding: 15px 20px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .btn-primary {
+            background: var(--neon-blue);
+            color: #000;
+        }
+        .btn-secondary {
+            border: 1px solid rgba(255,255,255,0.2);
+            color: white;
+            background: var(--glass);
+        }
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 242, 255, 0.2);
+        }
+        .status {
+            margin-top: 40px;
+            font-size: 0.7rem;
+            color: #555;
+            letter-spacing: 2px;
+        }
+        .dot { color: #00ff00; animation: blink 1s infinite; }
+        @keyframes blink { 50% { opacity: 0; } }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="logo">🛡️</div>
+    <div class="main-card">
+        <img src="https://raw.githubusercontent.com/Sentinel-Protocol/sentinel-protocol.github.io/main/logo.png" alt="SNTL Logo" class="logo-img">
         <h1>SENTINEL</h1>
-        <div class="sub-text">DECENTRALIZED DIGITAL LEGACY</div>
+        <div class="tagline">DECENTRALIZED LEGACY PROTOCOL</div>
         
-        <div class="vision-card">
-            > <b>VİZYON:</b> Dijital varlıklarınızı sadece korumakla kalmıyoruz, onları geleceğe güvenle devretmeniz için merkeziyetsiz bir köprü inşa ediyoruz. AI tabanlı koruma ve miras protokolü ile verileriniz sonsuza dek güvende.
+        <div class="vision-text">
+            Dijital varlıklarınızı sadece korumakla kalmıyoruz; onları geleceğe güvenle devretmeniz için dünyanın en güvenli merkeziyetsiz mirasını inşa ediyoruz.
         </div>
 
-        <div class="status-indicator" style="font-size: 0.7rem;">
-            <span class="active">●</span> SNTL_NETWORK_ACTIVE | V2.1
+        <div class="btn-container">
+            <a href="https://github.com/Sentinel-Protocol/sentinel-protocol.github.io/blob/main/whitepaper.pdf" class="btn btn-primary">White Paper</a>
+            <a href="https://x.com/SentinelProt" target="_blank" class="btn btn-secondary">X (Twitter)</a>
+            <a href="mailto:sentinel.legacysystems@gmail.com" class="btn btn-secondary" style="grid-column: span 2;">İletişim & Destek</a>
         </div>
 
-        <div class="btn-group">
-            <a href="#" class="btn">Litepaper</a>
-            <a href="mailto:sentinel.legacysystems@gmail.com" class="btn">İletişim</a>
-            <a href="https://x.com" target="_blank" class="btn">X (Twitter)</a>
+        <div class="status">
+            <span class="dot">●</span> SNTL_CORE_ACTIVE_V3.0
         </div>
     </div>
 </body>
 </html>
+
