@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SENTINEL PROTOCOL | Official</title>
+    <title>SENTINEL | Next-Gen Security</title>
     <style>
         :root {
             --neon-blue: #00f2ff;
@@ -17,61 +17,69 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
             margin: 0;
+            padding: 20px;
             text-align: center;
         }
         .container {
-            border: 1px solid rgba(0, 242, 255, 0.3);
-            padding: 50px 30px;
-            border-radius: 5px;
-            background: linear-gradient(145deg, #0a0c12, #05060a);
-            box-shadow: 0 0 50px rgba(0, 242, 255, 0.1);
-            max-width: 400px;
+            border: 1px solid rgba(0, 242, 255, 0.2);
+            padding: 40px 20px;
+            border-radius: 15px;
+            background: rgba(10, 12, 18, 0.8);
+            box-shadow: 0 0 40px rgba(0, 242, 255, 0.05);
+            max-width: 500px;
+            width: 100%;
         }
-        .logo {
-            font-size: 60px;
-            margin-bottom: 20px;
-            filter: drop-shadow(0 0 10px var(--neon-blue));
+        .logo { font-size: 60px; margin-bottom: 10px; filter: drop-shadow(0 0 10px var(--neon-blue)); }
+        h1 { color: var(--neon-blue); font-size: 2.2rem; letter-spacing: 5px; margin: 0; }
+        .sub-text { color: var(--shield-gold); font-size: 0.9rem; margin: 10px 0 25px 0; font-weight: bold; }
+        
+        .vision-card {
+            background: rgba(255, 255, 255, 0.03);
+            border-left: 3px solid var(--neon-blue);
+            padding: 15px;
+            margin: 20px 0;
+            text-align: left;
+            font-size: 0.85rem;
+            line-height: 1.6;
         }
-        h1 {
+
+        .btn-group { display: flex; gap: 10px; justify-content: center; margin-top: 30px; }
+        .btn {
+            text-decoration: none;
             color: var(--neon-blue);
-            font-size: 1.8rem;
-            letter-spacing: 4px;
-            margin: 0;
-            text-shadow: 0 0 10px rgba(0, 242, 255, 0.5);
-        }
-        .sub-text {
-            color: var(--shield-gold);
-            font-size: 0.8rem;
-            margin: 15px 0 30px 0;
-            letter-spacing: 1px;
-        }
-        .status-indicator {
+            border: 1px solid var(--neon-blue);
+            padding: 10px 15px;
             font-size: 0.7rem;
-            padding: 8px 15px;
-            border: 1px solid #1a1c25;
-            display: inline-block;
-            color: #444;
+            text-transform: uppercase;
+            transition: 0.3s;
         }
-        .active {
-            color: #00ff00;
-            animation: blink 1.5s infinite;
-        }
-        @keyframes blink {
-            50% { opacity: 0.3; }
-        }
+        .btn:hover { background: var(--neon-blue); color: black; box-shadow: 0 0 15px var(--neon-blue); }
+
+        .active { color: #00ff00; animation: blink 1.5s infinite; }
+        @keyframes blink { 50% { opacity: 0.3; } }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="logo">🛡️</div>
         <h1>SENTINEL</h1>
-        <div class="sub-text">DECENTRALIZED LEGACY PROTOCOL</div>
-        <div class="status-indicator">
-            <span class="active">●</span> SYSTEM_READY: v2.0.26
+        <div class="sub-text">DECENTRALIZED DIGITAL LEGACY</div>
+        
+        <div class="vision-card">
+            > <b>VİZYON:</b> Dijital varlıklarınızı sadece korumakla kalmıyoruz, onları geleceğe güvenle devretmeniz için merkeziyetsiz bir köprü inşa ediyoruz. AI tabanlı koruma ve miras protokolü ile verileriniz sonsuza dek güvende.
+        </div>
+
+        <div class="status-indicator" style="font-size: 0.7rem;">
+            <span class="active">●</span> SNTL_NETWORK_ACTIVE | V2.1
+        </div>
+
+        <div class="btn-group">
+            <a href="#" class="btn">Litepaper</a>
+            <a href="mailto:sentinel.legacysystems@gmail.com" class="btn">İletişim</a>
+            <a href="https://x.com" target="_blank" class="btn">X (Twitter)</a>
         </div>
     </div>
 </body>
 </html>
- 
