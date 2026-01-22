@@ -1,105 +1,144 @@
-<!DOCTYPE html>
-<html lang="tr">
+   <!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SENTINEL PROTOCOL | Digital Vault</title>
+    <title>SENTINEL PROTOCOL | Digital Vault & Privacy</title>
     <style>
+        :root {
+            --neon-blue: #00f2ff;
+        }
         body, html {
             margin: 0;
             padding: 0;
             height: 100%;
-            overflow: hidden;
             background-color: #05060a;
-            font-family: 'Inter', sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
         }
         .vault-bg {
-            background: url('vault.jpg') no-repeat center center fixed;
+            background: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.4)), 
+                        url('vault.jpg') no-repeat center center fixed;
             background-size: cover;
+            width: 100%;
             height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
         }
+        /* Ultra-Transparent Glass Panel */
         .overlay-card {
-            background: rgba(5, 6, 10, 0.7); /* Şeffaf koyu zemin */
-            backdrop-filter: blur(8px);
-            border: 2px solid #00f2ff;
+            background: rgba(0, 0, 0, 0.35); /* High transparency */
+            backdrop-filter: blur(12px); /* Blurred glass effect */
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(0, 242, 255, 0.2);
             border-radius: 30px;
-            padding: 40px;
+            padding: 50px 25px;
             width: 85%;
-            max-width: 500px;
+            max-width: 420px;
             text-align: center;
-            box-shadow: 0 0 50px rgba(0, 242, 255, 0.2);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            animation: fadeIn 1.2s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         .logo-img {
-            width: 80px;
-            margin-bottom: 15px;
+            width: 110px;
+            margin-bottom: 20px;
+            filter: drop-shadow(0 0 15px rgba(0, 242, 255, 0.4));
         }
         h1 {
-            color: white;
-            font-size: 2.5rem;
-            letter-spacing: 5px;
+            font-size: 2.4rem;
+            letter-spacing: 7px;
             margin: 0;
+            font-weight: 800;
         }
         .tagline {
-            color: #00f2ff;
-            font-size: 0.8rem;
-            letter-spacing: 1px;
-            margin-bottom: 30px;
+            color: var(--neon-blue);
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            margin: 12px 0 35px 0;
+            text-transform: uppercase;
+            font-weight: 400;
         }
         .btn-row {
             display: flex;
-            gap: 15px;
-            margin-bottom: 15px;
+            gap: 12px;
+            margin-bottom: 12px;
         }
         .btn {
             flex: 1;
-            padding: 15px;
-            border-radius: 10px;
+            padding: 16px;
+            border-radius: 12px;
             text-decoration: none;
-            font-weight: bold;
-            font-size: 0.8rem;
+            font-weight: 700;
+            font-size: 0.75rem;
             text-transform: uppercase;
-            transition: 0.3s;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255,255,255,0.15);
             display: flex;
             align-items: center;
             justify-content: center;
+            letter-spacing: 1px;
         }
-        .btn-wp { background: #00f2ff; color: #000; }
-        .btn-sec { border: 1px solid white; color: white; }
+        .btn-wp { 
+            background: var(--neon-blue); 
+            color: #000; 
+            border: none;
+            box-shadow: 0 0 20px rgba(0, 242, 255, 0.2);
+        }
+        .btn-wp:hover {
+            box-shadow: 0 0 30px var(--neon-blue);
+        }
+        .btn-sec { 
+            background: rgba(255,255,255,0.05); 
+            color: white; 
+        }
         .btn-full {
             width: 100%;
-            border: 1px solid #00f2ff;
-            color: #00f2ff;
-            background: rgba(0, 242, 255, 0.05);
+            background: rgba(255,255,255,0.05);
+            color: white;
+            box-sizing: border-box;
+        }
+        .btn:hover { 
+            transform: translateY(-3px);
+            background: rgba(255, 255, 255, 0.1);
+            border-color: var(--neon-blue);
         }
         .status {
-            margin-top: 25px;
-            color: #777;
-            font-size: 0.7rem;
-            letter-spacing: 2px;
+            margin-top: 35px;
+            color: rgba(255,255,255,0.4);
+            font-size: 0.6rem;
+            letter-spacing: 3px;
         }
+        .dot { color: #00ff00; animation: blink 1.5s infinite; }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
     </style>
 </head>
 <body>
     <div class="vault-bg">
         <div class="overlay-card">
-            <img src="logo.png" alt="SNTL" class="logo-img">
+            <img src="logo.png" alt="Sentinel Logo" class="logo-img">
             <h1>SENTINEL</h1>
-            <div class="tagline">UNIVERSAL DIGITAL VAULT & PRIVACY PROTOCOL</div>
+            <div class="tagline">DECENTRALIZED VAULT & PRIVACY PROTOCOL</div>
             
             <div class="btn-row">
                 <a href="whitepaper.md" class="btn btn-wp">WHITE PAPER</a>
-                <a href="https://x.com/SentinelProt" target="_blank" class="btn btn-sec">X (Twitter)</a>
+                <a href="https://x.com/SentinelProt" target="_blank" class="btn btn-sec">X (TWITTER)</a>
             </div>
             
-            <a href="mailto:sentinel.legacysystems@gmail.com" class="btn btn-full">İLETİŞİM & DESTEK</a>
+            <a href="mailto:sentinel.legacysystems@gmail.com" class="btn btn-full">CONTACT SUPPORT</a>
 
             <div class="status">
-                <span style="color: #00ff00;">●</span> SNTL_CORE_ACTIVE V5.0
+                <span class="dot">●</span> CORE_SYSTEM_ACTIVE_V5.5
             </div>
         </div>
     </div>
 </body>
 </html>
+   
