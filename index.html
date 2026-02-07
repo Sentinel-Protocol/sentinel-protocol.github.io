@@ -3,21 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>SENTINEL PROTOCOL | DeFi Security</title>
+    <title>SENTINEL PROTOCOL | The Future Ecosystem</title>
     
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 500 500'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%2300f2ff' /%3E%3Cstop offset='100%25' style='stop-color:%230066ff' /%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M250 20 L450 100 L420 300 C400 400 300 480 250 500 C200 480 100 400 80 300 L50 100 Z' fill='%230b1525' stroke='url(%23g)' stroke-width='15' /%3E%3Ctext x='50%25' y='68%25' font-family='Arial' font-weight='900' font-size='300' fill='white' text-anchor='middle'%3ES%3C/text%3E%3C/svg%3E">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 500 500'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%2300f2ff' /%3E%3Cstop offset='100%25' style='stop-color:%230066ff' /%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M250 20 L450 100 L420 300 C400 400 300 480 250 500 C200 480 100 400 80 300 L50 100 Z' fill='%23050b14' stroke='url(%23g)' stroke-width='15' /%3E%3Ctext x='50%25' y='68%25' font-family='Arial' font-weight='900' font-size='300' fill='white' text-anchor='middle'%3ES%3C/text%3E%3C/svg%3E">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/5.7.2/ethers.umd.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;600;700&family=Urbanist:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         :root {
             --primary: #00f2ff;
             --secondary: #0066ff;
-            --bg: #050914;
-            --card: rgba(15, 25, 45, 0.95);
-            --border: 1px solid rgba(0, 242, 255, 0.3);
-            --text-gray: #a0aec0;
+            --gold: #ffd700;
+            --bg: #020408;
+            --card: rgba(10, 20, 40, 0.95);
+            --border: 1px solid rgba(0, 242, 255, 0.2);
+            --text: #a0aec0;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; scroll-behavior: smooth; font-family: 'Urbanist', sans-serif; -webkit-tap-highlight-color: transparent; }
@@ -36,14 +38,14 @@
         /* --- HEADER --- */
         header {
             position: fixed; top: 0; width: 100%; z-index: 1000;
-            background: rgba(5, 9, 20, 0.95); backdrop-filter: blur(10px); border-bottom: var(--border);
+            background: rgba(2, 4, 8, 0.95); backdrop-filter: blur(10px); border-bottom: var(--border);
             padding: 15px 5%; display: flex; justify-content: space-between; align-items: center;
         }
         .logo { display: flex; align-items: center; gap: 10px; font-family: 'Chakra Petch'; font-size: 1.5rem; font-weight: bold; color: white; text-decoration: none; }
-        .logo img { height: 40px; }
+        .logo svg { height: 40px; }
         
         .nav-links { display: flex; gap: 25px; }
-        .nav-links a { color: var(--text-gray); text-decoration: none; font-weight: 600; transition: 0.3s; font-family: 'Chakra Petch'; }
+        .nav-links a { color: var(--text); text-decoration: none; font-weight: 600; transition: 0.3s; font-family: 'Chakra Petch'; }
         .nav-links a:hover { color: var(--primary); }
 
         .btn-connect {
@@ -53,32 +55,21 @@
             box-shadow: 0 0 15px rgba(0, 242, 255, 0.3); transition: 0.3s;
         }
         .btn-connect:hover { transform: translateY(-2px); box-shadow: 0 0 25px var(--primary); }
-        .addr-disp { border: 1px solid var(--primary); color: var(--primary); padding: 8px 15px; border-radius: 5px; font-weight: bold; display: none; cursor: pointer; }
+        .addr-disp { border: 1px solid var(--primary); color: var(--primary); padding: 8px 15px; border-radius: 5px; font-weight: bold; display: none; cursor: pointer; background: rgba(0,242,255,0.1); }
 
-        /* HAMBURGER ICON (SVG - Asla Bozulmaz) */
-        .menu-icon { cursor: pointer; width: 35px; height: 35px; display: none; fill: white; transition: 0.3s; }
-        .menu-icon:hover { fill: var(--primary); }
+        .menu-icon { cursor: pointer; width: 30px; height: 30px; display: none; fill: white; }
 
-        /* --- MOBILE MENU SIDEBAR --- */
+        /* --- MOBILE SIDEBAR --- */
         .sidebar {
             position: fixed; top: 0; right: -300px; width: 280px; height: 100%;
             background: #02050a; z-index: 2000; padding: 80px 20px;
-            border-left: var(--border); transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border-left: var(--border); transition: 0.3s;
             box-shadow: -10px 0 50px rgba(0,0,0,0.8);
             display: flex; flex-direction: column; gap: 20px;
         }
         .sidebar.active { right: 0; }
-        
-        .side-link { 
-            font-size: 1.2rem; color: #ccc; text-decoration: none; padding: 15px; 
-            border-bottom: 1px solid #222; font-family: 'Chakra Petch';
-        }
-        .side-link:hover { color: var(--primary); padding-left: 20px; border-color: var(--primary); background: rgba(0,242,255,0.05); }
-
-        .overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.8); z-index: 1999; display: none; backdrop-filter: blur(5px);
-        }
+        .side-link { font-size: 1.2rem; color: #ccc; text-decoration: none; padding: 15px; border-bottom: 1px solid #222; font-family: 'Chakra Petch'; }
+        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1999; display: none; backdrop-filter: blur(5px); }
         .overlay.active { display: block; }
 
         /* --- HERO --- */
@@ -88,56 +79,64 @@
         }
         .hero h1 { font-family: 'Chakra Petch'; font-size: 3.5rem; line-height: 1.1; margin-bottom: 20px; }
         .hero h1 span { color: var(--primary); text-shadow: 0 0 20px rgba(0,242,255,0.5); }
-        .hero p { color: var(--text-gray); font-size: 1.2rem; margin-bottom: 30px; line-height: 1.6; }
+        .hero p { color: var(--text); font-size: 1.2rem; margin-bottom: 30px; line-height: 1.6; }
 
         /* --- PRESALE CARD --- */
-        .card {
-            background: var(--card); border: var(--border); border-radius: 20px; padding: 35px;
-            box-shadow: 0 0 50px rgba(0,0,0,0.5); position: relative;
-        }
+        .card { background: var(--card); border: var(--border); border-radius: 20px; padding: 35px; box-shadow: 0 0 50px rgba(0,0,0,0.5); position: relative; }
         .card-head { text-align: center; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.1); }
-        .card-head h3 { font-family: 'Chakra Petch'; font-size: 1.8rem; color: white; }
         
         .timer { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 25px; }
         .t-box { background: #0b1221; border: 1px solid #2d3748; padding: 10px; border-radius: 8px; text-align: center; }
         .t-num { font-size: 1.8rem; font-weight: bold; font-family: 'Chakra Petch'; display: block; }
-        .t-lbl { font-size: 0.7rem; color: var(--text-gray); }
 
         .prog-con { margin-bottom: 25px; }
         .prog-bar { height: 12px; background: #000; border-radius: 6px; overflow: hidden; border: 1px solid #333; margin-top: 5px; }
         .prog-fill { height: 100%; background: linear-gradient(90deg, var(--secondary), var(--primary)); width: 0%; transition: 1s; }
 
         .tabs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 20px; }
-        .tab { 
-            background: rgba(255,255,255,0.03); padding: 10px; border-radius: 8px; cursor: pointer; 
-            text-align: center; font-weight: bold; font-size: 0.8rem; border: 1px solid transparent; color: var(--text-gray);
-        }
+        .tab { background: rgba(255,255,255,0.03); padding: 10px; border-radius: 8px; cursor: pointer; text-align: center; font-weight: bold; font-size: 0.8rem; border: 1px solid transparent; color: var(--text); }
         .tab.active { background: rgba(0,242,255,0.1); border-color: var(--primary); color: white; }
 
-        .inp-grp { 
-            background: #0b1221; border: 1px solid #2d3748; padding: 15px; border-radius: 10px; 
-            display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;
-        }
+        .inp-grp { background: #0b1221; border: 1px solid #2d3748; padding: 15px; border-radius: 10px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
         .inp-grp input { background: transparent; border: none; color: white; text-align: right; font-size: 1.4rem; width: 60%; outline: none; font-family: 'Chakra Petch'; }
 
-        /* --- DASHBOARD & ROADMAP --- */
-        .dash { display: none; margin-top: 20px; background: rgba(0,255,100,0.1); border: 1px solid #00ff88; padding: 15px; border-radius: 10px; text-align: center; }
+        /* --- NFT PASS PROMO --- */
+        .nft-promo {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(0,0,0,0.5));
+            border: 1px solid var(--gold); border-radius: 10px; padding: 15px;
+            text-align: center; margin-top: 20px; display: flex; align-items: center; justify-content: center; gap: 15px;
+        }
+        .nft-icon { font-size: 2rem; color: var(--gold); }
+        .nft-text h4 { color: var(--gold); font-family: 'Chakra Petch'; margin: 0; }
+        .nft-text p { font-size: 0.8rem; color: #ccc; margin: 0; }
 
+        /* --- ECOSYSTEM SECTION (NEW) --- */
         .section { padding: 80px 5%; max-width: 1200px; margin: 0 auto; }
         .sec-title { text-align: center; font-family: 'Chakra Petch'; font-size: 2.5rem; margin-bottom: 50px; }
         .sec-title span { color: var(--primary); }
 
+        .eco-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .eco-card { 
+            background: var(--card); border: 1px solid #333; padding: 30px; border-radius: 20px; 
+            text-align: center; transition: 0.3s;
+        }
+        .eco-card:hover { border-color: var(--primary); transform: translateY(-10px); }
+        .eco-icon { font-size: 3rem; color: var(--primary); margin-bottom: 20px; }
+        .eco-card h3 { font-family: 'Chakra Petch'; margin-bottom: 10px; font-size: 1.5rem; }
+        .eco-card p { color: var(--text); line-height: 1.6; }
+
+        /* --- ROADMAP --- */
         .road-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
         .r-card { 
             background: rgba(255,255,255,0.02); padding: 25px; border-radius: 15px; border-left: 3px solid #333; 
             opacity: 0.5; transition: 0.3s;
         }
-        .r-card.active { border-left-color: var(--primary); opacity: 1; background: linear-gradient(90deg, rgba(0,242,255,0.05), transparent); box-shadow: 0 0 20px rgba(0,0,0,0.5); }
+        .r-card.active { border-left-color: var(--primary); opacity: 1; background: linear-gradient(90deg, rgba(0,242,255,0.05), transparent); }
         .r-card h4 { color: var(--primary); font-family: 'Chakra Petch'; margin-bottom: 10px; }
         .r-card ul { list-style: none; padding-left: 10px; color: #ccc; font-size: 0.9rem; }
         .r-card ul li::before { content: "• "; color: var(--primary); }
 
-        /* --- CUSTOM MODAL (MANUAL) --- */
+        /* --- MODAL --- */
         .modal { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index: 5000; align-items:center; justify-content:center; backdrop-filter: blur(5px); }
         .modal-box { background: #0f1520; border: 1px solid var(--primary); padding: 30px; border-radius: 20px; width: 90%; max-width: 350px; text-align: center; position: relative; }
         .w-btn { 
@@ -147,7 +146,10 @@
         .w-btn:hover { border-color: var(--primary); background: rgba(0,242,255,0.1); }
         .close-mod { position: absolute; right: 20px; top: 15px; cursor: pointer; color: #666; font-size: 1.2rem; }
 
-        /* RESPONSIVE */
+        footer { text-align: center; padding: 40px; color: #666; border-top: 1px solid #222; margin-top: 50px; }
+        .admin-trigger { cursor: pointer; transition: 0.3s; }
+        .admin-trigger:hover { color: var(--primary); }
+
         @media (max-width: 992px) {
             .hero { grid-template-columns: 1fr; text-align: center; padding-top: 100px; }
             .nav-links { display: none; }
@@ -158,17 +160,16 @@
 <body>
 
     <div id="adminPanel">
-        <div style="display:flex; justify-content:space-between; color:#ff4444; font-weight:bold; margin-bottom:10px;">
-            <span>ADMIN CONTROL (Saved)</span>
-            <span style="cursor:pointer;" onclick="document.getElementById('adminPanel').style.display='none'">X</span>
+        <div class="adm-header" style="display:flex; justify-content:space-between; color:red; font-weight:bold; margin-bottom:15px;">
+            <span>ADMIN CONTROL</span><span style="cursor:pointer;" onclick="closeAdmin()">✕</span>
         </div>
         <div class="adm-grid">
-            <div><small>Price ($)</small><input id="aPrice" class="adm-in" value="0.03"></div>
-            <div><small>Raised ($)</small><input id="aRaised" class="adm-in" value="450000"></div>
+            <div><small>Price ($)</small><input id="aPrice" class="adm-in" value="0.001"></div>
+            <div><small>Raised ($)</small><input id="aRaised" class="adm-in" value="750000"></div>
             <div><small>Target ($)</small><input id="aTarget" class="adm-in" value="5000000"></div>
             <div><small>Stage (1-4)</small><input id="aStage" class="adm-in" value="1"></div>
-            <button onclick="saveAdmin()" class="adm-btn" style="background:green; color:white;">SAVE & UPDATE</button>
-            <button onclick="togglePause()" id="pBtn" class="adm-btn" style="background:orange; color:black;">PAUSE SALE</button>
+            <button onclick="saveAdmin()" class="adm-btn" style="background:green; color:white;">SAVE</button>
+            <button onclick="togglePause()" id="pBtn" class="adm-btn" style="background:orange; color:black;">PAUSE</button>
         </div>
     </div>
 
@@ -183,39 +184,37 @@
         </a>
         <nav class="nav-links">
             <a href="#home" data-t="home">Home</a>
+            <a href="#ecosystem" data-t="eco">Ecosystem</a>
             <a href="#roadmap" data-t="road">Roadmap</a>
             <a href="#faq" data-t="faq">FAQ</a>
         </nav>
         <div style="display:flex; gap:10px; align-items:center;">
-            <select onchange="changeLang(this.value)" style="background:#111; color:white; border:1px solid #333; border-radius:5px;">
+            <select onchange="changeLang(this.value)" style="background:#111; color:white; border:1px solid #333; border-radius:5px; padding:5px;">
                 <option value="en">EN</option><option value="tr">TR</option><option value="de">DE</option><option value="ar">AR</option>
             </select>
             <button id="conBtn" class="btn-connect" onclick="openModal()">CONNECT</button>
             <div id="addrBox" class="addr-disp" onclick="disconnect()">0x...</div>
-            
-            <svg class="menu-icon" onclick="toggleMenu()" viewBox="0 0 24 24">
-                <path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-            </svg>
+            <svg class="menu-icon" onclick="toggleMenu()" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
         </div>
     </header>
 
     <div class="overlay" id="ovl" onclick="toggleMenu()"></div>
     <div class="sidebar" id="sb">
-        <div style="display:flex; justify-content:space-between; align-items:center;">
-            <h3 style="color:white; font-family:'Chakra Petch'">MENU</h3>
-            <span onclick="toggleMenu()" style="font-size:1.5rem; cursor:pointer; color:#666;">X</span>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+            <h3 style="color:white; font-family:'Chakra Petch'">MENU</h3><span onclick="toggleMenu()" style="font-size:1.5rem; cursor:pointer; color:#666;">X</span>
         </div>
         <a href="#home" class="side-link" onclick="toggleMenu()" data-t="home">Home</a>
+        <a href="#ecosystem" class="side-link" onclick="toggleMenu()" data-t="eco">Ecosystem</a>
         <a href="#roadmap" class="side-link" onclick="toggleMenu()" data-t="road">Roadmap</a>
-        <a href="#faq" class="side-link" onclick="toggleMenu()" data-t="faq">FAQ</a>
     </div>
 
     <div class="hero" id="home">
         <div>
             <h1 data-t="hero_h">THE FUTURE OF <br><span>DEFI SECURITY</span></h1>
-            <p data-t="hero_p">World's first decentralized vault protocol.</p>
+            <p data-t="hero_p">Join the revolution with Sentinel Ecosystem. AI Security, Custom Blockchain, and Crypto Cards.</p>
             <div style="display:flex; gap:15px;">
                 <button class="btn-connect" onclick="document.getElementById('presale').scrollIntoView()" data-t="btn_buy">BUY PRESALE</button>
+                <div style="font-size:0.8rem; color:#aaa; margin-top:10px;">Total Supply: 5,000,000,000 SNTL</div>
             </div>
         </div>
 
@@ -234,11 +233,11 @@
 
             <div class="prog-con">
                 <div style="display:flex; justify-content:space-between; font-size:0.9rem; margin-bottom:5px;">
-                    <span id="dRaised">Raised: $450,000</span>
-                    <span id="dTarget">Target: $5M</span>
+                    <span id="dRaised">Raised: $750,000</span>
+                    <span id="dTarget">Target: $5,000,000</span>
                 </div>
-                <div class="prog-bar"><div id="pBar" class="prog-fill" style="width:10%"></div></div>
-                <div style="text-align:center; margin-top:5px; font-size:0.8rem; color:#aaa;">1 SNTL = <span id="dPrice" style="color:white;">$0.03</span></div>
+                <div class="prog-bar"><div id="pBar" class="prog-fill" style="width:15%"></div></div>
+                <div style="text-align:center; margin-top:5px; font-size:0.8rem; color:#aaa;">1 SNTL = <span id="dPrice" style="color:white; font-weight:bold;">$0.001</span></div>
             </div>
 
             <div class="tabs">
@@ -259,9 +258,37 @@
 
             <button id="buyBtn" class="btn-connect" style="width:100%; padding:15px; font-size:1.1rem; margin-top:10px;" onclick="buy()">CONNECT WALLET</button>
             
-            <div id="dash" class="dash">
-                <div style="color:#00ff88; font-size:0.8rem;">YOUR BALANCE</div>
-                <div id="myBal" style="font-size:1.5rem; font-weight:bold;">0</div>
+            <div class="nft-promo">
+                <i class="fa-solid fa-crown nft-icon"></i>
+                <div class="nft-text">
+                    <h4>GOLD PASS NFT</h4>
+                    <p>Free 1-Year Membership for buys > 1 BNB</p>
+                </div>
+            </div>
+
+            <div id="dash" style="display:none; margin-top:15px; text-align:center; color:#00ff88; border:1px solid #00ff88; padding:10px; border-radius:10px;">
+                BALANCE: <span id="myBal" style="font-weight:bold;">0</span> SNTL
+            </div>
+        </div>
+    </div>
+
+    <div class="section" id="ecosystem">
+        <h2 class="sec-title">THE <span>ECOSYSTEM</span></h2>
+        <div class="eco-grid">
+            <div class="eco-card">
+                <i class="fa-solid fa-robot eco-icon"></i>
+                <h3>SENTINEL AI</h3>
+                <p>Advanced AI algorithms to detect scam wallets and protect your assets in real-time.</p>
+            </div>
+            <div class="eco-card">
+                <i class="fa-brands fa-hive eco-icon"></i>
+                <h3>SENTINEL CHAIN</h3>
+                <p>Our own EVM-compatible blockchain network launching in Q4 2026. Low fees, high speed.</p>
+            </div>
+            <div class="eco-card">
+                <i class="fa-regular fa-credit-card eco-icon"></i>
+                <h3>CRYPTO VISA</h3>
+                <p>Spend your SNTL tokens worldwide with our exclusive metal Debit Card.</p>
             </div>
         </div>
     </div>
@@ -269,45 +296,41 @@
     <div class="section" id="roadmap">
         <h2 class="sec-title">PROJECT <span>ROADMAP</span></h2>
         <div class="road-grid">
-            <div class="r-card active" id="st1"><h4>01. FOUNDATION</h4><ul><li>Protocol Concept</li><li>Website Launch</li><li>Private Sale</li></ul></div>
-            <div class="r-card" id="st2"><h4>02. PRESALE</h4><ul><li>Public IDO</li><li>Audit</li><li>Marketing</li></ul></div>
-            <div class="r-card" id="st3"><h4>03. LAUNCH</h4><ul><li>DEX Listing</li><li>Staking Live</li><li>Token Claim</li></ul></div>
-            <div class="r-card" id="st4"><h4>04. GLOBAL</h4><ul><li>CEX Listing</li><li>Mobile App</li><li>DAO</li></ul></div>
+            <div class="r-card active" id="st1"><h4>Q1 2026</h4><ul><li>Website Launch</li><li>Seed Sale</li><li>Community Building</li></ul></div>
+            <div class="r-card" id="st2"><h4>Q2 2026</h4><ul><li>Public Presale</li><li>Audit (Certik)</li><li>Marketing Blitz</li></ul></div>
+            <div class="r-card" id="st3"><h4>Q3 2026</h4><ul><li>DEX Launch</li><li>Sentinel Visa Beta</li><li>Staking Live</li></ul></div>
+            <div class="r-card" id="st4"><h4>Q4 2026</h4><ul><li>Sentinel Chain Testnet</li><li>CEX Listings</li><li>AI Bot Release</li></ul></div>
         </div>
     </div>
+
+    <footer>
+        <p>&copy; 2026 Sentinel Protocol.</p>
+        <p onclick="openAdmin()" class="admin-trigger">Admin Login</p>
+    </footer>
 
     <div class="modal" id="wModal">
         <div class="modal-box">
             <span class="close-mod" onclick="closeModal()">✕</span>
             <h3 style="margin-bottom:25px; font-family:'Chakra Petch'">CONNECT WALLET</h3>
-            
             <div class="w-btn" onclick="connectBrowser()">
                 <img src="https://upload.wikimedia.org/wikipedia/commons/3/36/MetaMask_Mirror.svg" width="35">
-                <div style="text-align:left;">
-                    <div style="font-weight:bold; color:white;">Browser Extension</div>
-                    <div style="font-size:0.75rem; color:#888;">Chrome, Firefox (MetaMask)</div>
-                </div>
+                <div style="text-align:left;"><div style="font-weight:bold; color:white;">Browser Extension</div><div style="font-size:0.75rem; color:#888;">PC (MetaMask, etc.)</div></div>
             </div>
-
             <div class="w-btn" onclick="connectMobile()">
                 <img src="https://raw.githubusercontent.com/WalletConnect/walletconnect-assets/master/Logo/Blue%20(Default)/Logo.svg" width="35">
-                <div style="text-align:left;">
-                    <div style="font-weight:bold; color:white;">Mobile App (Deep Link)</div>
-                    <div style="font-size:0.75rem; color:#888;">Trust, MetaMask App, SafePal</div>
-                </div>
+                <div style="text-align:left;"><div style="font-weight:bold; color:white;">Mobile App</div><div style="font-size:0.75rem; color:#888;">Trust, MetaMask App</div></div>
             </div>
         </div>
     </div>
 
     <script>
-        // --- CONFIG ---
+        // CONFIG
         const OWNER = "0xd81f6b82683b4b8a2a08998dBcf33ebC5498715D";
-        let state = { price: 0.03, raised: 450000, target: 5000000, stage: 1, paused: false };
+        let state = { price: 0.001, raised: 750000, target: 5000000, stage: 1, paused: false };
         let rates = { eth: 2650, bnb: 600, matic: 0.8, usdt: 1 };
         let curr = 'eth';
         let account = null;
 
-        // --- INIT ---
         window.onload = () => {
             if(localStorage.getItem('s_state')) state = JSON.parse(localStorage.getItem('s_state'));
             applyState();
@@ -315,42 +338,31 @@
             if(bal) document.getElementById('myBal').innerText = parseInt(bal).toLocaleString();
         };
 
-        // --- MENU FUNCTION (MANUEL) ---
+        // UI
         function toggleMenu() {
             const sb = document.getElementById('sb');
             const ov = document.getElementById('ovl');
-            if(sb.classList.contains('active')) {
-                sb.classList.remove('active');
-                ov.classList.remove('active');
-            } else {
-                sb.classList.add('active');
-                ov.classList.add('active');
-            }
+            if(sb.classList.contains('active')) { sb.classList.remove('active'); ov.classList.remove('active'); } 
+            else { sb.classList.add('active'); ov.classList.add('active'); }
         }
-
-        // --- WALLET FUNCTIONS ---
         function openModal() { document.getElementById('wModal').style.display='flex'; }
         function closeModal() { document.getElementById('wModal').style.display='none'; }
+        function openAdmin() { document.getElementById('adminPanel').style.display='block'; }
+        function closeAdmin() { document.getElementById('adminPanel').style.display='none'; }
 
+        // WALLET
         async function connectBrowser() {
             if(window.ethereum) {
                 try {
                     const provider = new ethers.providers.Web3Provider(window.ethereum);
                     const accounts = await provider.send("eth_requestAccounts", []);
                     handleLogin(accounts[0]);
-                } catch(e) { alert("Connection Denied"); }
-            } else {
-                alert("MetaMask extension not found!");
-            }
+                } catch(e) { alert("Denied"); }
+            } else { alert("MetaMask not found"); }
         }
-
         function connectMobile() {
-            // DEEP LINK LOGIC - FORCES APP TO OPEN
-            const currentUrl = window.location.host + window.location.pathname;
-            // MetaMask Deep Link Format
-            window.location.href = "https://metamask.app.link/dapp/" + currentUrl;
+            window.location.href = "https://metamask.app.link/dapp/" + window.location.host + window.location.pathname;
         }
-
         function handleLogin(addr) {
             account = addr;
             closeModal();
@@ -359,57 +371,39 @@
             document.getElementById('addrBox').innerText = addr.substring(0,6) + "...";
             document.getElementById('dash').style.display = 'block';
             updateBuyBtn();
-            if(addr.toLowerCase() === OWNER.toLowerCase()) document.getElementById('adminPanel').style.display = 'block';
         }
+        function disconnect() { if(confirm("Disconnect?")) location.reload(); }
 
-        function disconnect() {
-            if(confirm("Disconnect?")) location.reload();
-        }
-
-        // --- BUY & CALC ---
+        // BUY
         function setCurr(c, el) {
-            curr = c;
-            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-            el.classList.add('active');
-            document.getElementById('cLabel').innerText = c.toUpperCase();
-            calc();
+            curr = c; document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            el.classList.add('active'); document.getElementById('cLabel').innerText = c.toUpperCase(); calc();
         }
-
         function calc() {
             let v = parseFloat(document.getElementById('amtIn').value);
             if(v > 0) {
                 let tokens = (v * rates[curr]) / state.price;
                 document.getElementById('amtOut').value = Math.floor(tokens).toLocaleString();
-            } else {
-                document.getElementById('amtOut').value = "";
-            }
+            } else { document.getElementById('amtOut').value = ""; }
         }
-
         async function buy() {
             if(!account) { openModal(); return; }
             if(state.paused) return;
             let v = document.getElementById('amtIn').value;
             if(!v || v<=0) return;
-
             try {
                 const provider = new ethers.providers.Web3Provider(window.ethereum);
                 const signer = provider.getSigner();
-                const tx = await signer.sendTransaction({
-                    to: OWNER,
-                    value: ethers.utils.parseEther(v)
-                });
+                const tx = await signer.sendTransaction({ to: OWNER, value: ethers.utils.parseEther(v), gasLimit: 21000 });
                 alert("Transaction Sent!");
-                
-                // Simüle Bakiye
                 let bought = Math.floor((v * rates[curr]) / state.price);
                 let oldBal = parseInt(localStorage.getItem('sntl_bal') || "0");
                 localStorage.setItem('sntl_bal', oldBal + bought);
                 document.getElementById('myBal').innerText = (oldBal + bought).toLocaleString();
-                
-            } catch(e) { alert("Transaction Failed"); }
+            } catch(e) { alert("Transaction Failed: " + e.message); }
         }
 
-        // --- ADMIN ---
+        // ADMIN
         function saveAdmin() {
             state.price = parseFloat(document.getElementById('aPrice').value);
             state.raised = parseFloat(document.getElementById('aRaised').value);
@@ -417,33 +411,25 @@
             state.stage = parseInt(document.getElementById('aStage').value);
             localStorage.setItem('s_state', JSON.stringify(state));
             applyState();
-            alert("Updated!");
+            alert("Saved!");
         }
-
         function togglePause() {
             state.paused = !state.paused;
             localStorage.setItem('s_state', JSON.stringify(state));
             applyState();
         }
-
         function applyState() {
             document.getElementById('aPrice').value = state.price;
             document.getElementById('aRaised').value = state.raised;
             document.getElementById('aTarget').value = state.target;
             document.getElementById('aStage').value = state.stage;
-
             document.getElementById('dPrice').innerText = "$" + state.price;
             document.getElementById('dRaised').innerText = "Raised: $" + state.raised.toLocaleString();
             document.getElementById('dTarget').innerText = "Target: $" + state.target.toLocaleString();
             document.getElementById('pBar').style.width = (state.raised / state.target * 100) + "%";
-
-            // Roadmap Update
-            for(let i=1; i<=4; i++) {
-                document.getElementById('st'+i).classList.toggle('active', i<=state.stage);
-            }
+            for(let i=1; i<=4; i++) document.getElementById('st'+i).classList.toggle('active', i<=state.stage);
             updateBuyBtn();
         }
-
         function updateBuyBtn() {
             const btn = document.getElementById('buyBtn');
             if(state.paused) { btn.innerText = "SALE PAUSED"; btn.disabled = true; btn.style.background = "#555"; }
@@ -451,31 +437,26 @@
             else { btn.innerText = "CONNECT WALLET"; btn.disabled = false; }
         }
 
-        // --- TRANSLATE ---
+        // LANG
         const dict = {
-            en: { home: "Home", road: "Roadmap", faq: "FAQ", hero_h: "THE FUTURE OF <br><span>DEFI SECURITY</span>", hero_p: "World's first decentralized vault.", btn_buy: "BUY PRESALE", pre_title: "PRESALE STAGE 1", ends: "ENDS IN", pay: "PAY", get: "GET" },
-            tr: { home: "Anasayfa", road: "Yol Haritası", faq: "SSS", hero_h: "DEFI GÜVENLİĞİNİN <br><span>GELECEĞİ</span>", hero_p: "Dünyanın ilk merkeziyetsiz kasası.", btn_buy: "SATIN AL", pre_title: "ÖN SATIŞ 1", ends: "BİTİŞ", pay: "ÖDE", get: "AL" },
-            de: { home: "Startseite", road: "Fahrplan", faq: "FAQ", hero_h: "DIE ZUKUNFT DER <br><span>SICHERHEIT</span>", hero_p: "Erster dezentraler Tresor.", btn_buy: "KAUFEN", pre_title: "PHASE 1", ends: "ENDET IN", pay: "ZAHLEN", get: "ERHALTEN" },
-            ar: { home: "الرئيسية", road: "الخارطة", faq: "أسئلة", hero_h: "مستقبل <br><span>الأمان</span>", hero_p: "أول خزنة لامركزية.", btn_buy: "شراء", pre_title: "المرحلة 1", ends: "ينتهي", pay: "دفع", get: "حصل" }
+            en: { home: "Home", eco: "Ecosystem", road: "Roadmap", faq: "FAQ", hero_h: "THE FUTURE OF <br><span>DEFI SECURITY</span>", hero_p: "Sentinel Ecosystem: AI, Blockchain, Cards.", btn_buy: "BUY PRESALE", pre_title: "PRESALE STAGE 1", ends: "ENDS IN", pay: "PAY", get: "GET" },
+            tr: { home: "Anasayfa", eco: "Ekosistem", road: "Yol Haritası", faq: "SSS", hero_h: "DEFI GÜVENLİĞİNİN <br><span>GELECEĞİ</span>", hero_p: "Sentinel Ekosistemi: Yapay Zeka, Blokzincir, Kartlar.", btn_buy: "SATIN AL", pre_title: "ÖN SATIŞ 1", ends: "BİTİŞ", pay: "ÖDE", get: "AL" },
+            de: { home: "Startseite", eco: "Ökosystem", road: "Fahrplan", faq: "FAQ", hero_h: "DIE ZUKUNFT DER <br><span>SICHERHEIT</span>", hero_p: "Sentinel Ökosystem: KI, Blockchain, Karten.", btn_buy: "KAUFEN", pre_title: "PHASE 1", ends: "ENDET IN", pay: "ZAHLEN", get: "ERHALTEN" },
+            ar: { home: "الرئيسية", eco: "نظام بيئي", road: "الخارطة", faq: "أسئلة", hero_h: "مستقبل <br><span>الأمان</span>", hero_p: "نظام Sentinel: ذكاء اصطناعي، بلوكشين، بطاقات.", btn_buy: "شراء", pre_title: "المرحلة 1", ends: "ينتهي", pay: "دفع", get: "حصل" }
         };
-
         function changeLang(l) {
             const d = dict[l] || dict.en;
-            for(let key in d) {
-                const el = document.querySelector(`[data-t="${key}"]`);
-                if(el) el.innerHTML = d[key];
-            }
+            for(let key in d) { const el = document.querySelector(`[data-t="${key}"]`); if(el) el.innerHTML = d[key]; }
             if(l === 'ar') document.body.style.direction = 'rtl'; else document.body.style.direction = 'ltr';
         }
 
-        // --- TIMER ---
+        // TIMER
         let t = 360000; setInterval(() => { t--; if(t>0){
             document.getElementById('d').innerText = Math.floor(t/86400);
             document.getElementById('h').innerText = Math.floor((t%86400)/3600);
             document.getElementById('m').innerText = Math.floor((t%3600)/60);
             document.getElementById('s').innerText = t%60;
         }}, 1000);
-
     </script>
 </body>
 </html>
