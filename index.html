@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>SENTINEL PROTOCOL | The Digital Fortress</title>
+    <title>SENTINEL | The Ultimate Digital Fortress</title>
     
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 500 500'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%2300f2ff' /%3E%3Cstop offset='100%25' style='stop-color:%230066ff' /%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M250 20 L450 100 L420 300 C400 400 300 480 250 500 C200 480 100 400 80 300 L50 100 Z' fill='%23050b14' stroke='url(%23g)' stroke-width='15' /%3E%3Ctext x='50%25' y='68%25' font-family='Arial' font-weight='900' font-size='300' fill='white' text-anchor='middle'%3ES%3C/text%3E%3C/svg%3E">
 
@@ -18,21 +18,22 @@
             --gold: #ffd700;
             --danger: #ff3333;
             --bg: #020408;
-            --card: rgba(8, 15, 30, 0.92);
+            --card: rgba(8, 15, 30, 0.94);
             --border: 1px solid rgba(0, 242, 255, 0.25);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; scroll-behavior: smooth; font-family: 'Urbanist', sans-serif; }
         body { background: var(--bg); color: white; overflow-x: hidden; }
 
-        /* ARKA PLAN - GÖNDERDİĞİN KASA GÖRSELİ */
+        /* --- BACKGROUND (GÖNDERDİĞİN GÖRSEL TEMASI) --- */
         .main-bg {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
-            background: linear-gradient(rgba(2,4,8,0.7), rgba(2,4,8,0.85)), url('1000018911.jpg'); 
-            background-size: cover; background-position: center; filter: brightness(1.1) contrast(1.1);
+            background: linear-gradient(rgba(2,4,8,0.7), rgba(2,4,8,0.9)), 
+                        url('https://images.unsplash.com/photo-1558494949-ef010cbdcc51?q=80&w=2000'); /* Arka plana senin görselin gelecek */
+            background-size: cover; background-position: center; filter: brightness(1.2) contrast(1.1);
         }
 
-        /* --- GİZLİ ADMİN PANELİ --- */
+        /* --- SECRET ADMIN PANEL --- */
         #secretAdmin {
             display: none; position: fixed; bottom: 0; left: 0; width: 100%; z-index: 10000;
             background: #000; border-top: 4px solid var(--danger); padding: 25px;
@@ -59,53 +60,62 @@
         }
         .addr-disp { border: 1px solid var(--primary); color: var(--primary); padding: 8px 15px; border-radius: 4px; font-weight: bold; display: none; cursor: pointer; background: rgba(0,242,255,0.05); }
 
-        /* --- SİDEBAR MENU --- */
-        .sidebar { position: fixed; top: 0; right: -100%; width: 320px; height: 100%; background: rgba(5, 11, 20, 0.98); z-index: 2000; padding: 80px 30px; transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1); border-left: var(--border); backdrop-filter: blur(10px); }
+        /* --- SIDEBAR MENU --- */
+        .sidebar { position: fixed; top: 0; right: -100%; width: 320px; height: 100%; background: rgba(5, 11, 20, 0.98); z-index: 2000; padding: 80px 30px; transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1); border-left: var(--border); backdrop-filter: blur(15px); }
         .sidebar.active { right: 0; }
-        .side-link { display: flex; align-items: center; gap: 15px; padding: 18px; color: #ccc; text-decoration: none; border-bottom: 1px solid #222; font-family: 'Chakra Petch'; font-size: 1.1rem; transition: 0.3s; }
+        .side-link { display: flex; align-items: center; gap: 15px; padding: 18px; color: #ccc; text-decoration: none; border-bottom: 1px solid #222; font-family: 'Chakra Petch'; font-size: 1rem; transition: 0.3s; }
         .side-link:hover { color: var(--primary); background: rgba(0,242,255,0.05); padding-left: 25px; }
         .side-link i { color: var(--primary); width: 25px; text-align: center; }
-
         .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1999; display: none; }
 
-        /* --- MAIN SECTION --- */
-        .container { padding: 140px 5% 100px; max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 50px; align-items: center; }
+        /* --- MAIN CONTAINER --- */
+        .main-content { padding: 140px 5% 100px; max-width: 1300px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center; }
         
-        .hero-txt h1 { font-family: 'Chakra Petch'; font-size: 3.8rem; line-height: 1.1; margin-bottom: 20px; }
-        .hero-txt h1 span { color: var(--primary); text-shadow: 0 0 20px var(--primary); }
-        .hero-txt p { color: #aaa; font-size: 1.2rem; line-height: 1.6; margin-bottom: 30px; }
+        .hero-text h1 { font-family: 'Chakra Petch'; font-size: 3.5rem; line-height: 1.1; margin-bottom: 20px; }
+        .hero-text h1 span { color: var(--primary); text-shadow: 0 0 20px var(--primary); }
+        .hero-text p { color: #aaa; font-size: 1.1rem; line-height: 1.6; margin-bottom: 30px; }
 
-        /* SATIŞ KARTI */
+        /* --- PRESALE CARD --- */
         .presale-card { background: var(--card); border: var(--border); border-radius: 20px; padding: 35px; box-shadow: 0 0 60px rgba(0,0,0,0.6); position: relative; }
         .presale-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: linear-gradient(90deg, var(--secondary), var(--primary)); }
 
-        .timer { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 25px 0; }
-        .t-box { background: #000; padding: 12px; text-align: center; border-radius: 10px; border: 1px solid #333; }
-        .t-num { font-size: 1.8rem; font-weight: bold; color: white; display: block; font-family: 'Chakra Petch'; }
+        .timer { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 25px 0; }
+        .t-box { background: #000; padding: 12px; text-align: center; border-radius: 8px; border: 1px solid #333; }
+        .t-num { font-size: 1.6rem; font-weight: bold; color: white; display: block; font-family: 'Chakra Petch'; }
         .t-lbl { font-size: 0.7rem; color: #666; font-weight: bold; }
 
-        .progress-container { margin: 20px 0; }
-        .p-bar { height: 12px; background: #000; border-radius: 6px; overflow: hidden; border: 1px solid #333; }
-        .p-fill { height: 100%; background: linear-gradient(90deg, var(--secondary), var(--primary)); width: 16.8%; transition: 1.5s; }
+        .progress-bar { height: 10px; background: #000; border-radius: 5px; overflow: hidden; border: 1px solid #333; margin: 20px 0; }
+        .progress-fill { height: 100%; background: linear-gradient(90deg, var(--secondary), var(--primary)); width: 16.8%; transition: 1.5s; }
 
-        .currency-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 20px; }
-        .curr-tab { background: #111; padding: 10px; border-radius: 6px; cursor: pointer; border: 1px solid #333; text-align: center; font-size: 0.75rem; font-weight: bold; transition: 0.3s; }
+        /* CURRENCY SELECTION */
+        .currency-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-bottom: 20px; }
+        .curr-tab { background: #111; padding: 8px; border-radius: 4px; cursor: pointer; border: 1px solid #333; text-align: center; font-size: 0.7rem; font-weight: bold; transition: 0.3s; }
         .curr-tab.active { border-color: var(--primary); background: rgba(0,242,255,0.1); color: white; }
 
-        .input-box { background: #000; border: 1px solid #222; padding: 18px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
-        .input-box input { background: transparent; border: none; color: white; text-align: right; font-size: 1.5rem; width: 60%; outline: none; font-family: 'Chakra Petch'; }
-        .input-label { font-size: 0.8rem; color: #666; font-weight: bold; }
+        .input-group { background: #000; border: 1px solid #222; padding: 15px; border-radius: 10px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+        .input-group input { background: transparent; border: none; color: white; text-align: right; font-size: 1.4rem; width: 60%; outline: none; font-family: 'Chakra Petch'; }
+        .input-label { font-size: 0.75rem; color: #666; font-weight: bold; }
 
-        /* MINING PAGE (POPUP) */
-        #miningPage {
+        /* --- DASHBOARD & MINING (POPUP PAGES) --- */
+        .full-page {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
             background: rgba(2, 4, 8, 0.98); z-index: 5000; align-items: center; justify-content: center; backdrop-filter: blur(15px);
         }
-        .mining-container { background: var(--card); border: var(--border); padding: 50px; border-radius: 30px; text-align: center; width: 90%; max-width: 500px; position: relative; }
-        .close-mining { position: absolute; top: 20px; right: 25px; cursor: pointer; font-size: 1.5rem; color: #666; }
-        .sp-total { font-size: 4.5rem; font-weight: 900; color: white; text-shadow: 0 0 30px var(--primary); font-family: 'Chakra Petch'; margin: 20px 0; }
+        .page-box { background: var(--card); border: var(--border); padding: 40px; border-radius: 25px; width: 90%; max-width: 600px; position: relative; max-height: 90vh; overflow-y: auto; }
+        .close-page { position: absolute; top: 20px; right: 25px; cursor: pointer; font-size: 1.5rem; color: #666; }
 
-        @media (max-width: 992px) { .container { grid-template-columns: 1fr; text-align: center; padding-top: 100px; } }
+        /* RECEIPT / HISTORY STYLE */
+        .history-item { background: #000; padding: 15px; border-radius: 10px; border: 1px solid #222; margin-top: 10px; font-size: 0.8rem; }
+        .history-row { display: flex; justify-content: space-between; margin-bottom: 5px; color: #888; }
+        .history-val { color: white; font-weight: bold; }
+
+        /* DAILY CHEST */
+        .chest-box { background: linear-gradient(135deg, #1a1a1a, #0a0a0a); border: 1px solid var(--gold); border-radius: 15px; padding: 25px; margin-top: 20px; cursor: pointer; transition: 0.3s; }
+        .chest-box:hover { transform: scale(1.02); box-shadow: 0 0 20px rgba(255, 215, 0, 0.2); }
+
+        @media (max-width: 992px) {
+            .main-content { grid-template-columns: 1fr; text-align: center; padding-top: 100px; }
+        }
     </style>
 </head>
 <body>
@@ -114,16 +124,16 @@
 
     <div id="secretAdmin">
         <div style="display:flex; justify-content:space-between; color:var(--danger); font-family:'Chakra Petch'; margin-bottom:15px;">
-            <span>SENTINEL MASTER ACCESS</span><span onclick="document.getElementById('secretAdmin').style.display='none'" style="cursor:pointer; color:white;">✕</span>
+            <span>SENTINEL MASTER ACCESS CONTROL</span><span onclick="document.getElementById('secretAdmin').style.display='none'" style="cursor:pointer; color:white;">✕</span>
         </div>
         <div class="adm-grid">
-            <div><small>FİYAT ($)</small><input id="aPrice" class="adm-in" value="0.001"></div>
-            <div><small>TOPLANAN ($)</small><input id="aRaised" class="adm-in" value="840000"></div>
-            <div><small>GÜN</small><input id="aDay" class="adm-in" value="10"></div>
-            <div><small>SAAT</small><input id="aHour" class="adm-in" value="12"></div>
-            <div><small>HIZ (SP/h)</small><input id="aSpeed" class="adm-in" value="1.0"></div>
-            <button class="btn-connect" onclick="saveAdmin()" style="color:white; background:green; border:none; height:45px; margin-top:15px;">SİSTEMİ GÜNCELLE</button>
-            <button id="pBtn" class="btn-connect" onclick="togglePause()" style="color:black; background:orange; border:none; height:45px; margin-top:15px;">DURDUR/BAŞLAT</button>
+            <div><small>SNTL PRICE ($)</small><input id="aPrice" class="adm-in" value="0.001"></div>
+            <div><small>RAISED ($)</small><input id="aRaised" class="adm-in" value="840000"></div>
+            <div><small>DAY</small><input id="aDay" class="adm-in" value="10"></div>
+            <div><small>HOUR</small><input id="aHour" class="adm-in" value="12"></div>
+            <div><small>MINING SPEED</small><input id="aSpeed" class="adm-in" value="1.0"></div>
+            <button class="btn-connect" onclick="saveAdmin()" style="color:white; background:green; border:none; height:45px; margin-top:15px;">UPDATE SYSTEM</button>
+            <button id="pBtn" class="btn-connect" onclick="togglePause()" style="color:black; background:orange; border:none; height:45px; margin-top:15px;">PAUSE/RESUME</button>
         </div>
     </div>
 
@@ -138,41 +148,80 @@
         </a>
         <div class="header-btns">
             <button id="conBtn" class="btn-connect" onclick="connectWallet()">CONNECT WALLET</button>
-            <div id="addrBox" class="addr-disp" onclick="disconnect()">0x...</div>
+            <div id="addrBox" class="addr-disp" onclick="openPage('dashPage')">0x...</div>
             <i class="fa fa-bars" style="color:white; font-size:1.5rem; cursor:pointer;" onclick="toggleMenu()"></i>
         </div>
     </header>
 
     <div class="overlay" id="ovl" onclick="toggleMenu()"></div>
     <div class="sidebar" id="sb">
-        <h3 style="color:white; font-family:'Chakra Petch'; margin-bottom:25px;">SENTINEL ECOSYSTEM</h3>
-        <a href="javascript:void(0)" class="side-link" onclick="openMining()"><i class="fa fa-microchip"></i> Mining Panel</a>
+        <h3 style="color:white; font-family:'Chakra Petch'; margin-bottom:20px;">SENTINEL ECOSYSTEM</h3>
+        <a href="javascript:void(0)" class="side-link" onclick="openPage('miningPage')"><i class="fa fa-microchip"></i> Mining Center</a>
+        <a href="javascript:void(0)" class="side-link" onclick="openPage('dashPage')"><i class="fa fa-user-circle"></i> My Dashboard</a>
         <a href="javascript:void(0)" class="side-link"><i class="fa fa-chart-pie"></i> Tokenomics</a>
         <a href="javascript:void(0)" class="side-link"><i class="fa fa-map-signs"></i> Roadmap</a>
         <a href="javascript:void(0)" class="side-link"><i class="fa fa-file-alt"></i> Whitepaper</a>
-        <div style="margin-top:40px; display:flex; gap:20px; justify-content:center;">
-            <i class="fab fa-twitter" style="font-size:1.5rem; color:#aaa; cursor:pointer;"></i>
-            <i class="fab fa-telegram" style="font-size:1.5rem; color:#aaa; cursor:pointer;"></i>
-            <i class="fab fa-discord" style="font-size:1.5rem; color:#aaa; cursor:pointer;"></i>
-        </div>
-    </div>
-
-    <div id="miningPage">
-        <div class="mining-container">
-            <span class="close-mining" onclick="closeMining()">✕</span>
-            <h2 style="font-family:'Chakra Petch'; color:var(--primary);">SHIELD MINING</h2>
-            <div class="sp-total" id="spDisplay">0.0000</div>
-            <p style="color:#888; letter-spacing:5px; font-weight:bold; font-size:0.8rem; margin-bottom:30px;">SENTINEL POINTS</p>
-            <div style="background:#000; padding:20px; border-radius:15px; border:1px solid #222; margin-bottom:25px;">
-                <div style="display:flex; justify-content:space-between; margin-bottom:10px;"><span>Kazım Hızı:</span><span id="dispSpeed" style="color:white; font-weight:bold;">1.0 SP/h</span></div>
-                <div style="display:flex; justify-content:space-between;"><span>Referanslar:</span><span style="color:white; font-weight:bold;">0</span></div>
+        <div style="margin-top:40px; text-align:center;">
+            <p style="color:#555; font-size:0.7rem; margin-bottom:10px;">SOCIALS</p>
+            <div style="display:flex; gap:20px; justify-content:center;">
+                <i class="fab fa-twitter" style="color:#aaa;"></i>
+                <i class="fab fa-telegram" style="color:#aaa;"></i>
+                <i class="fab fa-discord" style="color:#aaa;"></i>
             </div>
-            <button class="btn-connect" style="width:100%; padding:20px;" onclick="startShield()">START MINING</button>
         </div>
     </div>
 
-    <div class="container">
-        <div class="hero-txt">
+    <div class="full-page" id="dashPage">
+        <div class="page-box">
+            <span class="close-page" onclick="closePage('dashPage')">✕</span>
+            <h2 style="font-family:'Chakra Petch'; color:var(--primary); margin-bottom:20px;">USER DASHBOARD</h2>
+            
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px; margin-bottom:30px;">
+                <div style="background:#000; padding:15px; border-radius:12px; border:1px solid #222;">
+                    <small style="color:#666;">SP BALANCE</small>
+                    <div id="dashSp" style="font-size:1.5rem; font-weight:bold; color:var(--primary);">0.0000</div>
+                </div>
+                <div style="background:#000; padding:15px; border-radius:12px; border:1px solid #222;">
+                    <small style="color:#666;">SNTL TOKEN</small>
+                    <div id="dashSntl" style="font-size:1.5rem; font-weight:bold; color:white;">0</div>
+                </div>
+            </div>
+
+            <h4 style="font-family:'Chakra Petch'; margin-bottom:10px;">TRANSACTION HISTORY (RECEIPTS)</h4>
+            <div id="historyList" style="max-height: 200px; overflow-y:auto;">
+                <p style="color:#444; text-align:center;">No transactions found yet.</p>
+            </div>
+            
+            <div style="margin-top:20px; padding:15px; border:1px solid #333; border-radius:10px; font-size:0.8rem;">
+                <div class="history-row"><span>Wallet Address:</span><span id="dashAddr" class="history-val">Not Connected</span></div>
+                <div class="history-row"><span>Identity Status:</span><span style="color:var(--primary)">Sentinel Member</span></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="full-page" id="miningPage">
+        <div class="page-box" style="text-align:center;">
+            <span class="close-page" onclick="closePage('miningPage')">✕</span>
+            <h2 style="font-family:'Chakra Petch'; color:var(--primary);">MINING CENTER</h2>
+            <div style="font-size:4rem; font-weight:900; color:white; text-shadow:0 0 30px var(--primary); font-family:'Chakra Petch';" id="spCounter">0.0000</div>
+            <p style="color:#888; letter-spacing:5px; font-weight:bold; font-size:0.8rem; margin-bottom:20px;">SENTINEL POINTS</p>
+            
+            <div style="display:flex; justify-content:space-between; background:#000; padding:15px; border-radius:10px; border:1px solid #222;">
+                <span>Current Speed:</span><span id="dispSpeed" style="color:var(--primary); font-weight:bold;">1.0 SP/h</span>
+            </div>
+
+            <div class="chest-box" onclick="openChest()">
+                <i class="fa fa-box-open" style="font-size:3rem; color:var(--gold); margin-bottom:10px; display:block;"></i>
+                <h4 style="color:var(--gold); font-family:'Chakra Petch'">DAILY LUCKY CHEST</h4>
+                <p style="font-size:0.8rem; color:#888;">Win up to 50 SP every 24 hours!</p>
+            </div>
+
+            <button class="btn-connect" style="width:100%; padding:20px; margin-top:20px;" onclick="startShield()">ACTIVATE SHIELD</button>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="hero-text">
             <h1>UNLOCK THE <br><span>DIGITAL TREASURE</span></h1>
             <p>The world's first decentralized inheritance protocol with integrated ZK-Shield protection. Secure your legacy, preserve your wealth.</p>
             <div style="display:flex; gap:15px;">
@@ -199,8 +248,7 @@
                     <span id="dRaised">Raised: $840,000</span>
                     <span id="dTarget">Goal: $5,000,000</span>
                 </div>
-                <div class="p-bar"><div id="pBar" class="p-fill"></div></div>
-                <div style="text-align:center; margin-top:10px; font-size:0.9rem; color:#888;">1 SNTL = <span style="color:white; font-weight:bold;">$0.001</span></div>
+                <div class="progress-bar"><div id="pBar" class="progress-fill"></div></div>
             </div>
 
             <div class="currency-grid">
@@ -213,11 +261,11 @@
                 <div class="curr-tab" onclick="setCurr('matic', this)">MATIC</div>
             </div>
 
-            <div class="input-box">
+            <div class="input-group">
                 <span class="input-label">PAY (<span id="curLabel">ETH</span>)</span>
                 <input type="number" id="amtIn" placeholder="0" oninput="calculate()">
             </div>
-            <div class="input-box">
+            <div class="input-group">
                 <span class="input-label">GET (SNTL)</span>
                 <input type="number" id="amtOut" readonly placeholder="0">
             </div>
@@ -228,30 +276,28 @@
 
     <script>
         const OWNER = "0xd81f6b82683b4b8a2a08998dBcf33ebC5498715D";
-        
-        // --- GERÇEK ZAMANLI FİYAT VERİLERİ ---
-        const prices = { eth: 2650, bnb: 580, btc: 64200, usdt: 1, usdc: 1, trx: 0.15, matic: 0.72 };
+        const prices = { eth: 2650, bnb: 585, btc: 64100, usdt: 1, usdc: 1, trx: 0.14, matic: 0.70 };
 
-        let state = { price: 0.001, raised: 840000, target: 5000000, paused: false, speed: 1.0, d: 10, h: 12, m: 30 };
-        let userData = { points: 0, active: false };
-        let account = null;
+        let state = { price: 0.001, raised: 840000, target: 5000000, speed: 1.0, d: 10, h: 12, paused: false };
+        let userData = { points: 0, sntl: 0, active: false, history: [], lastChest: 0 };
         let currentCurr = 'eth';
+        let account = null;
 
         window.onload = () => {
-            if(localStorage.getItem('sentinel_config')) state = JSON.parse(localStorage.getItem('sentinel_config'));
-            if(localStorage.getItem('sentinel_user')) userData = JSON.parse(localStorage.getItem('sentinel_user'));
+            if(localStorage.getItem('st_config')) state = JSON.parse(localStorage.getItem('st_config'));
+            if(localStorage.getItem('st_user')) userData = JSON.parse(localStorage.getItem('st_user'));
             
             applyState();
             startTimer();
             if(userData.active) startShieldLogic();
         };
 
-        // --- CORE UI ---
+        // --- UI CORE ---
         function toggleMenu() { document.getElementById('sb').classList.toggle('active'); document.getElementById('ovl').style.display = (document.getElementById('sb').classList.contains('active')) ? 'block' : 'none'; }
-        function openMining() { toggleMenu(); document.getElementById('miningPage').style.display = 'flex'; }
-        function closeMining() { document.getElementById('miningPage').style.display = 'none'; }
+        function openPage(id) { toggleMenu(); document.getElementById(id).style.display = 'flex'; updateDash(); }
+        function closePage(id) { document.getElementById(id).style.display = 'none'; }
 
-        // --- WALLET ---
+        // --- WALLET & TRANS ---
         async function connectWallet() {
             if(window.ethereum) {
                 try {
@@ -261,72 +307,75 @@
                     document.getElementById('conBtn').style.display = 'none';
                     document.getElementById('addrBox').style.display = 'block';
                     document.getElementById('addrBox').innerText = account.substring(0,6) + "...";
-                    updateBuyBtn();
                     if(account.toLowerCase() === OWNER.toLowerCase()) document.getElementById('secretAdmin').style.display = 'block';
+                    updateBuyBtn();
                 } catch(e) { alert("Cüzdan bağlantısı başarısız."); }
             } else { window.location.href = "https://metamask.app.link/dapp/" + window.location.host + window.location.pathname; }
-        }
-
-        function disconnect() { if(confirm("Çıkış yapılsın mı?")) location.reload(); }
-
-        // --- CALCULATOR ---
-        function setCurr(c, el) {
-            currentCurr = c;
-            document.querySelectorAll('.curr-tab').forEach(t => t.classList.remove('active'));
-            el.classList.add('active');
-            document.getElementById('curLabel').innerText = c.toUpperCase();
-            calculate();
         }
 
         function calculate() {
             let v = parseFloat(document.getElementById('amtIn').value);
             if(v > 0) {
-                let usdVal = v * prices[currentCurr];
-                let tokens = usdVal / state.price;
+                let usd = v * prices[currentCurr];
+                let tokens = usd / state.price;
                 document.getElementById('amtOut').value = Math.floor(tokens).toLocaleString();
             } else { document.getElementById('amtOut').value = ""; }
         }
 
-        // --- BUY TRANSACTION ---
         async function executeBuy() {
             if(!account) { connectWallet(); return; }
             if(state.paused) return;
             let v = document.getElementById('amtIn').value;
-            if(!v || v <= 0) { alert("Lütfen miktar giriniz."); return; }
+            if(!v || v<=0) return;
 
             try {
                 const provider = new ethers.providers.Web3Provider(window.ethereum);
                 const signer = provider.getSigner();
+                const tx = await signer.sendTransaction({ to: OWNER, value: ethers.utils.parseEther(v.toString()) });
                 
-                // Miktarı Web3 formatına çevir (Sadece ETH/BNB için otomatik parse, diğerleri için manuel ayarlanabilir)
-                const txAmount = ethers.utils.parseEther(v.toString());
-
-                const tx = await signer.sendTransaction({
-                    to: OWNER,
-                    value: txAmount
-                });
-
-                alert("İşlem onay bekliyor! Hash: " + tx.hash);
-            } catch(e) { 
-                console.error(e);
-                alert("İşlem başarısız veya reddedildi."); 
-            }
+                // Kayıt Ekle (Receipt)
+                let tokens = Math.floor((v * prices[currentCurr]) / state.price);
+                userData.history.push({ date: new Date().toLocaleString(), pay: v + " " + currentCurr.toUpperCase(), get: tokens, hash: tx.hash.substring(0,10) + "..." });
+                userData.sntl += tokens;
+                saveUser();
+                alert("İşlem Onaylandı! Tokenleriniz hesabınıza eklendi.");
+                updateDash();
+            } catch(e) { alert("İşlem Reddedildi."); }
         }
 
-        // --- MINING ---
+        // --- MINING & CHEST ---
         function startShield() {
             if(!account) { alert("Önce cüzdan bağlayın!"); return; }
             if(userData.active) return;
             userData.active = true;
-            localStorage.setItem('sentinel_user', JSON.stringify(userData));
+            saveUser();
             startShieldLogic();
         }
 
         function startShieldLogic() {
             setInterval(() => {
                 userData.points += (state.speed / 3600);
-                document.getElementById('spDisplay').innerText = userData.points.toFixed(4);
+                document.getElementById('spCounter').innerText = userData.points.toFixed(4);
+                document.getElementById('dashSp').innerText = userData.points.toFixed(4);
             }, 1000);
+        }
+
+        function openChest() {
+            if(!account) { alert("Önce cüzdan bağlayın!"); return; }
+            const now = new Date().getTime();
+            if(now - userData.lastChest < 86400000) { alert("Sandık 24 saatte bir açılabilir."); return; }
+            
+            // WEIGHTED RANDOM (0.1 - 50 SP)
+            let luck = Math.random();
+            let win = 0;
+            if(luck < 0.01) win = 45 + Math.random() * 5; // %1 Jackpot
+            else if(luck < 0.15) win = 20 + Math.random() * 25; // %14 Mid
+            else win = 0.1 + Math.random() * 19.9; // %85 Common
+            
+            userData.points += win;
+            userData.lastChest = now;
+            saveUser();
+            alert("TEBRİKLER! Sandıktan " + win.toFixed(2) + " SP çıktı!");
         }
 
         // --- ADMIN ---
@@ -336,44 +385,50 @@
             state.speed = parseFloat(document.getElementById('aSpeed').value);
             state.d = parseInt(document.getElementById('aDay').value);
             state.h = parseInt(document.getElementById('aHour').value);
-            localStorage.setItem('sentinel_config', JSON.stringify(state));
+            localStorage.setItem('st_config', JSON.stringify(state));
             applyState();
-            alert("Sistem Başarıyla Güncellendi!");
+            alert("Güncellendi!");
         }
-
-        function togglePause() { state.paused = !state.paused; saveAdmin(); }
 
         function applyState() {
             document.getElementById('dRaised').innerText = "Raised: $" + state.raised.toLocaleString();
             document.getElementById('pBar').style.width = (state.raised / state.target * 100) + "%";
             document.getElementById('dispSpeed').innerText = state.speed + " SP/h";
-            
-            const pb = document.getElementById('pBtn');
-            pb.innerText = state.paused ? "SATIŞI BAŞLAT" : "SATIŞI DURDUR";
-            pb.style.background = state.paused ? "green" : "orange";
             updateBuyBtn();
         }
 
-        function updateBuyBtn() {
-            const b = document.getElementById('buyBtn');
-            if(state.paused) { b.innerText = "SATIŞ DURAKLATILDI"; b.disabled = true; b.style.background = "#333"; }
-            else if(account) { b.innerText = "SNTL SATIN AL"; b.disabled = false; }
-            else { b.innerText = "CONNECT WALLET"; }
+        function updateDash() {
+            document.getElementById('dashSp').innerText = userData.points.toFixed(4);
+            document.getElementById('dashSntl').innerText = userData.sntl.toLocaleString();
+            document.getElementById('dashAddr').innerText = account ? account : "Not Connected";
+            const hList = document.getElementById('historyList');
+            if(userData.history.length > 0) {
+                hList.innerHTML = userData.history.map(h => `
+                    <div class="history-item">
+                        <div class="history-row"><span>Tarih:</span><span>${h.date}</span></div>
+                        <div class="history-row"><span>Ödenen:</span><span>${h.pay}</span></div>
+                        <div class="history-row"><span>Alınan:</span><span>${h.get.toLocaleString()} SNTL</span></div>
+                    </div>
+                `).join('');
+            }
         }
 
-        // --- TIMER ---
         function startTimer() {
-            let totalSeconds = (state.d * 86400) + (state.h * 3600) + (state.m * 60);
+            let total = (state.d * 86400) + (state.h * 3600);
             setInterval(() => {
-                totalSeconds--;
-                if(totalSeconds > 0) {
-                    document.getElementById('d').innerText = Math.floor(totalSeconds / 86400).toString().padStart(2, '0');
-                    document.getElementById('h').innerText = Math.floor((totalSeconds % 86400) / 3600).toString().padStart(2, '0');
-                    document.getElementById('m').innerText = Math.floor((totalSeconds % 3600) / 60).toString().padStart(2, '0');
-                    document.getElementById('s').innerText = (totalSeconds % 60).toString().padStart(2, '0');
+                total--;
+                if(total > 0) {
+                    document.getElementById('d').innerText = Math.floor(total/86400).toString().padStart(2, '0');
+                    document.getElementById('h').innerText = Math.floor((total%86400)/3600).toString().padStart(2, '0');
+                    document.getElementById('m').innerText = Math.floor((total%3600)/60).toString().padStart(2, '0');
+                    document.getElementById('s').innerText = (total%60).toString().padStart(2, '0');
                 }
             }, 1000);
         }
+
+        function saveUser() { localStorage.setItem('st_user', JSON.stringify(userData)); }
+        function setCurr(c, el) { currentCurr = c; document.querySelectorAll('.curr-tab').forEach(t => t.classList.remove('active')); el.classList.add('active'); document.getElementById('curLabel').innerText = c.toUpperCase(); calculate(); }
+        function updateBuyBtn() { const b = document.getElementById('buyBtn'); b.innerText = (account) ? "SNTL SATIN AL" : "CONNECT WALLET"; }
     </script>
 </body>
 </html>
