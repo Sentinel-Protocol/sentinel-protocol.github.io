@@ -2,38 +2,34 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SENTINEL PROTOCOL | The Future of DeFi</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>SENTINEL PROTOCOL | DeFi Security</title>
     
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 500 500'%3E%3Cdefs%3E%3ClinearGradient id='grad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%2300f2ff' /%3E%3Cstop offset='100%25' style='stop-color:%230066ff' /%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M250 20 L450 100 L420 300 C400 400 300 480 250 500 C200 480 100 400 80 300 L50 100 Z' fill='%23050a15' stroke='url(%23grad)' stroke-width='15' /%3E%3Ctext x='50%25' y='68%25' font-family='Arial' font-weight='900' font-size='300' fill='white' text-anchor='middle'%3ES%3C/text%3E%3C/svg%3E">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 500 500'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%2300f2ff' /%3E%3Cstop offset='100%25' style='stop-color:%230066ff' /%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M250 20 L450 100 L420 300 C400 400 300 480 250 500 C200 480 100 400 80 300 L50 100 Z' fill='%230b1525' stroke='url(%23g)' stroke-width='15' /%3E%3Ctext x='50%25' y='68%25' font-family='Arial' font-weight='900' font-size='300' fill='white' text-anchor='middle'%3ES%3C/text%3E%3C/svg%3E">
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/5.7.2/ethers.umd.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;600;700&family=Urbanist:wght@400;600;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
-    <script src="https://unpkg.com/web3modal@1.9.12/dist/index.js"></script>
-    <script src="https://unpkg.com/@walletconnect/web3-provider@1.8.0/dist/umd/index.min.js"></script>
-
+    
     <style>
         :root {
             --primary: #00f2ff;
             --secondary: #0066ff;
             --bg: #050914;
             --card: rgba(15, 25, 45, 0.95);
-            --border: 1px solid rgba(0, 242, 255, 0.2);
+            --border: 1px solid rgba(0, 242, 255, 0.3);
             --text-gray: #a0aec0;
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; scroll-behavior: smooth; font-family: 'Urbanist', sans-serif; }
+        * { box-sizing: border-box; margin: 0; padding: 0; scroll-behavior: smooth; font-family: 'Urbanist', sans-serif; -webkit-tap-highlight-color: transparent; }
         body { background: var(--bg); color: white; overflow-x: hidden; }
 
         /* --- ADMIN PANEL --- */
         #adminPanel {
-            display: none; position: fixed; bottom: 0; left: 0; width: 100%; z-index: 10000;
-            background: #000; border-top: 3px solid var(--primary); padding: 20px;
+            display: none; position: fixed; bottom: 0; left: 0; width: 100%; z-index: 10001;
+            background: #000; border-top: 3px solid #ff4444; padding: 20px;
             box-shadow: 0 -10px 50px rgba(0,0,0,0.9);
         }
-        .adm-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; max-width: 1200px; margin: 0 auto; }
+        .adm-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; max-width: 1200px; margin: 0 auto; }
         .adm-in { background: #1a1a1a; border: 1px solid #333; color: white; padding: 10px; width: 100%; border-radius: 5px; }
         .adm-btn { padding: 10px; border: none; font-weight: bold; cursor: pointer; border-radius: 5px; font-family: 'Chakra Petch'; }
 
@@ -57,11 +53,33 @@
             box-shadow: 0 0 15px rgba(0, 242, 255, 0.3); transition: 0.3s;
         }
         .btn-connect:hover { transform: translateY(-2px); box-shadow: 0 0 25px var(--primary); }
+        .addr-disp { border: 1px solid var(--primary); color: var(--primary); padding: 8px 15px; border-radius: 5px; font-weight: bold; display: none; cursor: pointer; }
 
-        .lang-sel { background: rgba(255,255,255,0.1); border: var(--border); color: white; padding: 5px; border-radius: 5px; cursor: pointer; }
-        .lang-sel option { background: #000; }
+        /* HAMBURGER ICON (SVG - Asla Bozulmaz) */
+        .menu-icon { cursor: pointer; width: 35px; height: 35px; display: none; fill: white; transition: 0.3s; }
+        .menu-icon:hover { fill: var(--primary); }
 
-        .hamburger { display: none; font-size: 1.5rem; color: var(--primary); cursor: pointer; }
+        /* --- MOBILE MENU SIDEBAR --- */
+        .sidebar {
+            position: fixed; top: 0; right: -300px; width: 280px; height: 100%;
+            background: #02050a; z-index: 2000; padding: 80px 20px;
+            border-left: var(--border); transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: -10px 0 50px rgba(0,0,0,0.8);
+            display: flex; flex-direction: column; gap: 20px;
+        }
+        .sidebar.active { right: 0; }
+        
+        .side-link { 
+            font-size: 1.2rem; color: #ccc; text-decoration: none; padding: 15px; 
+            border-bottom: 1px solid #222; font-family: 'Chakra Petch';
+        }
+        .side-link:hover { color: var(--primary); padding-left: 20px; border-color: var(--primary); background: rgba(0,242,255,0.05); }
+
+        .overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8); z-index: 1999; display: none; backdrop-filter: blur(5px);
+        }
+        .overlay.active { display: block; }
 
         /* --- HERO --- */
         .hero {
@@ -102,10 +120,9 @@
         }
         .inp-grp input { background: transparent; border: none; color: white; text-align: right; font-size: 1.4rem; width: 60%; outline: none; font-family: 'Chakra Petch'; }
 
-        /* --- DASHBOARD --- */
+        /* --- DASHBOARD & ROADMAP --- */
         .dash { display: none; margin-top: 20px; background: rgba(0,255,100,0.1); border: 1px solid #00ff88; padding: 15px; border-radius: 10px; text-align: center; }
 
-        /* --- ROADMAP --- */
         .section { padding: 80px 5%; max-width: 1200px; margin: 0 auto; }
         .sec-title { text-align: center; font-family: 'Chakra Petch'; font-size: 2.5rem; margin-bottom: 50px; }
         .sec-title span { color: var(--primary); }
@@ -120,11 +137,21 @@
         .r-card ul { list-style: none; padding-left: 10px; color: #ccc; font-size: 0.9rem; }
         .r-card ul li::before { content: "• "; color: var(--primary); }
 
+        /* --- CUSTOM MODAL (MANUAL) --- */
+        .modal { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index: 5000; align-items:center; justify-content:center; backdrop-filter: blur(5px); }
+        .modal-box { background: #0f1520; border: 1px solid var(--primary); padding: 30px; border-radius: 20px; width: 90%; max-width: 350px; text-align: center; position: relative; }
+        .w-btn { 
+            background: #1a2233; padding: 15px; margin-bottom: 12px; border-radius: 10px; cursor: pointer; 
+            display: flex; align-items: center; gap: 15px; border: 1px solid #333; transition: 0.3s;
+        }
+        .w-btn:hover { border-color: var(--primary); background: rgba(0,242,255,0.1); }
+        .close-mod { position: absolute; right: 20px; top: 15px; cursor: pointer; color: #666; font-size: 1.2rem; }
+
         /* RESPONSIVE */
         @media (max-width: 992px) {
             .hero { grid-template-columns: 1fr; text-align: center; padding-top: 100px; }
             .nav-links { display: none; }
-            .hamburger { display: block; }
+            .menu-icon { display: block; }
         }
     </style>
 </head>
@@ -147,32 +174,48 @@
 
     <header>
         <a href="#" class="logo">
-            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 500 500'%3E%3Cdefs%3E%3ClinearGradient id='grad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%2300f2ff' /%3E%3Cstop offset='100%25' style='stop-color:%230066ff' /%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M250 20 L450 100 L420 300 C400 400 300 480 250 500 C200 480 100 400 80 300 L50 100 Z' fill='%23050a15' stroke='url(%23grad)' stroke-width='15' /%3E%3Ctext x='50%25' y='68%25' font-family='Arial' font-weight='900' font-size='300' fill='white' text-anchor='middle'%3ES%3C/text%3E%3C/svg%3E">
+            <svg viewBox="0 0 500 500" width="40" height="40">
+                <defs><linearGradient id="g2" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#00f2ff"/><stop offset="100%" style="stop-color:#0066ff"/></linearGradient></defs>
+                <path d="M250 20 L450 100 L420 300 C400 400 300 480 250 500 C200 480 100 400 80 300 L50 100 Z" fill="none" stroke="url(#g2)" stroke-width="30"/>
+                <text x="50%" y="68%" font-family="Arial" font-weight="bold" font-size="300" fill="white" text-anchor="middle">S</text>
+            </svg>
             SENTINEL
         </a>
         <nav class="nav-links">
             <a href="#home" data-t="home">Home</a>
-            <a href="#tokenomics" data-t="token">Tokenomics</a>
             <a href="#roadmap" data-t="road">Roadmap</a>
             <a href="#faq" data-t="faq">FAQ</a>
         </nav>
         <div style="display:flex; gap:10px; align-items:center;">
-            <select class="lang-sel" onchange="changeLang(this.value)">
-                <option value="en">EN</option><option value="tr">TR</option><option value="de">DE</option><option value="fr">FR</option><option value="ar">AR</option>
+            <select onchange="changeLang(this.value)" style="background:#111; color:white; border:1px solid #333; border-radius:5px;">
+                <option value="en">EN</option><option value="tr">TR</option><option value="de">DE</option><option value="ar">AR</option>
             </select>
-            <button id="conBtn" class="btn-connect" onclick="connectWallet()">CONNECT</button>
-            <button id="addrBtn" class="btn-connect" style="display:none; background:#111; border:1px solid var(--primary); color:var(--primary);">0x...</button>
-            <i class="fa fa-bars hamburger"></i>
+            <button id="conBtn" class="btn-connect" onclick="openModal()">CONNECT</button>
+            <div id="addrBox" class="addr-disp" onclick="disconnect()">0x...</div>
+            
+            <svg class="menu-icon" onclick="toggleMenu()" viewBox="0 0 24 24">
+                <path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
         </div>
     </header>
+
+    <div class="overlay" id="ovl" onclick="toggleMenu()"></div>
+    <div class="sidebar" id="sb">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+            <h3 style="color:white; font-family:'Chakra Petch'">MENU</h3>
+            <span onclick="toggleMenu()" style="font-size:1.5rem; cursor:pointer; color:#666;">X</span>
+        </div>
+        <a href="#home" class="side-link" onclick="toggleMenu()" data-t="home">Home</a>
+        <a href="#roadmap" class="side-link" onclick="toggleMenu()" data-t="road">Roadmap</a>
+        <a href="#faq" class="side-link" onclick="toggleMenu()" data-t="faq">FAQ</a>
+    </div>
 
     <div class="hero" id="home">
         <div>
             <h1 data-t="hero_h">THE FUTURE OF <br><span>DEFI SECURITY</span></h1>
-            <p data-t="hero_p">Sentinel Protocol is the world's first decentralized inheritance protocol. Protect your legacy with military-grade encryption.</p>
+            <p data-t="hero_p">World's first decentralized vault protocol.</p>
             <div style="display:flex; gap:15px;">
                 <button class="btn-connect" onclick="document.getElementById('presale').scrollIntoView()" data-t="btn_buy">BUY PRESALE</button>
-                <button style="background:transparent; border:1px solid white; color:white; padding:10px 25px; border-radius:5px; cursor:pointer;" data-t="btn_wp">WHITEPAPER</button>
             </div>
         </div>
 
@@ -217,7 +260,7 @@
             <button id="buyBtn" class="btn-connect" style="width:100%; padding:15px; font-size:1.1rem; margin-top:10px;" onclick="buy()">CONNECT WALLET</button>
             
             <div id="dash" class="dash">
-                <div style="color:#00ff88; font-size:0.8rem;">YOUR SNTL BALANCE</div>
+                <div style="color:#00ff88; font-size:0.8rem;">YOUR BALANCE</div>
                 <div id="myBal" style="font-size:1.5rem; font-weight:bold;">0</div>
             </div>
         </div>
@@ -233,67 +276,94 @@
         </div>
     </div>
 
+    <div class="modal" id="wModal">
+        <div class="modal-box">
+            <span class="close-mod" onclick="closeModal()">✕</span>
+            <h3 style="margin-bottom:25px; font-family:'Chakra Petch'">CONNECT WALLET</h3>
+            
+            <div class="w-btn" onclick="connectBrowser()">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/3/36/MetaMask_Mirror.svg" width="35">
+                <div style="text-align:left;">
+                    <div style="font-weight:bold; color:white;">Browser Extension</div>
+                    <div style="font-size:0.75rem; color:#888;">Chrome, Firefox (MetaMask)</div>
+                </div>
+            </div>
+
+            <div class="w-btn" onclick="connectMobile()">
+                <img src="https://raw.githubusercontent.com/WalletConnect/walletconnect-assets/master/Logo/Blue%20(Default)/Logo.svg" width="35">
+                <div style="text-align:left;">
+                    <div style="font-weight:bold; color:white;">Mobile App (Deep Link)</div>
+                    <div style="font-size:0.75rem; color:#888;">Trust, MetaMask App, SafePal</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
         // --- CONFIG ---
         const OWNER = "0xd81f6b82683b4b8a2a08998dBcf33ebC5498715D";
-        const PROJECT_ID = "2c68f3a0576f4d9cac49439a82825e05"; // SENİN ID'N
-        
         let state = { price: 0.03, raised: 450000, target: 5000000, stage: 1, paused: false };
         let rates = { eth: 2650, bnb: 600, matic: 0.8, usdt: 1 };
         let curr = 'eth';
-        let provider, signer, account;
-        
-        // --- WEB3MODAL SETUP ---
-        const providerOptions = {
-            walletconnect: {
-                package: WalletConnectProvider,
-                options: { projectId: PROJECT_ID, rpc: { 1: "https://mainnet.infura.io/v3/" } }
-            }
-        };
-        const web3Modal = new Web3Modal.default({
-            cacheProvider: true,
-            providerOptions,
-            theme: "dark"
-        });
+        let account = null;
 
         // --- INIT ---
-        window.onload = async () => {
-            // Load Admin State
+        window.onload = () => {
             if(localStorage.getItem('s_state')) state = JSON.parse(localStorage.getItem('s_state'));
             applyState();
-            
-            // Auto Connect if cached
-            if(web3Modal.cachedProvider) {
-                await connectWallet();
-            }
+            let bal = localStorage.getItem('sntl_bal');
+            if(bal) document.getElementById('myBal').innerText = parseInt(bal).toLocaleString();
         };
 
+        // --- MENU FUNCTION (MANUEL) ---
+        function toggleMenu() {
+            const sb = document.getElementById('sb');
+            const ov = document.getElementById('ovl');
+            if(sb.classList.contains('active')) {
+                sb.classList.remove('active');
+                ov.classList.remove('active');
+            } else {
+                sb.classList.add('active');
+                ov.classList.add('active');
+            }
+        }
+
         // --- WALLET FUNCTIONS ---
-        async function connectWallet() {
-            try {
-                const instance = await web3Modal.connect();
-                provider = new ethers.providers.Web3Provider(instance);
-                signer = provider.getSigner();
-                const accounts = await provider.listAccounts();
-                account = accounts[0];
+        function openModal() { document.getElementById('wModal').style.display='flex'; }
+        function closeModal() { document.getElementById('wModal').style.display='none'; }
 
-                // UI Update
-                document.getElementById('conBtn').style.display = 'none';
-                document.getElementById('addrBtn').style.display = 'block';
-                document.getElementById('addrBtn').innerText = account.substring(0,6) + "...";
-                
-                // Show Dashboard
-                document.getElementById('dash').style.display = 'block';
-                let bal = localStorage.getItem('sntl_bal');
-                document.getElementById('myBal').innerText = bal ? parseInt(bal).toLocaleString() : "0";
+        async function connectBrowser() {
+            if(window.ethereum) {
+                try {
+                    const provider = new ethers.providers.Web3Provider(window.ethereum);
+                    const accounts = await provider.send("eth_requestAccounts", []);
+                    handleLogin(accounts[0]);
+                } catch(e) { alert("Connection Denied"); }
+            } else {
+                alert("MetaMask extension not found!");
+            }
+        }
 
-                // Update Button
-                updateBuyBtn();
+        function connectMobile() {
+            // DEEP LINK LOGIC - FORCES APP TO OPEN
+            const currentUrl = window.location.host + window.location.pathname;
+            // MetaMask Deep Link Format
+            window.location.href = "https://metamask.app.link/dapp/" + currentUrl;
+        }
 
-                // Admin Check
-                if(account.toLowerCase() === OWNER.toLowerCase()) document.getElementById('adminPanel').style.display = 'block';
+        function handleLogin(addr) {
+            account = addr;
+            closeModal();
+            document.getElementById('conBtn').style.display = 'none';
+            document.getElementById('addrBox').style.display = 'block';
+            document.getElementById('addrBox').innerText = addr.substring(0,6) + "...";
+            document.getElementById('dash').style.display = 'block';
+            updateBuyBtn();
+            if(addr.toLowerCase() === OWNER.toLowerCase()) document.getElementById('adminPanel').style.display = 'block';
+        }
 
-            } catch(e) { console.error("Connect Error", e); }
+        function disconnect() {
+            if(confirm("Disconnect?")) location.reload();
         }
 
         // --- BUY & CALC ---
@@ -316,19 +386,21 @@
         }
 
         async function buy() {
-            if(!account) { connectWallet(); return; }
+            if(!account) { openModal(); return; }
             if(state.paused) return;
             let v = document.getElementById('amtIn').value;
             if(!v || v<=0) return;
 
             try {
+                const provider = new ethers.providers.Web3Provider(window.ethereum);
+                const signer = provider.getSigner();
                 const tx = await signer.sendTransaction({
                     to: OWNER,
                     value: ethers.utils.parseEther(v)
                 });
-                alert("Transaction Sent! Hash: " + tx.hash);
+                alert("Transaction Sent!");
                 
-                // Simüle Bakiye Artışı
+                // Simüle Bakiye
                 let bought = Math.floor((v * rates[curr]) / state.price);
                 let oldBal = parseInt(localStorage.getItem('sntl_bal') || "0");
                 localStorage.setItem('sntl_bal', oldBal + bought);
@@ -365,11 +437,10 @@
             document.getElementById('dTarget').innerText = "Target: $" + state.target.toLocaleString();
             document.getElementById('pBar').style.width = (state.raised / state.target * 100) + "%";
 
-            // Roadmap
+            // Roadmap Update
             for(let i=1; i<=4; i++) {
                 document.getElementById('st'+i).classList.toggle('active', i<=state.stage);
             }
-            
             updateBuyBtn();
         }
 
@@ -382,11 +453,10 @@
 
         // --- TRANSLATE ---
         const dict = {
-            en: { home: "Home", token: "Tokenomics", road: "Roadmap", faq: "FAQ", hero_h: "THE FUTURE OF <br><span>DEFI SECURITY</span>", hero_p: "World's first decentralized vault.", btn_buy: "BUY PRESALE", btn_wp: "WHITEPAPER", pre_title: "PRESALE STAGE 1", ends: "ENDS IN", pay: "PAY", get: "GET" },
-            tr: { home: "Anasayfa", token: "Tokenomik", road: "Yol Haritası", faq: "SSS", hero_h: "DEFI GÜVENLİĞİNİN <br><span>GELECEĞİ</span>", hero_p: "Dünyanın ilk merkeziyetsiz kasası.", btn_buy: "SATIN AL", btn_wp: "TEKNİK BELGE", pre_title: "ÖN SATIŞ AŞAMA 1", ends: "BİTİŞE KALAN", pay: "ÖDE", get: "AL" },
-            de: { home: "Startseite", token: "Tokenomics", road: "Fahrplan", faq: "FAQ", hero_h: "DIE ZUKUNFT DER <br><span>SICHERHEIT</span>", hero_p: "Das erste dezentrale Tresorsystem.", btn_buy: "KAUFEN", btn_wp: "WEISSBUCH", pre_title: "VORVERKAUF PHASE 1", ends: "ENDET IN", pay: "ZAHLEN", get: "ERHALTEN" },
-            fr: { home: "Accueil", token: "Tokenomics", road: "Feuille", faq: "FAQ", hero_h: "L'AVENIR DE LA <br><span>SÉCURITÉ</span>", hero_p: "Premier protocole de coffre-fort décentralisé.", btn_buy: "ACHETER", btn_wp: "LIVRE BLANC", pre_title: "PRÉVENTE ÉTAPE 1", ends: "FIN DANS", pay: "PAYER", get: "OBTENIR" },
-            ar: { home: "الرئيسية", token: "الرموز", road: "الخارطة", faq: "أسئلة", hero_h: "مستقبل <br><span>الأمان</span>", hero_p: "أول نظام خزنة لامركزي في العالم.", btn_buy: "شراء", btn_wp: "ورقة", pre_title: "المرحلة 1", ends: "ينتهي في", pay: "دفع", get: "حصل" }
+            en: { home: "Home", road: "Roadmap", faq: "FAQ", hero_h: "THE FUTURE OF <br><span>DEFI SECURITY</span>", hero_p: "World's first decentralized vault.", btn_buy: "BUY PRESALE", pre_title: "PRESALE STAGE 1", ends: "ENDS IN", pay: "PAY", get: "GET" },
+            tr: { home: "Anasayfa", road: "Yol Haritası", faq: "SSS", hero_h: "DEFI GÜVENLİĞİNİN <br><span>GELECEĞİ</span>", hero_p: "Dünyanın ilk merkeziyetsiz kasası.", btn_buy: "SATIN AL", pre_title: "ÖN SATIŞ 1", ends: "BİTİŞ", pay: "ÖDE", get: "AL" },
+            de: { home: "Startseite", road: "Fahrplan", faq: "FAQ", hero_h: "DIE ZUKUNFT DER <br><span>SICHERHEIT</span>", hero_p: "Erster dezentraler Tresor.", btn_buy: "KAUFEN", pre_title: "PHASE 1", ends: "ENDET IN", pay: "ZAHLEN", get: "ERHALTEN" },
+            ar: { home: "الرئيسية", road: "الخارطة", faq: "أسئلة", hero_h: "مستقبل <br><span>الأمان</span>", hero_p: "أول خزنة لامركزية.", btn_buy: "شراء", pre_title: "المرحلة 1", ends: "ينتهي", pay: "دفع", get: "حصل" }
         };
 
         function changeLang(l) {
@@ -395,8 +465,7 @@
                 const el = document.querySelector(`[data-t="${key}"]`);
                 if(el) el.innerHTML = d[key];
             }
-            if(l === 'ar') document.body.style.direction = 'rtl';
-            else document.body.style.direction = 'ltr';
+            if(l === 'ar') document.body.style.direction = 'rtl'; else document.body.style.direction = 'ltr';
         }
 
         // --- TIMER ---
